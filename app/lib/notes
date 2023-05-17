@@ -1,0 +1,14 @@
+- tamanhos dos botoes trocar para wrap
+- terminar de config alert generic dialog (cores botoes)
+- ver como inicia uma vez a class em outra (validator e application)
+- se pah vou precisar trocar o package do projeto dps
+
+1 - tirar logo da toolbar
+2 - antes da home degrade de fundo
+3 - padronizar botoes que flutuam, e conteudo que scrolla somente
+4 - dizer que senha forte vai ser padrao
+5 - no cadastro tocar sempre pro login dps
+5 - trocar botao carrinho pra avancar
+6 - usar todos os modais como oq ja foi padronizado
+
+botao carrinho no produto, ja pra setar quantidade e ir direto carrinho

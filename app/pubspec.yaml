@@ -71,12 +71,6 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - images/main_logo_1.png
-    - images/main_logo_2.png
-    - images/banner1_image.jpg
-    - images/banner2_image.jpg
-    - images/intro1_image.png
-    - images/intro2_image.png
-    - images/intro3_image.png
     - images/map_image256.png
     - images/person.jpg
 

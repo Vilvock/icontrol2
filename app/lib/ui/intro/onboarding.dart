@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:icontrol/res/dimens.dart';
 import 'package:icontrol/res/owner_colors.dart';
 import 'package:icontrol/ui/auth/login.dart';
@@ -24,24 +23,7 @@ class _OnboardingState extends State<Onboarding> {
   void initState() {
     _pageController = PageController(initialPage: 0);
     super.initState();
-    //
-    // _timer = Timer.periodic(Duration(seconds: 4), (timer) {
-    //   if (_pageIndex < 2) {
-    //     _pageIndex++;
-    //     _pageController.animateToPage(
-    //       _pageIndex,
-    //       duration: Duration(milliseconds: 400),
-    //       curve: Curves.easeInOut,
-    //     );
-    //   } else {
-    //     _pageIndex = 0;
-    //     _pageController.animateToPage(
-    //       _pageIndex,
-    //       duration: Duration(milliseconds: 400),
-    //       curve: Curves.easeInOut,
-    //     );
-    //   }
-    // });
+
   }
 
   @override
@@ -54,14 +36,15 @@ class _OnboardingState extends State<Onboarding> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [
-          OwnerColors.gradientFirstColor,
-          OwnerColors.gradientSecondaryColor,
-          OwnerColors.gradientThirdColor
-        ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
         child: Column(
           children: [
+            Container(
+                padding: EdgeInsets.all(Dimens.maxPaddingApplication),
+                child: Image.asset(
+              'images/main_logo_1.png',
+                  height: 90,
+            )),
+            
             Expanded(
                 child: PageView.builder(
                     itemCount: demo_data.length,
@@ -99,8 +82,6 @@ class _OnboardingState extends State<Onboarding> {
                       ),
                       Container(
                         margin: EdgeInsets.all(Dimens.marginApplication),
-                        width: double.infinity,
-                        height: 50,
                         child: ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
@@ -114,7 +95,7 @@ class _OnboardingState extends State<Onboarding> {
                                   ModalRoute.withName("/ui/login"));
                             },
                             child: Text(
-                              "Entrar",
+                              "Pular",
                               style: TextStyle(
                                   fontSize: Dimens.textSize8,
                                   color: Colors.white,
@@ -122,15 +103,6 @@ class _OnboardingState extends State<Onboarding> {
                                   fontWeight: FontWeight.normal,
                                   decoration: TextDecoration.none),
                             )),
-                      ),
-                      Text(
-                        "Já possui uma conta? Entre aqui",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize:Dimens.textSize5,
-                            fontFamily: 'Inter',
-                        ),
-                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
@@ -153,17 +125,22 @@ class Onboard {
 
 final List<Onboard> demo_data = [
   Onboard(
-    image: 'images/intro1_image.png',
+    image: '',
     title: "",
     subtitle: "A Água da Serra é uma marca historicamente jovem.",
   ),
   Onboard(
-    image: 'images/intro2_image.png',
+    image: '',
     title: "",
     subtitle: "Agora com mais sabores além do original",
   ),
   Onboard(
-    image: 'images/intro3_image.png',
+    image: '',
+    title: "",
+    subtitle: "Sabores para todos os gostos",
+  ),
+  Onboard(
+    image: '',
     title: "",
     subtitle: "Sabores para todos os gostos",
   )

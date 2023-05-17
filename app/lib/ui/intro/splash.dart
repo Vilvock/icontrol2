@@ -38,14 +38,9 @@ class _SplashState extends State<Splash> {
         child: Center(
           child: Image.asset(
             'images/main_logo_1.png',
+            height: 120,
           ),
         ),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [OwnerColors.gradientFirstColor, OwnerColors.gradientSecondaryColor, OwnerColors.gradientThirdColor],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter)
-            ),
           ),
       );
   }

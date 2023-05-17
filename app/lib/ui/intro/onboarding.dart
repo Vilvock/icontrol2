@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:icontrol/res/dimens.dart';
 import 'package:icontrol/res/owner_colors.dart';
+import 'package:icontrol/res/styles.dart';
 import 'package:icontrol/ui/auth/login.dart';
 import 'package:icontrol/ui/components/dot_indicator.dart';
 
@@ -75,7 +76,7 @@ class _OnboardingState extends State<Onboarding> {
                                     padding: const EdgeInsets.only(right: 4),
                                     child: DotIndicator(
                                       isActive: index == _pageIndex,
-                                      color: Colors.white,
+                                      color: OwnerColors.colorPrimary,
                                     ),
                                   )),
                         ],
@@ -83,10 +84,7 @@ class _OnboardingState extends State<Onboarding> {
                       Container(
                         margin: EdgeInsets.all(Dimens.marginApplication),
                         child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  OwnerColors.colorPrimary),
-                            ),
+                            style: Styles().styleDefaultButton,
                             onPressed: () {
                               Navigator.pushAndRemoveUntil(
                                   context,
@@ -96,12 +94,7 @@ class _OnboardingState extends State<Onboarding> {
                             },
                             child: Text(
                               "Pular",
-                              style: TextStyle(
-                                  fontSize: Dimens.textSize8,
-                                  color: Colors.white,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.normal,
-                                  decoration: TextDecoration.none),
+                              style: Styles().styleDefaultTextButton,
                             )),
                       ),
                     ],

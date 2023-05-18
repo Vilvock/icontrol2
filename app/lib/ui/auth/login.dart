@@ -97,7 +97,7 @@ class _LoginState extends State<Login> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(isVisibleBackButton: true),
       body: Container(
         margin: EdgeInsets.all(Dimens.marginApplication),
         child: Column(

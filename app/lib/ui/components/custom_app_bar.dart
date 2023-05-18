@@ -10,18 +10,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   bool isVisibleAddressButton;
   bool isVisibleSearchButton;
 
-  CustomAppBar({this.title: "", this.isVisibleBackButton = false,
-    this.isVisibleFavoriteButton = false, this.isVisibleAddressButton = false, this.isVisibleSearchButton = false});
+  CustomAppBar(
+      {this.title: "",
+      this.isVisibleBackButton = false,
+      this.isVisibleFavoriteButton = false,
+      this.isVisibleAddressButton = false,
+      this.isVisibleSearchButton = false});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      actions: _returnFavoriteIcon(this.isVisibleFavoriteButton, this.isVisibleAddressButton, this.isVisibleSearchButton, context),
+      actions: _returnFavoriteIcon(this.isVisibleFavoriteButton,
+          this.isVisibleAddressButton, this.isVisibleSearchButton, context),
       automaticallyImplyLeading: this.isVisibleBackButton,
       leading: _returnBackIcon(this.isVisibleBackButton, context),
-      backgroundColor: Colors.white,
-      elevation: Dimens.elevationApplication,
-      titleSpacing: 0,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      titleSpacing: 10,
       title: Row(
         children: [
           // Container(
@@ -47,24 +52,32 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  IconButton? _returnBackIcon(bool isVisible, BuildContext context) {
+  Container? _returnBackIcon(bool isVisible, BuildContext context) {
     if (isVisible) {
-      return IconButton(
-        icon: Icon(Icons.arrow_back_ios, color: Colors.black54),
-        onPressed: () => {
-          if (Navigator.of(context).canPop())
-            {Navigator.of(context).pop()}
-          else
-            {SystemNavigator.pop()}
-        },
-      );
+      return Container(margin: EdgeInsets.only(left: Dimens.minMarginApplication),
+          child: FloatingActionButton(
+            elevation: Dimens.minElevationApplication,
+            mini: true,
+            child: Icon(Icons.arrow_back_ios, color: Colors.black54, size: 20,),
+            backgroundColor: Colors.white,
+            onPressed: () {
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              } else {
+                SystemNavigator.pop();
+              }
+            },
+          ));
     }
 
     return null;
   }
 
-  List<Widget> _returnFavoriteIcon(bool isVisibleFavoriteButton, bool isVisibleAddressButton, bool isVisibleSearchButton, BuildContext context) {
-
+  List<Widget> _returnFavoriteIcon(
+      bool isVisibleFavoriteButton,
+      bool isVisibleAddressButton,
+      bool isVisibleSearchButton,
+      BuildContext context) {
     List<Widget> _widgetList = <Widget>[];
 
     if (isVisibleFavoriteButton) {
@@ -102,9 +115,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Icons.search,
           color: Colors.black,
         ),
-        onPressed: () {
-
-        },
+        onPressed: () {},
       ));
     }
 

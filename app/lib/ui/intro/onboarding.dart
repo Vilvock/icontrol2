@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:icontrol/res/dimens.dart';
 import 'package:icontrol/res/owner_colors.dart';
+import 'package:icontrol/res/strings.dart';
 import 'package:icontrol/res/styles.dart';
 import 'package:icontrol/ui/auth/login.dart';
 import 'package:icontrol/ui/components/dot_indicator.dart';
@@ -24,7 +25,6 @@ class _OnboardingState extends State<Onboarding> {
   void initState() {
     _pageController = PageController(initialPage: 0);
     super.initState();
-
   }
 
   @override
@@ -42,10 +42,9 @@ class _OnboardingState extends State<Onboarding> {
             Container(
                 padding: EdgeInsets.all(Dimens.maxPaddingApplication),
                 child: Image.asset(
-              'images/main_logo_1.png',
+                  'images/main_logo_1.png',
                   height: 90,
-            )),
-            
+                )),
             Expanded(
                 child: PageView.builder(
                     itemCount: demo_data.length,
@@ -63,7 +62,8 @@ class _OnboardingState extends State<Onboarding> {
             SizedBox(
               child: Container(
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: Dimens.paddingApplication),
+                  padding:
+                      const EdgeInsets.only(bottom: Dimens.paddingApplication),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -82,7 +82,7 @@ class _OnboardingState extends State<Onboarding> {
                         ],
                       ),
                       Container(
-                        margin: EdgeInsets.all(Dimens.marginApplication),
+                        margin: EdgeInsets.all(Dimens.minMarginApplication),
                         child: ElevatedButton(
                             style: Styles().styleDefaultButton,
                             onPressed: () {
@@ -150,45 +150,32 @@ class OnboardingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: Column(
-          children: [
-            Expanded(
-                child: Container(
-                  child: Center(
-                    child: Image.asset(
-                      color: Colors.white,
-                      image,
-                      height: 180,
-                      width: 180,
-                    ),
-                  ),
-                )),
-            Container(
+        backgroundColor: Colors.transparent,
+        body: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(Dimens.minRadiusApplication),
+            ),
+            margin: EdgeInsets.all(Dimens.minMarginApplication),
+            child: Container(
+                width: double.infinity,
+                height: double.infinity,
                 padding: EdgeInsets.all(Dimens.paddingApplication),
-                margin: EdgeInsets.only(bottom: Dimens.marginApplication),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: Dimens.textSize6,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                    ),
-                  ],
-                )),
-          ],
-        ),
-      ),
-    );
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        Strings.littleLoremIpsum,
+                        style: Styles().styleTitleText,
+                      ),
+                      Expanded(
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                              Strings.longLoremIpsum,
+                              style: Styles().styleDescriptionText,
+                            ),
+                          ))
+                    ]))));
   }
 }

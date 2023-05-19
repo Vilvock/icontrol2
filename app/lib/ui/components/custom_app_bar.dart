@@ -29,13 +29,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleSpacing: 10,
       title: Row(
         children: [
-          // Container(
-          //   margin: EdgeInsets.only(left: Dimens.minMarginApplication),
-          //   child: Image.asset(
-          //     'images/main_logo_2.png',
-          //     height: AppBar().preferredSize.height,
-          //   ),
-          // ),
+          Container(
+            margin: EdgeInsets.only(left: Dimens.minMarginApplication),
+            child: Image.asset(
+              'images/main_logo_1.png',
+              height: AppBar().preferredSize.height * 0.70,
+            ),
+          ),
           Container(
             margin: EdgeInsets.only(left: Dimens.minMarginApplication),
             child: Text(
@@ -54,11 +54,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Container? _returnBackIcon(bool isVisible, BuildContext context) {
     if (isVisible) {
-      return Container(margin: EdgeInsets.only(left: Dimens.minMarginApplication),
+      return Container(
+          margin: EdgeInsets.only(left: Dimens.minMarginApplication),
           child: FloatingActionButton(
             elevation: Dimens.minElevationApplication,
             mini: true,
-            child: Icon(Icons.arrow_back_ios, color: Colors.black54, size: 20,),
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black54,
+              size: 20,
+            ),
             backgroundColor: Colors.white,
             onPressed: () {
               if (Navigator.of(context).canPop()) {

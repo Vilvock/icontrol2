@@ -153,6 +153,7 @@ class OnboardingContent extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: Card(
+            elevation: Dimens.minElevationApplication,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(Dimens.minRadiusApplication),
             ),
@@ -170,12 +171,12 @@ class OnboardingContent extends StatelessWidget {
                       ),
                       Expanded(
                           child: Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              Strings.longLoremIpsum,
-                              style: Styles().styleDescriptionText,
-                            ),
-                          ))
+                        alignment: Alignment.center,
+                        child: Text(
+                          Strings.longLoremIpsum,
+                          style: Styles().styleDescriptionText,
+                        ),
+                      ))
                     ]))));
   }
 }

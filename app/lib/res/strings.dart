@@ -38,4 +38,14 @@ abstract class Strings {
 
   static const String littleLoremIpsum = "Lorem Ipsum is simply";
 
+  //app
+
+
+  static const String home = "Home";
+  static const String tire = "Controle de Pneus";
+  static const String plan = "Meu plano";
+  static const String search = "Buscar";
+  static const String menu = "Menu principal";
+
+
 }

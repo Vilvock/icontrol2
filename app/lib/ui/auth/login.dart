@@ -13,6 +13,7 @@ import '../../config/application_messages.dart';
 import '../../config/preferences.dart';
 import '../../res/dimens.dart';
 import '../../res/owner_colors.dart';
+import '../../res/styles.dart';
 import '../../web_service/links.dart';
 import '../components/custom_app_bar.dart';
 import '../main/home.dart';
@@ -25,8 +26,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
-
   @override
   void initState() {
     super.initState();
@@ -35,7 +34,6 @@ class _LoginState extends State<Login> {
   late Validator validator;
   final postRequest = PostRequest();
   User? _loginResponse;
-
 
   Future<void> loginRequest(String email, String password) async {
     try {
@@ -57,7 +55,7 @@ class _LoginState extends State<Login> {
 
       final response = User.fromJson(_map[0]);
 
-      if(response.status == "01") {
+      if (response.status == "01") {
         setState(() async {
           _loginResponse = response;
 
@@ -66,20 +64,16 @@ class _LoginState extends State<Login> {
 
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(
-                  builder: (context) => Home()),
+              MaterialPageRoute(builder: (context) => Home()),
               ModalRoute.withName("/ui/home"));
         });
       } else {
-
         ApplicationMessages(context: context).showMessage(response.msg);
       }
-
     } catch (e) {
       throw Exception('HTTP_ERROR: $e');
     }
   }
-
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -90,7 +84,7 @@ class _LoginState extends State<Login> {
     passwordController.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     validator = Validator(context: context);
@@ -99,130 +93,131 @@ class _LoginState extends State<Login> {
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(isVisibleBackButton: true),
       body: Container(
-        margin: EdgeInsets.all(Dimens.marginApplication),
+        margin: EdgeInsets.all(Dimens.minMarginApplication),
         child: Column(
           children: [
-            Expanded(child: Container (
+            Expanded(
+                child: Container(
               child: Column(
                 children: [
                   Container(
-                    width: double.infinity,
-                    child: Text(
-                      "Olá, \nRealize seu login",
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: Dimens.textSize8,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                    padding: EdgeInsets.all(Dimens.paddingApplication),
+                    child: Center(
+                      child: Image.asset(
+                        'images/main_logo_1.png',
+                        height: 120,
                       ),
                     ),
                   ),
-
-                  SizedBox(height: 32),
-                  TextField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: OwnerColors.colorPrimary, width: 1.5),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                      ),
-                      hintText: 'E-mail',
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: OutlineInputBorder(
+                  Card(
+                      elevation: Dimens.minElevationApplication,
+                      shape: RoundedRectangleBorder(
                         borderRadius:
-                        BorderRadius.circular(Dimens.radiusApplication),
-                        borderSide: BorderSide.none,
+                            BorderRadius.circular(Dimens.minRadiusApplication),
                       ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding:
-                      EdgeInsets.all(Dimens.textFieldPaddingApplication),
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: Dimens.textSize5,
-                    ),
-                  ),
-                  SizedBox(height: Dimens.marginApplication),
-
-                  TextField(
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: OwnerColors.colorPrimary, width: 1.5),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                      ),
-                      hintText: 'Senha',
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.circular(Dimens.radiusApplication),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding:
-                      EdgeInsets.all(Dimens.textFieldPaddingApplication),
-                    ),
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: Dimens.textSize5,
-                    ),
-                  ),
-
-
-                  Container(
-                    margin: EdgeInsets.only(top: Dimens.minMarginApplication),
-                    width: double.infinity,
-                    child: Text(
-                      "Esqueceu sua senha?",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize:Dimens.textSize5,
-                        fontFamily: 'Inter',
-                      ),
-                      textAlign: TextAlign.end,
-                    ),
-                  ),
-
-                  Container(
-                    margin: EdgeInsets.only(top: Dimens.marginApplication),
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
-                        style: ButtonStyle (
-                          backgroundColor: MaterialStateProperty.all(OwnerColors.colorPrimary),
-                        ),
-                        onPressed: () async {
-
-                          if (!validator.validateEmail(emailController.text)) return;
-                          // if (!validator.validatePassword(passwordController.text)) return;
-                          await Preferences.init();
-                          loginRequest(emailController.text, passwordController.text);
-
-                        },
-                        child: Text(
-                          "Entrar",
-                          style: TextStyle(
-                              fontSize: Dimens.textSize8,
-                              color: Colors.white,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.normal,
-                              decoration: TextDecoration.none),
-                        )),
-                  ),
-
+                      margin: EdgeInsets.all(Dimens.minMarginApplication),
+                      child: Container(
+                        padding: EdgeInsets.all(Dimens.paddingApplication),
+                        child: Column(children: [
+                          TextField(
+                            controller: emailController,
+                            decoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: OwnerColors.colorPrimary,
+                                    width: 1.5),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 1.0),
+                              ),
+                              hintText: 'E-mail',
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                    Dimens.radiusApplication),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                              contentPadding: EdgeInsets.all(
+                                  Dimens.textFieldPaddingApplication),
+                            ),
+                            keyboardType: TextInputType.emailAddress,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: Dimens.textSize5,
+                            ),
+                          ),
+                          SizedBox(height: Dimens.marginApplication),
+                          TextField(
+                            controller: passwordController,
+                            decoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: OwnerColors.colorPrimary,
+                                    width: 1.5),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 1.0),
+                              ),
+                              hintText: 'Senha',
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                    Dimens.radiusApplication),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                              contentPadding: EdgeInsets.all(
+                                  Dimens.textFieldPaddingApplication),
+                            ),
+                            keyboardType: TextInputType.visiblePassword,
+                            obscureText: true,
+                            enableSuggestions: false,
+                            autocorrect: false,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: Dimens.textSize5,
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: Dimens.minMarginApplication),
+                            width: double.infinity,
+                            child: Text(
+                              "Esqueceu sua senha?",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: Dimens.textSize5,
+                                fontFamily: 'Inter',
+                              ),
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                          Container(
+                            margin:
+                                EdgeInsets.only(top: Dimens.marginApplication),
+                            width: double.infinity,
+                            child: ElevatedButton(
+                                style: Styles().styleDefaultButton,
+                                onPressed: () async {
+                                  if (!validator.validateEmail(
+                                      emailController.text)) return;
+                                  // if (!validator.validatePassword(passwordController.text)) return;
+                                  await Preferences.init();
+                                  loginRequest(emailController.text,
+                                      passwordController.text);
+                                },
+                                child: Text(
+                                  "Login",
+                                  style: Styles().styleDefaultTextButton,
+                                )),
+                          ),
+                        ]),
+                      )),
                   Expanded(
                     child: Align(
                         alignment: FractionalOffset.bottomCenter,

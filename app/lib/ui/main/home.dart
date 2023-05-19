@@ -81,23 +81,23 @@ class BottomNavBar extends StatelessWidget {
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home_outlined),
-          label: 'Home',
+          label: Strings.home,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart_outlined),
-          label: 'Carrinho',
+          icon: Icon(Icons.tire_repair),
+          label: Strings.tire,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.list_alt),
-          label: 'Meus Pedidos',
+          icon: Icon(Icons.shield_outlined),
+          label: Strings.plan,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.favorite_border_outlined),
-          label: 'Meus Favoritos',
+          icon: Icon(Icons.map_outlined),
+          label: Strings.search,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person_outline),
-          label: 'Menu Principal',
+          label: Strings.menu,
         ),
       ],
     );

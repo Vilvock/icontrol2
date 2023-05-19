@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:icontrol/res/styles.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import '../../config/preferences.dart';
@@ -117,7 +119,6 @@ class _ContainerHomeState extends State<ContainerHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
         appBar: CustomAppBar(
           title: "Início",
           isVisibleBackButton: false,
@@ -128,44 +129,86 @@ class _ContainerHomeState extends State<ContainerHome> {
         body: ProgressHUD(
           inAsyncCall: _isLoading,
           valueColor: AlwaysStoppedAnimation<Color>(OwnerColors.colorPrimary),
-          child: RefreshIndicator(
-              onRefresh: _pullRefresh,
-              child: Container(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 180,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: /*numbersList.length*/ 5,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              elevation: Dimens.minElevationApplication,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    Dimens.radiusApplication),
-                              ),
-                              margin:
-                                  EdgeInsets.all(Dimens.minMarginApplication),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.80,
-                                padding:
-                                    EdgeInsets.all(Dimens.paddingApplication),
-                                child: Column( children: [
-
-
-
-                                ]),
-                              ),
-                            );
-                          },
+          child: Container(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Card(
+                        elevation: Dimens.minElevationApplication,
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(Dimens.radiusApplication),
                         ),
+                        margin: EdgeInsets.all(Dimens.minMarginApplication),
+                        child: Container(
+                            width: MediaQuery.of(context).size.width * 0.80,
+                            padding:
+                                EdgeInsets.all(Dimens.minPaddingApplication),
+                            child: Wrap(
+                              children: [
+                                Column(children: [
+                                  Row(children: [
+                                    Expanded(
+                                        child: Container(
+                                      child: Text(
+                                        "Frota 1",
+                                        style: Styles().styleDescriptionText,
+                                      ),
+                                    )),
+                                    IconButton(
+                                      icon: Icon(
+                                          CupertinoIcons.ellipsis_vertical,
+                                          color: Colors.black),
+                                      onPressed: () => {},
+                                    )
+                                  ]),
+                                  ConstrainedBox(
+                                    child: ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: 5,
+                                      itemBuilder: (context, index) {
+                                        return Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                Dimens.radiusApplication),
+                                          ),
+                                          margin: EdgeInsets.all(
+                                              Dimens.minMarginApplication),
+                                          child: Container(
+                                            padding: EdgeInsets.all(
+                                                Dimens.paddingApplication),
+                                            child: Text("dsda"),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    constraints: BoxConstraints(
+                                      maxHeight: MediaQuery.of(context).size.height * 0.70
+                                    ),
+                                  ),
+                                  Container(
+                                      width: double.infinity,
+                                      child: Text(
+                                        "Adicionar card",
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontSize: Dimens.textSize6,
+                                          color: OwnerColors.colorPrimary,
+                                        ),
+                                      ))
+                                ])
+                              ],
+                            )),
                       ),
-                    ],
-                  ),
-                ),
-              )),
+                    ]);
+              },
+            ),
+          ),
         ));
   }
 

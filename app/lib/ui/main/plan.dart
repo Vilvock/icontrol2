@@ -1,23 +1,23 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
 import '../../global/application_constant.dart';
-import '../../res/dimens.dart';
 import '../../res/owner_colors.dart';
 import '../../web_service/links.dart';
 import '../../web_service/service_response.dart';
 import '../components/custom_app_bar.dart';
 import '../components/progress_hud.dart';
 
-class Favorites extends StatefulWidget {
-  const Favorites({Key? key}) : super(key: key);
+class Plan extends StatefulWidget {
+  const Plan({Key? key}) : super(key: key);
 
   @override
-  State<Favorites> createState() => _Favorites();
+  State<Plan> createState() => _Plan();
 }
 
-class _Favorites extends State<Favorites> {
+class _Plan extends State<Plan> {
   bool _isLoading = false;
 
   @override
@@ -27,17 +27,16 @@ class _Favorites extends State<Favorites> {
 
   final postRequest = PostRequest();
 
-  Future<List<Map<String, dynamic>>> listFavorites() async {
+  Future<List<Map<String, dynamic>>> listOrders() async {
     try {
       final body = {
-        "id_user": /*await Preferences.getUserData()!.id*/ "6",
+        "id_user": /*await Preferences.getUserData()!.id*/"6",
         "token": ApplicationConstant.TOKEN
       };
 
       print('HTTP_BODY: $body');
 
-      final json =
-          await postRequest.sendPostRequest(Links.LIST_FAVORITES, body);
+      final json = await postRequest.sendPostRequest(Links.LIST_ORDERS, body);
 
       List<Map<String, dynamic>> _map = [];
       _map = List<Map<String, dynamic>>.from(jsonDecode(json));
@@ -53,24 +52,28 @@ class _Favorites extends State<Favorites> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(title: "Meus Favoritos", isVisibleBackButton: false),
-      body: ProgressHUD(
+        resizeToAvoidBottomInset: false,
+        appBar: CustomAppBar(title: "Meu plano", isVisibleBackButton: false),
+        body: ProgressHUD(
           inAsyncCall: _isLoading,
           valueColor: AlwaysStoppedAnimation<Color>(OwnerColors.colorPrimary),
           child: RefreshIndicator(
-              onRefresh: _pullRefresh,
-              child: FutureBuilder<List<Map<String, dynamic>>>(
-                  future: listFavorites(), builder: (context, snapshot) {
-                    return Container(child: Container());
-              }))),
-    );
+            onRefresh: _pullRefresh,
+            child: FutureBuilder<List<Map<String, dynamic>>>(
+              future: listOrders(),
+              builder: (context, snapshot) {
+
+                  return CircularProgressIndicator();
+
+              },
+            ),
+          ),
+        ));
   }
 
   Future<void> _pullRefresh() async {
     setState(() {
       _isLoading = true;
-      // listFavorites();
       _isLoading = false;
     });
   }

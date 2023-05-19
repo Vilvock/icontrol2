@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:icontrol/res/styles.dart';
 
 import '../../config/preferences.dart';
 import '../../res/dimens.dart';
@@ -18,7 +19,6 @@ class _MainMenu extends State<MainMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Menu Principal", isVisibleBackButton: false),
       resizeToAvoidBottomInset: false,
       body: Container(
         child: Column(
@@ -66,30 +66,24 @@ class _MainMenu extends State<MainMenu> {
                       ),
                       IconButton(
                         icon: Icon(Icons.arrow_forward_ios,
-                            color: Colors.black38),
+                            color: Colors.black38, size: 18,),
                         onPressed: () =>
                         {Navigator.pushNamed(context, "/ui/profile")},
                       )
                     ],
                   ),
                 )),
-
             GestureDetector(
                 child: Container(
                   padding: EdgeInsets.all(Dimens.maxPaddingApplication),
                   child: Row(
                     children: [
-                      Container(
-                        margin: EdgeInsets.all(Dimens.minMarginApplication),
-                        child:
-                        Icon(Icons.pin_drop_outlined, color: Colors.black),
-                      ),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Meus endereços",
+                              "Histórico de pagamentos",
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: Dimens.textSize5,
@@ -99,7 +93,7 @@ class _MainMenu extends State<MainMenu> {
                             ),
                             SizedBox(height: Dimens.minMarginApplication),
                             Text(
-                              "Atualize ou determine seu endereço principal",
+                              "Visualize pagamentos recentes",
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: Dimens.textSize4,
@@ -116,28 +110,20 @@ class _MainMenu extends State<MainMenu> {
                   Navigator.pushNamed(context, "/ui/user_addresses");
                 }),
 
-            Divider(
-              color: Colors.black12,
-              height: 2,
-              thickness: 1.5,
-              indent: Dimens.marginApplication,
-              endIndent: Dimens.marginApplication,
-            ),
+
+            Styles().div_vertical,
+
             GestureDetector(
                 child: Container(
                   padding: EdgeInsets.all(Dimens.maxPaddingApplication),
                   child: Row(
                     children: [
-                      Container(
-                          margin: EdgeInsets.all(Dimens.minMarginApplication),
-                          child: Icon(Icons.category_outlined,
-                              color: Colors.black)),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Categorias",
+                              "Equipamentos",
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: Dimens.textSize5,
@@ -147,7 +133,46 @@ class _MainMenu extends State<MainMenu> {
                             ),
                             SizedBox(height: Dimens.minMarginApplication),
                             Text(
-                              "Visualize categorias de ofertas",
+                              "Gerencie Equipamentos",
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: Dimens.textSize4,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, "/ui/user_addresses");
+                }),
+
+            Styles().div_vertical,
+
+            GestureDetector(
+                child: Container(
+                  padding: EdgeInsets.all(Dimens.maxPaddingApplication),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Funcionários",
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: Dimens.textSize5,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: Dimens.minMarginApplication),
+                            Text(
+                              "Gerencie seus Funcionários",
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: Dimens.textSize4,
@@ -162,29 +187,20 @@ class _MainMenu extends State<MainMenu> {
                 ),
                 onTap: () {Navigator.pushNamed(context, "/ui/categories");}
             ),
-            Divider(
-              color: Colors.black12,
-              height: 2,
-              thickness: 1.5,
-              indent: Dimens.marginApplication,
-              endIndent: Dimens.marginApplication,
-            ),
+
+            Styles().div_vertical,
+
             GestureDetector(
                 child: Container(
                   padding: EdgeInsets.all(Dimens.maxPaddingApplication),
                   child: Row(
                     children: [
-                      Container(
-                        margin: EdgeInsets.all(Dimens.minMarginApplication),
-                        child: Icon(Icons.contact_support_outlined,
-                            color: Colors.black),
-                      ),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Suporte",
+                              "FAQ",
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: Dimens.textSize5,
@@ -194,7 +210,7 @@ class _MainMenu extends State<MainMenu> {
                             ),
                             SizedBox(height: Dimens.minMarginApplication),
                             Text(
-                              "Contacte o suporte",
+                              "Descubra Informações úteis",
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: Dimens.textSize4,
@@ -209,23 +225,52 @@ class _MainMenu extends State<MainMenu> {
                 ),
                 onTap: () {}),
 
-            Divider(
-              color: Colors.black12,
-              height: 2,
-              thickness: 1.5,
-              indent: Dimens.marginApplication,
-              endIndent: Dimens.marginApplication,
-            ),
+
+            Styles().div_vertical,
 
             GestureDetector(
                 child: Container(
                   padding: EdgeInsets.all(Dimens.maxPaddingApplication),
                   child: Row(
                     children: [
-                      Container(
-                        margin: EdgeInsets.all(Dimens.minMarginApplication),
-                        child: Icon(Icons.logout_outlined, color: Colors.black),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Desativar conta",
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: Dimens.textSize5,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: Dimens.minMarginApplication),
+                            Text(
+                              "Desative completamente todas as funções da sua conta",
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: Dimens.textSize4,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
+                    ],
+                  ),
+                ),
+                onTap: () {}),
+
+
+            Styles().div_vertical,
+
+            GestureDetector(
+                child: Container(
+                  padding: EdgeInsets.all(Dimens.maxPaddingApplication),
+                  child: Row(
+                    children: [
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,13 +329,8 @@ class _MainMenu extends State<MainMenu> {
                   );
                 }),
 
-            Divider(
-              color: Colors.black12,
-              height: 2,
-              thickness: 1.5,
-              indent: Dimens.marginApplication,
-              endIndent: Dimens.marginApplication,
-            ),
+
+            Styles().div_vertical,
           ],
         ),
       ),

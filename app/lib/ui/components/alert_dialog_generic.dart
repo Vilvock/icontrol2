@@ -26,7 +26,7 @@ class _GenericAlertDialogState extends State<GenericAlertDialog> {
   Widget build(BuildContext context) {
     return Column(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
             child: Card(

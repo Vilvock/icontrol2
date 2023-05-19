@@ -15,10 +15,10 @@ import '../../web_service/service_response.dart';
 import '../components/custom_app_bar.dart';
 import '../components/dot_indicator.dart';
 import '../components/progress_hud.dart';
-import 'cart.dart';
-import 'favorites.dart';
+import 'tires_control.dart';
+import 'search.dart';
 import 'main_menu.dart';
-import 'orders.dart';
+import 'plan.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -31,9 +31,9 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   List<Widget> _widgetOptions = [
     ContainerHome(),
-    Cart(),
-    Orders(),
-    Favorites(),
+    TiresControl(),
+    Plan(),
+    Search(),
     MainMenu()
   ];
 

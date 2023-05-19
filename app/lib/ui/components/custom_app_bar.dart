@@ -88,7 +88,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (isVisibleFavoriteButton) {
       _widgetList.add(IconButton(
         icon: Icon(
-          Icons.favorite_border_outlined,
+          Icons.add,
           color: Colors.black,
         ),
         onPressed: () {
@@ -100,7 +100,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (isVisibleAddressButton) {
       _widgetList.add(IconButton(
         icon: Icon(
-          Icons.add_location_alt,
+          Icons.notifications_none_sharp,
           color: Colors.black,
         ),
         onPressed: () {

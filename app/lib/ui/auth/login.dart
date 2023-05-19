@@ -204,12 +204,18 @@ class _LoginState extends State<Login> {
                             child: ElevatedButton(
                                 style: Styles().styleDefaultButton,
                                 onPressed: () async {
-                                  if (!validator.validateEmail(
-                                      emailController.text)) return;
-                                  // if (!validator.validatePassword(passwordController.text)) return;
-                                  await Preferences.init();
-                                  loginRequest(emailController.text,
-                                      passwordController.text);
+
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Home()),
+                                      ModalRoute.withName("/ui/home"));
+                                  //
+                                  // if (!validator.validateEmail(
+                                  //     emailController.text)) return;
+                                  // // if (!validator.validatePassword(passwordController.text)) return;
+                                  // await Preferences.init();
+                                  // loginRequest(emailController.text,
+                                  //     passwordController.text);
                                 },
                                 child: Text(
                                   "Login",

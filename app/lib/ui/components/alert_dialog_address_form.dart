@@ -44,7 +44,7 @@ class _AddressFormAlertDialog extends State<AddressFormAlertDialog> {
   Widget build(BuildContext context) {
     return Column(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
             child: Card(

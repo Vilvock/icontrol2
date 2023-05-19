@@ -32,4 +32,12 @@ class Styles {
       fontSize: Dimens.textSize6,
       color: Colors.black,
   );
+
+  var div_vertical = Divider(
+    color: Colors.black12,
+    height: 2,
+    thickness: 1.5,
+    indent: Dimens.marginApplication,
+    endIndent: Dimens.marginApplication,
+  );
 }

@@ -6,21 +6,21 @@ import '../../res/strings.dart';
 import '../components/custom_app_bar.dart';
 import '../components/progress_hud.dart';
 
-class Cart extends StatefulWidget {
-  const Cart({Key? key}) : super(key: key);
+class TiresControl extends StatefulWidget {
+  const TiresControl({Key? key}) : super(key: key);
 
   @override
-  State<Cart> createState() => _Cart();
+  State<TiresControl> createState() => _TiresControl();
 }
 
-class _Cart extends State<Cart> {
+class _TiresControl extends State<TiresControl> {
   bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: CustomAppBar(title: "Carrinho", isVisibleBackButton: false),
+        appBar: CustomAppBar(title: "Controle de pneus", isVisibleBackButton: false),
         body: ProgressHUD(
             inAsyncCall: _isLoading,
             valueColor: AlwaysStoppedAnimation<Color>(OwnerColors.colorPrimary),

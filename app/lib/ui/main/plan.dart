@@ -36,7 +36,7 @@ class _Plan extends State<Plan> {
 
       print('HTTP_BODY: $body');
 
-      final json = await postRequest.sendPostRequest(Links.LIST_ORDERS, body);
+      final json = await postRequest.sendPostRequest(Links.LIST_NOTIFICATIONS, body);
 
       List<Map<String, dynamic>> _map = [];
       _map = List<Map<String, dynamic>>.from(jsonDecode(json));

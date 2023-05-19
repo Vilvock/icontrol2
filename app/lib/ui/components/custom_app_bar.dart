@@ -6,22 +6,22 @@ import 'package:icontrol/ui/components/alert_dialog_address_form.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   String title;
   bool isVisibleBackButton;
-  bool isVisibleFavoriteButton;
-  bool isVisibleAddressButton;
+  bool isVisibleAddButton;
+  bool isVisibleNotificationsButton;
   bool isVisibleSearchButton;
 
   CustomAppBar(
       {this.title: "",
       this.isVisibleBackButton = false,
-      this.isVisibleFavoriteButton = false,
-      this.isVisibleAddressButton = false,
+      this.isVisibleAddButton = false,
+      this.isVisibleNotificationsButton = false,
       this.isVisibleSearchButton = false});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      actions: _returnFavoriteIcon(this.isVisibleFavoriteButton,
-          this.isVisibleAddressButton, this.isVisibleSearchButton, context),
+      actions: _returnFavoriteIcon(this.isVisibleAddButton,
+          this.isVisibleNotificationsButton, this.isVisibleSearchButton, context),
       automaticallyImplyLeading: this.isVisibleBackButton,
       leading: _returnBackIcon(this.isVisibleBackButton, context),
       backgroundColor: Colors.transparent,
@@ -33,7 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             margin: EdgeInsets.only(left: Dimens.minMarginApplication),
             child: Image.asset(
               'images/main_logo_1.png',
-              height: AppBar().preferredSize.height * 0.70,
+              height: AppBar().preferredSize.height * 0.60,
             ),
           ),
           Container(
@@ -79,13 +79,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   List<Widget> _returnFavoriteIcon(
-      bool isVisibleFavoriteButton,
-      bool isVisibleAddressButton,
+      bool isVisibleAddButton,
+      bool isVisibleNotificationsButton,
       bool isVisibleSearchButton,
       BuildContext context) {
     List<Widget> _widgetList = <Widget>[];
 
-    if (isVisibleFavoriteButton) {
+    if (isVisibleAddButton) {
       _widgetList.add(IconButton(
         icon: Icon(
           Icons.add,
@@ -97,7 +97,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ));
     }
 
-    if (isVisibleAddressButton) {
+    if (isVisibleNotificationsButton) {
       _widgetList.add(IconButton(
         icon: Icon(
           Icons.notifications_none_sharp,

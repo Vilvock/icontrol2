@@ -155,7 +155,7 @@ class OnboardingContent extends StatelessWidget {
         body: Card(
             elevation: Dimens.minElevationApplication,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Dimens.minRadiusApplication),
+              borderRadius: BorderRadius.circular(Dimens.radiusApplication),
             ),
             margin: EdgeInsets.all(Dimens.minMarginApplication),
             child: Container(

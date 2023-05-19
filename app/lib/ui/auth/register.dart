@@ -58,7 +58,7 @@ class _RegisterState extends State<Register> {
 
       print('HTTP_BODY: $body');
 
-      final json = await postRequest.sendPostRequest(Links.REGISTER, body);
+      final json = await postRequest.sendPostRequest(Links.REGISTER_W_LOCATION, body);
       // final parsedResponse = jsonDecode(json); // pegar um objeto so
 
       List<Map<String, dynamic>> _map = [];
@@ -141,7 +141,7 @@ class _RegisterState extends State<Register> {
                         elevation: Dimens.minElevationApplication,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
-                              Dimens.minRadiusApplication),
+                              Dimens.radiusApplication),
                         ),
                         margin: EdgeInsets.all(Dimens.minMarginApplication),
                         child: Container(

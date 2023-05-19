@@ -73,9 +73,10 @@ class BottomNavBar extends StatelessWidget {
       elevation: Dimens.elevationApplication,
       currentIndex: currentIndex,
       onTap: onTap,
-      backgroundColor: Colors.white,
-      selectedItemColor: OwnerColors.colorPrimary,
-      unselectedItemColor: Colors.grey,
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: OwnerColors.colorPrimary,
+      selectedItemColor: OwnerColors.colorAccent,
+      unselectedItemColor: OwnerColors.lightGrey,
       showSelectedLabels: false,
       showUnselectedLabels: false,
       items: const [
@@ -117,7 +118,13 @@ class _ContainerHomeState extends State<ContainerHome> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: CustomAppBar(title: "Início", isVisibleBackButton: false, isVisibleSearchButton: true,),
+        appBar: CustomAppBar(
+          title: "Início",
+          isVisibleBackButton: false,
+          isVisibleSearchButton: true,
+          isVisibleNotificationsButton: true,
+          isVisibleAddButton: true,
+        ),
         body: ProgressHUD(
           inAsyncCall: _isLoading,
           valueColor: AlwaysStoppedAnimation<Color>(OwnerColors.colorPrimary),
@@ -126,7 +133,36 @@ class _ContainerHomeState extends State<ContainerHome> {
               child: Container(
                 child: SingleChildScrollView(
                   child: Column(
-                    children: [],
+                    children: [
+                      Container(
+                        height: 180,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: /*numbersList.length*/ 5,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              elevation: Dimens.minElevationApplication,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    Dimens.radiusApplication),
+                              ),
+                              margin:
+                                  EdgeInsets.all(Dimens.minMarginApplication),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.80,
+                                padding:
+                                    EdgeInsets.all(Dimens.paddingApplication),
+                                child: Column( children: [
+
+
+
+                                ]),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               )),
@@ -140,5 +176,4 @@ class _ContainerHomeState extends State<ContainerHome> {
       _isLoading = false;
     });
   }
-
 }

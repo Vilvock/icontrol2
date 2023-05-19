@@ -12,15 +12,14 @@ class Dimens {
   static const double textSize7 = 20.0;
   static const double textSize8 = 24.0;
 
-  static const double minElevationApplication = 1.0;
+  static const double minElevationApplication = 2.0;
   static const double minPaddingApplication = 8.0;
   static const double minMarginApplication = 8.0;
-  static const double minRadiusApplication = 8.0;
 
-  static const double elevationApplication = 2.0;
+  static const double elevationApplication = 4.0;
   static const double paddingApplication = 16.0;
   static const double marginApplication = 16.0;
-  static const double radiusApplication = 16.0;
+  static const double radiusApplication = 4.0;
   static const double textFieldPaddingApplication = 20.0;
 
 

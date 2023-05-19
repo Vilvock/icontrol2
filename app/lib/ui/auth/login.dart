@@ -113,7 +113,7 @@ class _LoginState extends State<Login> {
                       elevation: Dimens.minElevationApplication,
                       shape: RoundedRectangleBorder(
                         borderRadius:
-                            BorderRadius.circular(Dimens.minRadiusApplication),
+                            BorderRadius.circular(Dimens.radiusApplication),
                       ),
                       margin: EdgeInsets.all(Dimens.minMarginApplication),
                       child: Container(

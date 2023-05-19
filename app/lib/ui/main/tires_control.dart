@@ -34,7 +34,7 @@ class _TiresControl extends State<TiresControl> {
                       return Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
-                              Dimens.minRadiusApplication),
+                              Dimens.radiusApplication),
                         ),
                         margin: EdgeInsets.all(Dimens.minMarginApplication),
                         child: Container(
@@ -47,7 +47,7 @@ class _TiresControl extends State<TiresControl> {
                                       right: Dimens.minMarginApplication),
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(
-                                          Dimens.minRadiusApplication),
+                                          Dimens.radiusApplication),
                                       child: Image.asset(
                                         'images/person.jpg',
                                         height: 90,
@@ -146,7 +146,7 @@ class _TiresControl extends State<TiresControl> {
                       Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
-                                Dimens.minRadiusApplication),
+                                Dimens.radiusApplication),
                           ),
                           margin: EdgeInsets.all(Dimens.minMarginApplication),
                           child: Container(

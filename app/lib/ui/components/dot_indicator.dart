@@ -21,7 +21,7 @@ class DotIndicator extends StatelessWidget {
           width: 20,
           decoration: BoxDecoration(
               color: isActive ? color : OwnerColors.lightGrey,
-              borderRadius: BorderRadius.all(Radius.circular(Dimens.minRadiusApplication)))),
+              borderRadius: BorderRadius.all(Radius.circular(Dimens.radiusApplication)))),
     );
   }
 }

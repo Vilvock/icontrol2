@@ -37,7 +37,7 @@ class _Search extends State<Search> {
       print('HTTP_BODY: $body');
 
       final json =
-          await postRequest.sendPostRequest(Links.LIST_FAVORITES, body);
+          await postRequest.sendPostRequest(Links.LIST_NOTIFICATIONS, body);
 
       List<Map<String, dynamic>> _map = [];
       _map = List<Map<String, dynamic>>.from(jsonDecode(json));

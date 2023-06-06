@@ -8,7 +8,6 @@ import '../../res/owner_colors.dart';
 import '../../web_service/links.dart';
 import '../../web_service/service_response.dart';
 import '../components/custom_app_bar.dart';
-import '../components/progress_hud.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -55,15 +54,12 @@ class _Search extends State<Search> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(title: "Pesquisar", isVisibleBackButton: false),
-      body: ProgressHUD(
-          inAsyncCall: _isLoading,
-          valueColor: AlwaysStoppedAnimation<Color>(OwnerColors.colorPrimary),
-          child: RefreshIndicator(
+      body:  RefreshIndicator(
               onRefresh: _pullRefresh,
               child: FutureBuilder<List<Map<String, dynamic>>>(
                   future: listFavorites(), builder: (context, snapshot) {
                     return Container(child: Container());
-              }))),
+              })),
     );
   }
 

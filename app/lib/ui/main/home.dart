@@ -16,7 +16,6 @@ import '../../web_service/links.dart';
 import '../../web_service/service_response.dart';
 import '../components/custom_app_bar.dart';
 import '../components/dot_indicator.dart';
-import '../components/progress_hud.dart';
 import 'tires_control.dart';
 import 'search.dart';
 import 'main_menu.dart';
@@ -126,10 +125,7 @@ class _ContainerHomeState extends State<ContainerHome> {
           isVisibleNotificationsButton: true,
           isVisibleAddButton: true,
         ),
-        body: ProgressHUD(
-          inAsyncCall: _isLoading,
-          valueColor: AlwaysStoppedAnimation<Color>(OwnerColors.colorPrimary),
-          child: Container(
+        body: Container(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 5,
@@ -209,7 +205,7 @@ class _ContainerHomeState extends State<ContainerHome> {
               },
             ),
           ),
-        ));
+        );
   }
 
   Future<void> _pullRefresh() async {

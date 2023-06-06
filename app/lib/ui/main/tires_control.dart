@@ -4,7 +4,6 @@ import '../../res/dimens.dart';
 import '../../res/owner_colors.dart';
 import '../../res/strings.dart';
 import '../components/custom_app_bar.dart';
-import '../components/progress_hud.dart';
 
 class TiresControl extends StatefulWidget {
   const TiresControl({Key? key}) : super(key: key);
@@ -21,10 +20,7 @@ class _TiresControl extends State<TiresControl> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: CustomAppBar(title: "Controle de pneus", isVisibleBackButton: false),
-        body: ProgressHUD(
-            inAsyncCall: _isLoading,
-            valueColor: AlwaysStoppedAnimation<Color>(OwnerColors.colorPrimary),
-            child: Container(
+        body:  Container(
                 height: double.infinity,
                 child: Stack(children: [
                   ListView.builder(
@@ -229,6 +225,6 @@ class _TiresControl extends State<TiresControl> {
                           ))
                     ],
                   )
-                ]))));
+                ])));
   }
 }

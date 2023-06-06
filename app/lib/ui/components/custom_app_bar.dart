@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:icontrol/res/dimens.dart';
-import 'package:icontrol/ui/components/alert_dialog_address_form.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   String title;
@@ -104,12 +103,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.black,
         ),
         onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AddressFormAlertDialog();
-            },
-          );
+
         },
       ));
     }

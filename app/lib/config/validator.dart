@@ -1,8 +1,9 @@
 import 'package:cpf_cnpj_validator/cnpj_validator.dart';
 import 'package:cpf_cnpj_validator/cpf_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:icontrol/config/application_messages.dart';
-import 'package:icontrol/res/strings.dart';
+
+import '../res/strings.dart';
+import 'application_messages.dart';
 
 class Validator {
   BuildContext context;
@@ -22,7 +23,7 @@ class Validator {
 
   bool validatePassword(String password) {
     RegExp regex =
-        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+        RegExp(r'^(?=.*?[A-Z]).{8,}$');
     if (password.isEmpty) {
       ApplicationMessages(context: context)
           .showMessage(Strings.password_denied);
@@ -76,12 +77,21 @@ class Validator {
     }
   }
 
+  bool validateCEP(String cep) {
+    if (cep.length > 8) {
+      return true;
+    } else {
+      ApplicationMessages(context: context).showMessage(Strings.cep_denied);
+      return false;
+    }
+  }
+
   bool validateGenericTextField(String text, String field) {
     if (text.isNotEmpty) {
       return true;
     } else {
       ApplicationMessages(context: context)
-          .showMessage("$field não pode estar vazio!");
+          .showMessage("Preencha o campo $field!");
       return false;
     }
   }

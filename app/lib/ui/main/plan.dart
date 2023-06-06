@@ -8,7 +8,6 @@ import '../../res/owner_colors.dart';
 import '../../web_service/links.dart';
 import '../../web_service/service_response.dart';
 import '../components/custom_app_bar.dart';
-import '../components/progress_hud.dart';
 
 class Plan extends StatefulWidget {
   const Plan({Key? key}) : super(key: key);
@@ -54,10 +53,7 @@ class _Plan extends State<Plan> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: CustomAppBar(title: "Meu plano", isVisibleBackButton: false),
-        body: ProgressHUD(
-          inAsyncCall: _isLoading,
-          valueColor: AlwaysStoppedAnimation<Color>(OwnerColors.colorPrimary),
-          child: RefreshIndicator(
+        body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: FutureBuilder<List<Map<String, dynamic>>>(
               future: listOrders(),
@@ -68,7 +64,7 @@ class _Plan extends State<Plan> {
               },
             ),
           ),
-        ));
+        );
   }
 
   Future<void> _pullRefresh() async {

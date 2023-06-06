@@ -13,9 +13,12 @@ abstract class Strings {
   static const String enable = "Ativar";
   static const String exit = "Sair";
   static const String logout = "Você tem certeza que deseja realizar seu logout?";
+  static const String disable_account = "Você tem certeza que deseja desativar sua conta permanentemente?";
   static const String yes = "Sim";
   static const String no = "Não";
   static const String attention = "Atenção";
+  static const String empty_list = "Não foram encontrados resultados :(";
+  static const String enable_account = "Para reativar sua conta, entre em contato com o administrador";
 
   static const String email_denied = "E-mail Inválido!";
   static const String password_denied = "Senha Inválida!";
@@ -23,6 +26,7 @@ abstract class Strings {
   static const String cellphone_denied = "Celular Inválido!";
   static const String cpf_denied = "CPF Inválido!";
   static const String cnpj_denied = "CNPJ Inválido!";
+  static const String cep_denied = "CEP Inválido!";
 
 
 
@@ -38,14 +42,10 @@ abstract class Strings {
 
   static const String littleLoremIpsum = "Lorem Ipsum is simply";
 
-  //app
-
-
   static const String home = "Home";
   static const String tire = "Controle de Pneus";
   static const String plan = "Meu plano";
   static const String search = "Buscar";
   static const String menu = "Menu principal";
-
 
 }

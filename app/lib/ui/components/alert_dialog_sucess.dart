@@ -2,27 +2,23 @@ import 'package:flutter/material.dart';
 
 import '../../res/dimens.dart';
 
-class GenericAlertDialog extends StatefulWidget {
-  String? title;
+class SucessAlertDialog extends StatefulWidget {
+  Container btnConfirm;
   String? content;
-  TextButton? btnBack;
-  TextButton? btnConfirm;
 
-  GenericAlertDialog({
+  SucessAlertDialog({
     Key? key,
-    this.title,
+    required this.btnConfirm,
     this.content,
-    this.btnBack,
-    this.btnConfirm,
   });
 
   // DialogGeneric({Key? key}) : super(key: key);
 
   @override
-  State<GenericAlertDialog> createState() => _GenericAlertDialogState();
+  State<SucessAlertDialog> createState() => _SucessAlertDialogState();
 }
 
-class _GenericAlertDialogState extends State<GenericAlertDialog> {
+class _SucessAlertDialogState extends State<SucessAlertDialog> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,13 +30,12 @@ class _GenericAlertDialogState extends State<GenericAlertDialog> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  widget.title!,
-                  style: TextStyle(
-                      fontSize: Dimens.textSize7,
-                      fontFamily: 'Inter',
-                      color: Colors.black),
-                ),
+                Align(
+                    child: Image.asset(
+                  fit: BoxFit.fitWidth,
+                  'images/success.png',
+                  height: 100,
+                )),
                 SizedBox(height: Dimens.marginApplication),
                 Text(
                   widget.content!,
@@ -50,11 +45,7 @@ class _GenericAlertDialogState extends State<GenericAlertDialog> {
                       fontFamily: 'Inter',
                       color: Colors.black),
                 ),
-                SizedBox(height: Dimens.marginApplication),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [widget.btnBack!, widget.btnConfirm!],
-                )
+                widget.btnConfirm,
               ],
             ),
           ),

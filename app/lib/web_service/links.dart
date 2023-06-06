@@ -103,6 +103,7 @@ abstract class Links {
   static const String DELETE_ATTACHMENT = "usuarios/excluirAnexo/";
 
   //pagamentos
+
   static const String ADD_PAYMENT = "pagamentos/adicionar/";
   static const String LIST_PAYMENTS = "pagamentos/listar/";
   static const String CREATE_TOKEN_CARD = "pagamentos/criarTokenCartao/";

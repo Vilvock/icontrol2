@@ -1,9 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:icontrol/res/styles.dart';
 
+import '../../config/application_messages.dart';
 import '../../config/preferences.dart';
+import '../../global/application_constant.dart';
+import '../../model/user.dart';
 import '../../res/dimens.dart';
 import '../../res/strings.dart';
+import '../../web_service/links.dart';
+import '../../web_service/service_response.dart';
 import '../auth/login.dart';
 import '../components/alert_dialog_generic.dart';
 import '../components/custom_app_bar.dart';
@@ -16,6 +23,71 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenu extends State<MainMenu> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  final postRequest = PostRequest();
+  User? _profileResponse;
+
+  Future<Map<String, dynamic>> loadProfileRequest() async {
+    try {
+      final body = {
+        "id": await Preferences.getUserData()!.id,
+        "token": ApplicationConstant.TOKEN
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json = await postRequest.sendPostRequest(Links.LOAD_PROFILE, body);
+      final parsedResponse = jsonDecode(json);
+
+      print('HTTP_RESPONSE: $parsedResponse');
+
+      final response = User.fromJson(parsedResponse);
+
+      return parsedResponse;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  Future<void> disableAccount() async {
+    try {
+      final body = {
+        "id": await Preferences.getUserData()!.id,
+        "token": ApplicationConstant.TOKEN
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json =
+      await postRequest.sendPostRequest(Links.DISABLE_ACCOUNT, body);
+
+      List<Map<String, dynamic>> _map = [];
+      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+
+      print('HTTP_RESPONSE: $_map');
+
+      final response = User.fromJson(_map[0]);
+
+      if (response.status == "01") {
+        await Preferences.init();
+        Preferences.clearUserData();
+
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => Login()),
+            ModalRoute.withName("/ui/login"));
+      } else {}
+      ApplicationMessages(context: context).showMessage(response.msg + "\n\n" + Strings.enable_account);
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -262,7 +334,34 @@ class _MainMenu extends State<MainMenu> {
                     ],
                   ),
                 ),
-                onTap: () {}),
+                onTap: () {
+
+                  showModalBottomSheet<dynamic>(
+                    isScrollControlled: true,
+                    context: context,
+                    shape: Styles().styleShapeBottomSheet,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    builder: (BuildContext context) {
+                      return GenericAlertDialog(
+                          title: Strings.attention,
+                          content: Strings.disable_account,
+                          btnBack: TextButton(
+                              child: Text(Strings.no,
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    color: Colors.black54,
+                                  )),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              }),
+                          btnConfirm: TextButton(
+                              child: Text(Strings.yes),
+                              onPressed: () {
+                                disableAccount();
+                              }));
+                    },
+                  );
+                }),
 
 
             Styles().div_horizontal,
@@ -301,21 +400,29 @@ class _MainMenu extends State<MainMenu> {
                   ),
                 ),
                 onTap: () {
-                  showDialog(
+                  showModalBottomSheet<dynamic>(
+                    isScrollControlled: true,
                     context: context,
+                    shape: Styles().styleShapeBottomSheet,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
                     builder: (BuildContext context) {
                       return GenericAlertDialog(
                           title: Strings.attention,
                           content: Strings.logout,
                           btnBack: TextButton(
-                              child: Text(Strings.no),
+                              child: Text(
+                                Strings.no,
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  color: Colors.black54,
+                                ),
+                              ),
                               onPressed: () {
                                 Navigator.of(context).pop();
                               }),
                           btnConfirm: TextButton(
                               child: Text(Strings.yes),
                               onPressed: () async {
-
                                 await Preferences.init();
                                 Preferences.clearUserData();
 
@@ -324,7 +431,6 @@ class _MainMenu extends State<MainMenu> {
                                     MaterialPageRoute(
                                         builder: (context) => Login()),
                                     ModalRoute.withName("/ui/login"));
-
                               }));
                     },
                   );

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:icontrol/config/validator.dart';
@@ -26,9 +27,13 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  late bool _passwordVisible;
+  late bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
+    _passwordVisible = false;
   }
 
   late Validator validator;
@@ -90,22 +95,23 @@ class _LoginState extends State<Login> {
     validator = Validator(context: context);
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: CustomAppBar(isVisibleBackButton: true),
       body: Container(
         margin: EdgeInsets.all(Dimens.minMarginApplication),
-        child: Column(
-          children: [
-            Expanded(
-                child: Container(
-              child: Column(
+        child: SafeArea(
+          child: Container(
+              child: CustomScrollView(slivers: [
+                SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
                 children: [
                   Container(
                     padding: EdgeInsets.all(Dimens.paddingApplication),
                     child: Center(
                       child: Image.asset(
                         'images/main_logo_1.png',
-                        height: 120,
+                        height: 90,
                       ),
                     ),
                   ),
@@ -124,18 +130,17 @@ class _LoginState extends State<Login> {
                             decoration: InputDecoration(
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: OwnerColors.colorPrimary,
-                                    width: 1.5),
+                                    color: OwnerColors.colorPrimary, width: 1.5),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.grey, width: 1.0),
+                                BorderSide(color: Colors.grey, width: 1.0),
                               ),
                               hintText: 'E-mail',
                               hintStyle: TextStyle(color: Colors.grey),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                    Dimens.radiusApplication),
+                                borderRadius:
+                                BorderRadius.circular(Dimens.radiusApplication),
                                 borderSide: BorderSide.none,
                               ),
                               filled: true,
@@ -153,20 +158,33 @@ class _LoginState extends State<Login> {
                           TextField(
                             controller: passwordController,
                             decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                  icon: Icon(
+                                    // Based on passwordVisible state choose the icon
+                                    _passwordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: OwnerColors.colorPrimary,
+                                  ),
+                                  onPressed: () {
+                                    // Update the state i.e. toogle the state of passwordVisible variable
+                                    setState(() {
+                                      _passwordVisible = !_passwordVisible;
+                                    });
+                                  }),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: OwnerColors.colorPrimary,
-                                    width: 1.5),
+                                    color: OwnerColors.colorPrimary, width: 1.5),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.grey, width: 1.0),
+                                BorderSide(color: Colors.grey, width: 1.0),
                               ),
                               hintText: 'Senha',
                               hintStyle: TextStyle(color: Colors.grey),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                    Dimens.radiusApplication),
+                                borderRadius:
+                                BorderRadius.circular(Dimens.radiusApplication),
                                 borderSide: BorderSide.none,
                               ),
                               filled: true,
@@ -175,7 +193,7 @@ class _LoginState extends State<Login> {
                                   Dimens.textFieldPaddingApplication),
                             ),
                             keyboardType: TextInputType.visiblePassword,
-                            obscureText: true,
+                            obscureText: !_passwordVisible,
                             enableSuggestions: false,
                             autocorrect: false,
                             style: TextStyle(
@@ -198,52 +216,72 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                           Container(
-                            margin:
-                                EdgeInsets.only(top: Dimens.marginApplication),
+                            margin: EdgeInsets.only(top: Dimens.marginApplication),
                             width: double.infinity,
                             child: ElevatedButton(
-                                style: Styles().styleDefaultButton,
-                                onPressed: () async {
+                              style: Styles().styleDefaultButton,
+                              onPressed: () async {
 
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => Home()),
-                                      ModalRoute.withName("/ui/home"));
-                                  //
-                                  // if (!validator.validateEmail(
-                                  //     emailController.text)) return;
-                                  // // if (!validator.validatePassword(passwordController.text)) return;
-                                  // await Preferences.init();
-                                  // loginRequest(emailController.text,
-                                  //     passwordController.text);
-                                },
-                                child: Text(
-                                  "Login",
-                                  style: Styles().styleDefaultTextButton,
-                                )),
+                                if (!validator
+                                    .validateEmail(emailController.text)) return;
+
+                                setState(() {
+                                  _isLoading = true;
+                                });
+                                // if (!validator.validatePassword(passwordController.text)) return;
+                                await Preferences.init();
+                                await loginRequest(
+                                    emailController.text, passwordController.text);
+
+                                setState(() {
+                                  _isLoading = false;
+                                });
+                              },
+                              child: (_isLoading)
+                                  ? const SizedBox(
+                                  width: Dimens.buttonIndicatorWidth,
+                                  height: Dimens.buttonIndicatorHeight,
+                                  child: CircularProgressIndicator(
+                                    color: OwnerColors.colorAccent,
+                                    strokeWidth: Dimens.buttonIndicatorStrokes,
+                                  ))
+                                  : Text("Entrar",
+                                  style: Styles().styleDefaultTextButton),
+                            ),
                           ),
                         ]),
                       )),
-                  Expanded(
-                    child: Align(
-                        alignment: FractionalOffset.bottomCenter,
-                        child: GestureDetector(
-                            child: Text(
-                              "Ainda não possui uma conta? Entre aqui",
-                              style: TextStyle(
-                                color: Colors.grey,
+                  Spacer(),
+                  SizedBox(height: Dimens.marginApplication),
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: Dimens.textSize5,
+                        fontFamily: 'Inter',
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(text: 'Ainda não possui uma conta? '),
+                        TextSpan(
+                            text: 'Entre aqui',
+                            style: TextStyle(
+                                color: Colors.black54,
                                 fontSize: Dimens.textSize5,
                                 fontFamily: 'Inter',
-                              ),
+                                fontWeight: FontWeight.bold
                             ),
-                            onTap: () {
-                              Navigator.pushNamed(context, "/ui/register");
-                            })),
-                  ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+
+                                Navigator.pushNamed(context, "/ui/register");
+                              }),
+
+                      ],
+                    ),
+                  )
                 ],
               ),
-            ))
-          ],
+            )])),
         ),
       ),
     );

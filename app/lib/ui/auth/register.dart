@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -117,8 +118,8 @@ class _RegisterState extends State<Register> {
     validator = Validator(context: context);
 
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: CustomAppBar(),
+        resizeToAvoidBottomInset: true,
+        appBar: CustomAppBar(isVisibleBackButton: true,),
         body: Container(
             child: Container(
           child: Column(children: [
@@ -133,7 +134,7 @@ class _RegisterState extends State<Register> {
                       child: Center(
                         child: Image.asset(
                           'images/main_logo_1.png',
-                          height: 120,
+                          height: 90,
                         ),
                       ),
                     ),
@@ -371,24 +372,35 @@ class _RegisterState extends State<Register> {
                                   fontSize: Dimens.textSize5,
                                 ),
                               ),
-                              GestureDetector(
-                                  child: Container(
-                                      margin: EdgeInsets.only(
-                                          top: Dimens.marginApplication,
-                                          bottom: Dimens.marginApplication),
-                                      child: Text(
-                                        "Ao clicar no botão Criar conta, você aceita os termos de privacidade do aplicativo.",
+                              SizedBox(height: Dimens.marginApplication),
+                              RichText(
+                                textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: Dimens.textSize5,
+                                    fontFamily: 'Inter',
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text:
+                                        'Ao clicar no botão Criar conta, você aceita os'),
+                                    TextSpan(
+                                        text: ' Termos de uso',
                                         style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: Dimens.textSize5,
-                                          fontFamily: 'Inter',
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      )),
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context, "/ui/pdf_viewer");
-                                  }),
+                                            color: Colors.black54,
+                                            fontSize: Dimens.textSize5,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.bold),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {
+                                            Navigator.pushNamed(
+                                                context, "/ui/pdf_viewer");
+                                          }),
+                                    TextSpan(text: ' do aplicativo.'),
+                                  ],
+                                ),
+                              ),
                               Container(
                                 margin: EdgeInsets.only(
                                     top: Dimens.marginApplication),

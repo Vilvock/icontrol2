@@ -33,7 +33,7 @@ class Styles {
       color: Colors.black,
   );
 
-  var div_vertical = Divider(
+  var div_horizontal = Divider(
     color: Colors.black12,
     height: 2,
     thickness: 1.5,

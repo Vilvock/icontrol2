@@ -20,6 +20,7 @@ class _MainMenu extends State<MainMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: CustomAppBar(title: "Menu principal",),
       body: Container(
         child: Column(
           children: [
@@ -111,7 +112,7 @@ class _MainMenu extends State<MainMenu> {
                 }),
 
 
-            Styles().div_vertical,
+            Styles().div_horizontal,
 
             GestureDetector(
                 child: Container(
@@ -150,7 +151,7 @@ class _MainMenu extends State<MainMenu> {
                   Navigator.pushNamed(context, "/ui/user_addresses");
                 }),
 
-            Styles().div_vertical,
+            Styles().div_horizontal,
 
             GestureDetector(
                 child: Container(
@@ -188,7 +189,7 @@ class _MainMenu extends State<MainMenu> {
                 onTap: () {Navigator.pushNamed(context, "/ui/categories");}
             ),
 
-            Styles().div_vertical,
+            Styles().div_horizontal,
 
             GestureDetector(
                 child: Container(
@@ -226,7 +227,7 @@ class _MainMenu extends State<MainMenu> {
                 onTap: () {}),
 
 
-            Styles().div_vertical,
+            Styles().div_horizontal,
 
             GestureDetector(
                 child: Container(
@@ -264,7 +265,7 @@ class _MainMenu extends State<MainMenu> {
                 onTap: () {}),
 
 
-            Styles().div_vertical,
+            Styles().div_horizontal,
 
             GestureDetector(
                 child: Container(
@@ -330,7 +331,7 @@ class _MainMenu extends State<MainMenu> {
                 }),
 
 
-            Styles().div_vertical,
+            Styles().div_horizontal,
           ],
         ),
       ),

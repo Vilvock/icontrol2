@@ -11,6 +11,10 @@ class ApplicationConstant {
   static const String TOKEN = "12Qge8d3";
 
 
+  static const int CREDIT_CARD = 1;
+  static const int TICKET = 2;
+  static const int PIX = 3;
+  static const int TICKET_IN_TERM = 4;
 
   static const String URL_PRODUCT_PHOTO = URL + "uploads/produtos/";
 

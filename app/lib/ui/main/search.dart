@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:icontrol/model/employee.dart';
 import 'package:icontrol/model/equipment.dart';
+import 'package:icontrol/model/task.dart';
 
 import '../../config/application_messages.dart';
 import '../../config/preferences.dart';
@@ -1195,7 +1196,7 @@ class _Search extends State<Search> {
 
       print('HTTP_RESPONSE: $parsedResponse');
 
-      final response = Equipment.fromJson(parsedResponse);
+      final response = Task.fromJson(parsedResponse);
 
       return parsedResponse;
     } catch (e) {
@@ -1225,7 +1226,7 @@ class _Search extends State<Search> {
 
       print('HTTP_RESPONSE: $parsedResponse');
 
-      final response = Equipment.fromJson(parsedResponse);
+      final response = Task.fromJson(parsedResponse);
 
       return parsedResponse;
     } catch (e) {
@@ -1250,7 +1251,7 @@ class _Search extends State<Search> {
 
       print('HTTP_RESPONSE: $_map');
 
-      final response = Equipment.fromJson(_map[0]);
+      final response = Task.fromJson(_map[0]);
 
       return _map;
     } catch (e) {
@@ -1276,7 +1277,7 @@ class _Search extends State<Search> {
 
       print('HTTP_RESPONSE: $_map');
 
-      final response = Equipment.fromJson(_map[0]);
+      final response = Task.fromJson(_map[0]);
 
       return _map;
     } catch (e) {
@@ -1298,7 +1299,7 @@ class _Search extends State<Search> {
 
       print('HTTP_RESPONSE: $parsedResponse');
 
-      final response = Equipment.fromJson(parsedResponse);
+      final response = Task.fromJson(parsedResponse);
 
       return parsedResponse;
     } catch (e) {
@@ -1323,7 +1324,7 @@ class _Search extends State<Search> {
 
       print('HTTP_RESPONSE: $parsedResponse');
 
-      final response = Equipment.fromJson(parsedResponse);
+      final response = Task.fromJson(parsedResponse);
 
       return parsedResponse;
     } catch (e) {
@@ -1348,7 +1349,7 @@ class _Search extends State<Search> {
 
       print('HTTP_RESPONSE: $_map');
 
-      final response = Equipment.fromJson(_map[0]);
+      final response = Task.fromJson(_map[0]);
 
       return _map;
     } catch (e) {
@@ -1374,7 +1375,7 @@ class _Search extends State<Search> {
 
       print('HTTP_RESPONSE: $_map');
 
-      final response = Equipment.fromJson(_map[0]);
+      final response = Task.fromJson(_map[0]);
 
       return _map;
     } catch (e) {
@@ -1397,7 +1398,7 @@ class _Search extends State<Search> {
 
       print('HTTP_RESPONSE: $parsedResponse');
 
-      final response = Equipment.fromJson(parsedResponse);
+      final response = Task.fromJson(parsedResponse);
 
       return parsedResponse;
     } catch (e) {
@@ -1406,6 +1407,105 @@ class _Search extends State<Search> {
   }
 
   ///////////////////////////////////
+
+  Future<Map<String, dynamic>> saveComment(String idTask, String desc) async {
+    try {
+      final body = {
+        "id_tarefa": idTask,
+        "id_usuario": await Preferences.getUserData()!.id,
+        "descricao": desc,
+        "token": ApplicationConstant.TOKEN
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json = await postRequest.sendPostRequest(Links.SAVE_TASK_COMMENT, body);
+      final parsedResponse = jsonDecode(json);
+
+      print('HTTP_RESPONSE: $parsedResponse');
+
+      final response = Task.fromJson(parsedResponse);
+
+      return parsedResponse;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> updateComment(String idComment, String desc) async {
+    try {
+      final body = {
+        "id_comentario": idComment,
+        "id_usuario": await Preferences.getUserData()!.id,
+        "descricao": desc,
+        "token": ApplicationConstant.TOKEN,
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json =
+      await postRequest.sendPostRequest(Links.UPDATE_TASK_COMMENT, body);
+
+      final parsedResponse = jsonDecode(json);
+
+      print('HTTP_RESPONSE: $parsedResponse');
+
+      final response = Task.fromJson(parsedResponse);
+
+      return parsedResponse;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> listComments(String idTask) async {
+    try {
+      final body = {
+        "id_tarefa": idTask,
+        "token": ApplicationConstant.TOKEN,
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json =
+      await postRequest.sendPostRequest(Links.LIST_TASK_COMMENTS, body);
+
+      List<Map<String, dynamic>> _map = [];
+      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+
+      print('HTTP_RESPONSE: $_map');
+
+      final response = Task.fromJson(_map[0]);
+
+      return _map;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> deleteComment(String idComment) async {
+    try {
+      final body = {
+        "id_comentario": idComment,
+        "token": ApplicationConstant.TOKEN
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json = await postRequest.sendPostRequest(Links.DELETE_TASK_COMMENT, body);
+      final parsedResponse = jsonDecode(json);
+
+      print('HTTP_RESPONSE: $parsedResponse');
+
+      final response = Task.fromJson(parsedResponse);
+
+      return parsedResponse;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  ////////////////////////
 
 
 

@@ -4,10 +4,13 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:icontrol/model/employee.dart';
+import 'package:icontrol/model/equipment.dart';
 
 import '../../config/preferences.dart';
 import '../../global/application_constant.dart';
+import '../../model/brand.dart';
 import '../../model/fleet.dart';
+import '../../model/model.dart';
 import '../../model/user.dart';
 import '../../res/dimens.dart';
 import '../../res/owner_colors.dart';
@@ -596,7 +599,7 @@ class _Search extends State<Search> {
 
       print('HTTP_RESPONSE: $parsedResponse');
 
-      final response = Employee.fromJson(parsedResponse);
+      final response = Brand.fromJson(parsedResponse);
 
       return parsedResponse;
     } catch (e) {
@@ -622,7 +625,7 @@ class _Search extends State<Search> {
 
       print('HTTP_RESPONSE: $parsedResponse');
 
-      final response = Employee.fromJson(parsedResponse);
+      final response = Brand.fromJson(parsedResponse);
 
       return parsedResponse;
     } catch (e) {
@@ -647,7 +650,7 @@ class _Search extends State<Search> {
 
       print('HTTP_RESPONSE: $_map');
 
-      final response = Fleet.fromJson(_map[0]);
+      final response = Brand.fromJson(_map[0]);
 
       return _map;
     } catch (e) {
@@ -669,7 +672,218 @@ class _Search extends State<Search> {
 
       print('HTTP_RESPONSE: $parsedResponse');
 
-      final response = Fleet.fromJson(parsedResponse);
+      final response = Brand.fromJson(parsedResponse);
+
+      return parsedResponse;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  //////////////
+
+  Future<Map<String, dynamic>> saveModel(String idBrand, String status, String name) async {
+    try {
+      final body = {
+        "id_marca": idBrand,
+        "nome": name,
+        "status": status,
+        "token": ApplicationConstant.TOKEN
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json = await postRequest.sendPostRequest(Links.SAVE_MODEL, body);
+      final parsedResponse = jsonDecode(json);
+
+      print('HTTP_RESPONSE: $parsedResponse');
+
+      final response = Model.fromJson(parsedResponse);
+
+      return parsedResponse;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> updateModel(String idModel, String name, String status) async {
+    try {
+      final body = {
+        "id_modelo": idModel,
+        "nome": name,
+        "status": status,
+        "token": ApplicationConstant.TOKEN,
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json =
+      await postRequest.sendPostRequest(Links.UPDATE_MODEL, body);
+
+      final parsedResponse = jsonDecode(json);
+
+      print('HTTP_RESPONSE: $parsedResponse');
+
+      final response = Brand.fromJson(parsedResponse);
+
+      return parsedResponse;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> listModels(String idModel) async {
+    try {
+      final body = {
+        "id_marca": idModel,
+        "token": ApplicationConstant.TOKEN,
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json =
+      await postRequest.sendPostRequest(Links.LIST_MODELS, body);
+
+      List<Map<String, dynamic>> _map = [];
+      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+
+      print('HTTP_RESPONSE: $_map');
+
+      final response = Brand.fromJson(_map[0]);
+
+      return _map;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> deleteModel(String idModel) async {
+    try {
+      final body = {
+        "id_modelo": idModel,
+        "token": ApplicationConstant.TOKEN
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json = await postRequest.sendPostRequest(Links.DELETE_MODEL, body);
+      final parsedResponse = jsonDecode(json);
+
+      print('HTTP_RESPONSE: $parsedResponse');
+
+      final response = Brand.fromJson(parsedResponse);
+
+      return parsedResponse;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  //////////////
+
+  Future<Map<String, dynamic>> saveEquip(String idBrand, String idModel, String name, String status, String year, String series, String hour, String tag, String owner) async {
+    try {
+      final body = {
+        "id_marca": idBrand,
+        "id_modelo": idModel,
+        "nome": name,
+        "ano": year,
+        "serie": series,
+        "horimetro": hour,
+        "proprietario": owner,
+        "tag": tag,
+        "status": status,
+        "token": ApplicationConstant.TOKEN
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json = await postRequest.sendPostRequest(Links.SAVE_EQUIPMENT, body);
+      final parsedResponse = jsonDecode(json);
+
+      print('HTTP_RESPONSE: $parsedResponse');
+
+      final response = Equipment.fromJson(parsedResponse);
+
+      return parsedResponse;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> updateEquip(String idEquip, String idBrand, String idModel, String name, String status, String year, String series, String hour, String tag, String owner) async {
+    try {
+      final body = {
+        "id_equipamento": idEquip,
+        "id_marca": idBrand,
+        "id_modelo": idModel,
+        "nome": name,
+        "ano": year,
+        "serie": series,
+        "horimetro": hour,
+        "proprietario": owner,
+        "tag": tag,
+        "status": status,
+        "token": ApplicationConstant.TOKEN,
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json =
+      await postRequest.sendPostRequest(Links.UPDATE_EQUIPMENT, body);
+
+      final parsedResponse = jsonDecode(json);
+
+      print('HTTP_RESPONSE: $parsedResponse');
+
+      final response = Equipment.fromJson(parsedResponse);
+
+      return parsedResponse;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> listEquips() async {
+    try {
+      final body = {
+        "id_user": await Preferences.getUserData()!.id,
+        "token": ApplicationConstant.TOKEN,
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json =
+      await postRequest.sendPostRequest(Links.LIST_EQUIPMENTS, body);
+
+      List<Map<String, dynamic>> _map = [];
+      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+
+      print('HTTP_RESPONSE: $_map');
+
+      final response = Equipment.fromJson(_map[0]);
+
+      return _map;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> deleteEquip(String idEquip) async {
+    try {
+      final body = {
+        "id_equipamento": idEquip,
+        "token": ApplicationConstant.TOKEN
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json = await postRequest.sendPostRequest(Links.DELETE_EQUIPMENT, body);
+      final parsedResponse = jsonDecode(json);
+
+      print('HTTP_RESPONSE: $parsedResponse');
+
+      final response = Equipment.fromJson(parsedResponse);
 
       return parsedResponse;
     } catch (e) {

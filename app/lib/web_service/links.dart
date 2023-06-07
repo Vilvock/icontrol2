@@ -89,12 +89,12 @@ abstract class Links {
 
   static const String SAVE_TASK_CHECKLIST = "usuarios/saveTarefasChecklists/";
   static const String SAVE_TASK_CHECKLIST_ITEMS = "usuarios/saveTarefasChecklistsItens/";
-  static const String LIST_TASK_CHECKLIST = "usuarios/listTarefasChecklists/";
+  static const String LIST_TASK_CHECKLISTS = "usuarios/listTarefasChecklists/";
   static const String LIST_TASK_CHECKLIST_ITEMS = "usuarios/listTarefasChecklistsItens/";
   static const String CHECK_UNCHECK_ITEM = "user/usuarios/checkItem/";
   static const String UPDATE_TASK_CHECKLIST = "usuarios/updateTarefasChecklists/";
   static const String DELETE_TASK_CHECKLIST = "usuarios/excluirTarefasChecklists/";
-  static const String DELETE_TASK_CHECKLIST_ITEMS  = "usuarios/excluirTarefasChecklistsItens/";
+  static const String DELETE_TASK_CHECKLIST_ITEM  = "usuarios/excluirTarefasChecklistsItens/";
 
   //tarefa - anexos
 

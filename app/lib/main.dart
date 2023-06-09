@@ -13,7 +13,7 @@ import 'package:icontrol/ui/main/checkout_flow/method_payment.dart';
 import 'package:icontrol/ui/main/checkout_flow/sucess.dart';
 import 'package:icontrol/ui/main/home.dart';
 import 'package:icontrol/ui/main/menu/payments/payments.dart';
-import 'package:icontrol/ui/main/menu/profile.dart';
+import 'package:icontrol/ui/main/menu/user/profile.dart';
 import 'package:icontrol/ui/main/notifications/notifications.dart';
 import 'package:icontrol/ui/utilities/pdf_viewer.dart';
 

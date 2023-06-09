@@ -96,18 +96,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ));
     }
 
-    if (isVisibleNotificationsButton) {
-      _widgetList.add(IconButton(
-        icon: Icon(
-          Icons.notifications_none_sharp,
-          color: Colors.black,
-        ),
-        onPressed: () {
-
-        },
-      ));
-    }
-
     if (isVisibleSearchButton) {
       _widgetList.add(IconButton(
         icon: Icon(
@@ -117,6 +105,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         onPressed: () {},
       ));
     }
+
+    if (isVisibleNotificationsButton) {
+      _widgetList.add(IconButton(
+        icon: Icon(
+          Icons.notifications_none_sharp,
+          color: Colors.black,
+        ),
+        onPressed: () {
+
+          Navigator.pushNamed(context, "/ui/notifications");
+        },
+      ));
+    }
+
 
     return _widgetList;
   }

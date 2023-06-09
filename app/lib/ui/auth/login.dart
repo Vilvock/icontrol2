@@ -67,10 +67,16 @@ class _LoginState extends State<Login> {
           await Preferences.setUserData(_loginResponse);
           await Preferences.setLogin(true);
 
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => Home()),
-              ModalRoute.withName("/ui/home"));
+          if (response.tipo == 1) {
+
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => Home()),
+                ModalRoute.withName("/ui/home"));
+          } else {
+            // outra tela
+          }
+
         });
       } else {
         ApplicationMessages(context: context).showMessage(response.msg);

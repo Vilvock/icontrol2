@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../../../res/owner_colors.dart';
 import '../../components/custom_app_bar.dart';
 
-class Sucess extends StatefulWidget {
-  const Sucess({Key? key}) : super(key: key);
+class Success extends StatefulWidget {
+  const Success({Key? key}) : super(key: key);
 
   @override
-  State<Sucess> createState() => _Sucess();
+  State<Success> createState() => _Sucess();
 }
 
-class _Sucess extends State<Sucess> {
+class _Sucess extends State<Success> {
   bool _isLoading = false;
 
   @override

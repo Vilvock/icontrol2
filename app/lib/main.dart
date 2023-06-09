@@ -12,7 +12,9 @@ import 'package:icontrol/ui/intro/splash.dart';
 import 'package:icontrol/ui/main/checkout_flow/method_payment.dart';
 import 'package:icontrol/ui/main/checkout_flow/sucess.dart';
 import 'package:icontrol/ui/main/home.dart';
+import 'package:icontrol/ui/main/menu/payments/payments.dart';
 import 'package:icontrol/ui/main/menu/profile.dart';
+import 'package:icontrol/ui/main/notifications/notifications.dart';
 import 'package:icontrol/ui/utilities/pdf_viewer.dart';
 
 import 'config/notification_helper.dart';
@@ -94,7 +96,9 @@ void main() async {
       '/ui/profile': (context) => Profile(),
       '/ui/pdf_viewer': (context) => PdfViewer(),
       '/ui/method_payment': (context) => MethodPayment(),
-      '/ui/sucess': (context) => Sucess()
+      '/ui/payments': (context) => Payments(),
+      '/ui/success': (context) => Success(),
+      '/ui/notifications': (context) => Notifications(),
 
 
       //lista horizontal

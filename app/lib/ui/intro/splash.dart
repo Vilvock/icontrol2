@@ -8,7 +8,6 @@ import '../../res/owner_colors.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
-// VAI NA LINHA 15
   @override
   State<Splash> createState() => _SplashState();
 }
@@ -17,7 +16,7 @@ class _SplashState extends State<Splash> {
 
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 4), () async {
+    Future.delayed(Duration(seconds: 2), () async {
 
       await Preferences.init();
 

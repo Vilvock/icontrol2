@@ -16,7 +16,7 @@ class ApplicationConstant {
   static const int PIX = 3;
   static const int TICKET_IN_TERM = 4;
 
-  static const String URL_PRODUCT_PHOTO = URL + "uploads/produtos/";
+  static const String URL_AVATAR = URL + "uploads/avatar/";
 
 
 }

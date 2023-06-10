@@ -489,7 +489,7 @@ class _RegisterOwnerDataState extends State<RegisterOwnerData> {
                                   children: <TextSpan>[
                                     TextSpan(
                                         text:
-                                        'Ao clicar no botão Criar conta, você aceita os'),
+                                        'Ao clicar no botão Avançar, você aceita os'),
                                     TextSpan(
                                         text: ' Termos de uso',
                                         style: TextStyle(
@@ -525,6 +525,9 @@ class _RegisterOwnerDataState extends State<RegisterOwnerData> {
                                       if (!validator.validateCoPassword(
                                           passwordController.text,
                                           coPasswordController.text)) return;
+
+
+                                      Navigator.pushNamed(context, "/ui/register_company_data");
 
                                     },
                                     child: Text(

@@ -6,6 +6,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:icontrol/res/owner_colors.dart';
 import 'package:icontrol/ui/auth/login.dart';
+import 'package:icontrol/ui/auth/recover_password/recover_password.dart';
+import 'package:icontrol/ui/auth/recover_password/update_password_token.dart';
+import 'package:icontrol/ui/auth/recover_password/verify_token.dart';
 import 'package:icontrol/ui/auth/register/register_address_form.dart';
 import 'package:icontrol/ui/auth/register/register_company_data.dart';
 import 'package:icontrol/ui/auth/register/register_owner_data.dart';
@@ -86,7 +89,7 @@ void main() async {
       colorScheme: ColorScheme.fromSwatch(primarySwatch: Useful().getMaterialColor(OwnerColors.colorPrimary)),
     ),
     debugShowCheckedModeBanner: false,
-    title: "Água da Serra",
+    title: "IControl",
     initialRoute:'/ui/splash',
     color: OwnerColors.colorPrimary,
     routes: {
@@ -103,6 +106,9 @@ void main() async {
       '/ui/payments': (context) => Payments(),
       '/ui/success': (context) => Success(),
       '/ui/notifications': (context) => Notifications(),
+      '/ui/recover_password': (context) => RecoverPassword(),
+      '/ui/verify_token': (context) => VerifyToken(),
+      '/ui/update_password_token': (context) => UpdatePasswordToken(),
 
 
       //lista horizontal

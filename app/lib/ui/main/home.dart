@@ -106,9 +106,12 @@ class BottomNavBar extends StatelessWidget {
   }
 }
 
+enum SampleItem { itemOne, itemTwo, itemThree }
+
 class _ContainerHomeState extends State<ContainerHome> {
   bool _isLoading = false;
   int _pageIndex = 0;
+  SampleItem? selectedMenu;
 
   @override
   void initState() {
@@ -118,94 +121,112 @@ class _ContainerHomeState extends State<ContainerHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
-          title: "Início",
-          isVisibleBackButton: false,
-          isVisibleSearchButton: true,
-          isVisibleNotificationsButton: true,
-          isVisibleAddButton: true,
-        ),
-        body: Container(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Card(
-                        elevation: Dimens.minElevationApplication,
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(Dimens.radiusApplication),
-                        ),
-                        margin: EdgeInsets.all(Dimens.minMarginApplication),
-                        child: Container(
-                            width: MediaQuery.of(context).size.width * 0.80,
-                            padding:
-                                EdgeInsets.all(Dimens.minPaddingApplication),
-                            child: Wrap(
-                              children: [
-                                Column(children: [
-                                  Row(children: [
-                                    Expanded(
-                                        child: Container(
-                                      child: Text(
-                                        "Frota 1",
-                                        style: Styles().styleDescriptionText,
-                                      ),
-                                    )),
-                                    IconButton(
-                                      icon: Icon(
-                                          CupertinoIcons.ellipsis_vertical,
-                                          color: Colors.black),
-                                      onPressed: () => {},
-                                    )
-                                  ]),
-                                  ConstrainedBox(
-                                    child: ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: 5,
-                                      itemBuilder: (context, index) {
-                                        return Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                Dimens.radiusApplication),
-                                          ),
-                                          margin: EdgeInsets.all(
-                                              Dimens.minMarginApplication),
-                                          child: Container(
-                                            padding: EdgeInsets.all(
-                                                Dimens.paddingApplication),
-                                            child: Text("dsda"),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                    constraints: BoxConstraints(
-                                      maxHeight: MediaQuery.of(context).size.height * 0.70
-                                    ),
+      appBar: CustomAppBar(
+        title: "Início",
+        isVisibleBackButton: false,
+        isVisibleSearchButton: true,
+        isVisibleNotificationsButton: true,
+        isVisibleAddButton: true,
+      ),
+      body: Container(
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 5,
+          itemBuilder: (context, index) {
+            return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Card(
+                    elevation: Dimens.minElevationApplication,
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(Dimens.radiusApplication),
+                    ),
+                    margin: EdgeInsets.all(Dimens.minMarginApplication),
+                    child: Container(
+                        width: MediaQuery.of(context).size.width * 0.80,
+                        padding: EdgeInsets.all(Dimens.minPaddingApplication),
+                        child: Wrap(
+                          children: [
+                            Column(children: [
+                              Row(children: [
+                                Expanded(
+                                    child: Container(
+                                  child: Text(
+                                    "Frota 1",
+                                    style: Styles().styleDescriptionText,
                                   ),
-                                  Container(
-                                      width: double.infinity,
-                                      child: Text(
-                                        "Adicionar card",
-                                        style: TextStyle(
-                                          fontFamily: 'Inter',
-                                          fontSize: Dimens.textSize6,
-                                          color: OwnerColors.colorPrimary,
-                                        ),
-                                      ))
-                                ])
-                              ],
-                            )),
-                      ),
-                    ]);
-              },
-            ),
-          ),
-        );
+                                )),
+                                PopupMenuButton<SampleItem>(
+                                  initialValue: selectedMenu,
+                                  // Callback that sets the selected popup menu item.
+                                  onSelected: (SampleItem item) {
+                                    setState(() {
+                                      selectedMenu = item;
+                                    });
+                                  },
+                                  itemBuilder: (BuildContext context) =>
+                                      <PopupMenuEntry<SampleItem>>[
+                                    const PopupMenuItem<SampleItem>(
+                                      value: SampleItem.itemOne,
+                                      child: Text('Item 1'),
+                                    ),
+                                    const PopupMenuItem<SampleItem>(
+                                      value: SampleItem.itemTwo,
+                                      child: Text('Item 2'),
+                                    ),
+                                    const PopupMenuItem<SampleItem>(
+                                      value: SampleItem.itemThree,
+                                      child: Text('Item 3'),
+                                    ),
+                                  ],
+                                ),
+                              ]),
+                              ConstrainedBox(
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: 5,
+                                  itemBuilder: (context, index) {
+                                    return Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.radiusApplication),
+                                      ),
+                                      margin: EdgeInsets.all(
+                                          Dimens.minMarginApplication),
+                                      child: Container(
+                                        padding: EdgeInsets.all(
+                                            Dimens.paddingApplication),
+                                        child: Text("dsda"),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                constraints: BoxConstraints(
+                                    maxHeight:
+                                        MediaQuery.of(context).size.height *
+                                            0.70),
+                              ),
+                              Container(
+                                  width: double.infinity,
+                                  child: Text(
+                                    "Adicionar card",
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: Dimens.textSize6,
+                                      color: OwnerColors.colorPrimary,
+                                    ),
+                                  ))
+                            ])
+                          ],
+                        )),
+                  ),
+                ]);
+          },
+        ),
+      ),
+    );
   }
 
   Future<void> _pullRefresh() async {

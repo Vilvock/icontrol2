@@ -6,7 +6,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:icontrol/res/owner_colors.dart';
 import 'package:icontrol/ui/auth/login.dart';
-import 'package:icontrol/ui/auth/register.dart';
+import 'package:icontrol/ui/auth/register/register_address_form.dart';
+import 'package:icontrol/ui/auth/register/register_company_data.dart';
+import 'package:icontrol/ui/auth/register/register_owner_data.dart';
 import 'package:icontrol/ui/intro/onboarding.dart';
 import 'package:icontrol/ui/intro/splash.dart';
 import 'package:icontrol/ui/main/checkout_flow/method_payment.dart';
@@ -91,7 +93,9 @@ void main() async {
       '/ui/splash': (context) => Splash(),
       '/ui/onboarding': (context) => Onboarding(),
       '/ui/login': (context) => Login(),
-      '/ui/register': (context) => Register(),
+      '/ui/register_address_form': (context) => RegisterAddressForm(),
+      '/ui/register_owner_data': (context) => RegisterOwnerData(),
+      '/ui/register_company_data': (context) => RegisterCompanyData(),
       '/ui/home': (context) => Home(),
       '/ui/profile': (context) => Profile(),
       '/ui/pdf_viewer': (context) => PdfViewer(),

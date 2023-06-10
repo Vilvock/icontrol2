@@ -6,26 +6,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../config/application_messages.dart';
-import '../../config/masks.dart';
-import '../../config/validator.dart';
-import '../../global/application_constant.dart';
-import '../../model/user.dart';
-import '../../res/dimens.dart';
-import '../../res/owner_colors.dart';
-import '../../web_service/links.dart';
-import '../../web_service/service_response.dart';
-import '../components/custom_app_bar.dart';
-import '../main/home.dart';
+import '../../../config/application_messages.dart';
+import '../../../config/masks.dart';
+import '../../../config/validator.dart';
+import '../../../global/application_constant.dart';
+import '../../../model/user.dart';
+import '../../../res/dimens.dart';
+import '../../../res/owner_colors.dart';
+import '../../../web_service/links.dart';
+import '../../../web_service/service_response.dart';
+import '../../components/custom_app_bar.dart';
+import '../../main/home.dart';
 
-class Register extends StatefulWidget {
-  const Register({Key? key}) : super(key: key);
+class RegisterAddressForm extends StatefulWidget {
+  const RegisterAddressForm({Key? key}) : super(key: key);
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<RegisterAddressForm> createState() => _RegisterAddressFormState();
 }
 
-class _RegisterState extends State<Register> {
+class _RegisterAddressFormState extends State<RegisterAddressForm> {
+
   @override
   void initState() {
     super.initState();

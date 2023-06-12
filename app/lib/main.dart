@@ -17,6 +17,7 @@ import 'package:icontrol/ui/intro/splash.dart';
 import 'package:icontrol/ui/main/checkout_flow/method_payment.dart';
 import 'package:icontrol/ui/main/checkout_flow/sucess.dart';
 import 'package:icontrol/ui/main/home.dart';
+import 'package:icontrol/ui/main/menu/employees/employees.dart';
 import 'package:icontrol/ui/main/menu/payments/payments.dart';
 import 'package:icontrol/ui/main/menu/user/profile.dart';
 import 'package:icontrol/ui/main/notifications/notifications.dart';
@@ -109,6 +110,7 @@ void main() async {
       '/ui/recover_password': (context) => RecoverPassword(),
       '/ui/verify_token': (context) => VerifyToken(),
       '/ui/update_password_token': (context) => UpdatePasswordToken(),
+      '/ui/employees': (context) => Employees(),
 
 
       //lista horizontal

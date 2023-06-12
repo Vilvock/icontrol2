@@ -286,7 +286,7 @@ class _MainMenu extends State<MainMenu> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.pushNamed(context, "/ui/categories");
+                      Navigator.pushNamed(context, "/ui/employees");
                     }),
 
                 Styles().div_horizontal,

@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +11,7 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import '../../config/preferences.dart';
 import '../../global/application_constant.dart';
+import '../../model/user.dart';
 import '../../res/dimens.dart';
 import '../../res/owner_colors.dart';
 import '../../res/strings.dart';
@@ -113,10 +116,64 @@ class _ContainerHomeState extends State<ContainerHome> {
   int _pageIndex = 0;
   SampleItem? selectedMenu;
 
+  final postRequest = PostRequest();
+
   @override
   void initState() {
     super.initState();
   }
+
+
+  Future<void> saveFcm() async {
+
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+    try {
+      await Preferences.init();
+      String? savedFcmToken = await Preferences.getInstanceTokenFcm();
+      String? currentFcmToken = await _firebaseMessaging.getToken();
+      if (savedFcmToken != null && savedFcmToken == currentFcmToken) {
+        print('FCM: não salvou');
+        return;
+      }
+
+      var _type = "";
+
+      if (Platform.isAndroid) {
+        _type = ApplicationConstant.FCM_TYPE_ANDROID;
+      } else if (Platform.isIOS) {
+        _type = ApplicationConstant.FCM_TYPE_IOS;
+      } else {
+        return;
+      }
+
+      final body = {
+        "id_user": await Preferences.getUserData()!.id,
+        "type": _type,
+        "registration_id": currentFcmToken,
+        "token": ApplicationConstant.TOKEN,
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json = await postRequest.sendPostRequest(Links.SAVE_FCM, body);
+
+      List<Map<String, dynamic>> _map = [];
+      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+
+      print('HTTP_RESPONSE: $_map');
+
+      final response = User.fromJson(_map[0]);
+
+      if (response.status == "01") {
+        await Preferences.saveInstanceTokenFcm("token", currentFcmToken!);
+        setState(() {});
+      } else {}
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {

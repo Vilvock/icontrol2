@@ -27,7 +27,6 @@ class RecoverPassword extends StatefulWidget {
 }
 
 class _RecoverPasswordState extends State<RecoverPassword> {
-
   late Validator validator;
   final postRequest = PostRequest();
 
@@ -45,96 +44,127 @@ class _RecoverPasswordState extends State<RecoverPassword> {
     super.dispose();
   }
 
+  Future<List<Map<String, dynamic>>> recoverPasswordByEmail(String email) async {
+    try {
+      final body = {
+        "email": email
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json =
+      await postRequest.sendPostRequest(Links.RECOVER_PASSWORD_TOKEN, body);
+
+      List<Map<String, dynamic>> _map = [];
+      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+
+      print('HTTP_RESPONSE: $_map');
+
+      final response = User.fromJson(_map[0]);
+
+      return _map;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: CustomAppBar(isVisibleBackButton: true,),
+        appBar: CustomAppBar(
+          isVisibleBackButton: true,
+        ),
         body: Container(
             child: Container(
-              child: Column(children: [
-                Expanded(
-                    child: SingleChildScrollView(
-                      child: Container(
-                        margin: EdgeInsets.all(Dimens.minMarginApplication),
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(Dimens.paddingApplication),
-                              child: Center(
-                                child: Image.asset(
-                                  'images/main_logo_1.png',
-                                  height: 90,
-                                ),
-                              ),
-                            ),
-                            Card(
-                                elevation: Dimens.minElevationApplication,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      Dimens.radiusApplication),
-                                ),
-                                margin: EdgeInsets.all(Dimens.minMarginApplication),
-                                child: Container(
-                                    padding: EdgeInsets.all(Dimens.paddingApplication),
-                                    child: Column(children: [
-                                      SizedBox(height: Dimens.marginApplication),
-                                      TextField(
-                                        controller: emailController,
-                                        decoration: InputDecoration(
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: OwnerColors.colorPrimary,
-                                                width: 1.5),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.grey, width: 1.0),
-                                          ),
-                                          hintText: 'E-mail',
-                                          hintStyle: TextStyle(color: Colors.grey),
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                Dimens.radiusApplication),
-                                            borderSide: BorderSide.none,
-                                          ),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          contentPadding: EdgeInsets.all(
-                                              Dimens.textFieldPaddingApplication),
-                                        ),
-                                        keyboardType: TextInputType.emailAddress,
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: Dimens.textSize5,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            top: Dimens.marginApplication),
-                                        width: double.infinity,
-                                        child: ElevatedButton(
-                                            style: Styles().styleDefaultButton,
-                                            onPressed: () {
-                                              if (!validator.validateEmail(
-                                                  emailController.text)) return;
-
-                                              Navigator.pushNamed(context, "/ui/verify_token");
-
-                                            },
-                                            child: Text(
-                                                "Avançar",
-                                                style: Styles().styleDefaultTextButton
-                                            )),
-                                      ),
-                                    ]))),
-                          ],
+          child: Column(children: [
+            Expanded(
+                child: SingleChildScrollView(
+              child: Container(
+                margin: EdgeInsets.all(Dimens.minMarginApplication),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(Dimens.paddingApplication),
+                      child: Center(
+                        child: Image.asset(
+                          'images/main_logo_1.png',
+                          height: 90,
                         ),
                       ),
-                    )),
-              ]),
-            )));
+                    ),
+                    Card(
+                        elevation: Dimens.minElevationApplication,
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(Dimens.radiusApplication),
+                        ),
+                        margin: EdgeInsets.all(Dimens.minMarginApplication),
+                        child: Container(
+                            padding: EdgeInsets.all(Dimens.paddingApplication),
+                            child: Column(children: [
+                              Text(
+                                "É necessário inserir seu e-mail para poder iníciar o processo de recuperação de senha.",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: Dimens.textSize5,
+                                  fontFamily: 'Inter',
+                                ),
+                              ),
+                              SizedBox(height: Dimens.marginApplication),
+                              TextField(
+                                controller: emailController,
+                                decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: OwnerColors.colorPrimary,
+                                        width: 1.5),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.grey, width: 1.0),
+                                  ),
+                                  hintText: 'E-mail',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        Dimens.radiusApplication),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  contentPadding: EdgeInsets.all(
+                                      Dimens.textFieldPaddingApplication),
+                                ),
+                                keyboardType: TextInputType.emailAddress,
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: Dimens.textSize5,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    top: Dimens.marginApplication),
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                    style: Styles().styleDefaultButton,
+                                    onPressed: () {
+                                      if (!validator.validateEmail(
+                                          emailController.text)) return;
+
+                                      Navigator.pushNamed(
+                                          context, "/ui/verify_token");
+                                    },
+                                    child: Text("Avançar",
+                                        style:
+                                            Styles().styleDefaultTextButton)),
+                              ),
+                            ]))),
+                  ],
+                ),
+              ),
+            )),
+          ]),
+        )));
   }
 }

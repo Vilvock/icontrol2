@@ -61,7 +61,7 @@ class _LoginState extends State<Login> {
       final response = User.fromJson(_map[0]);
 
       if (response.status == "01") {
-        setState(() async {
+        // setState(() async {
           _loginResponse = response;
 
           await Preferences.setUserData(_loginResponse);
@@ -74,10 +74,13 @@ class _LoginState extends State<Login> {
                 MaterialPageRoute(builder: (context) => Home()),
                 ModalRoute.withName("/ui/home"));
           } else {
-            // outra tela
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => Home()),
+                ModalRoute.withName("/ui/home"));
           }
 
-        });
+        // });
       } else {
         ApplicationMessages(context: context).showMessage(response.msg);
       }

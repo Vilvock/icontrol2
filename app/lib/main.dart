@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:icontrol/res/owner_colors.dart';
 import 'package:icontrol/ui/auth/login.dart';
 import 'package:icontrol/ui/auth/recover_password/recover_password.dart';
-import 'package:icontrol/ui/auth/recover_password/update_password_token.dart';
-import 'package:icontrol/ui/auth/recover_password/verify_token.dart';
 import 'package:icontrol/ui/auth/register/register_address_form.dart';
 import 'package:icontrol/ui/auth/register/register_company_data.dart';
 import 'package:icontrol/ui/auth/register/register_owner_data.dart';
@@ -108,34 +106,9 @@ void main() async {
       '/ui/success': (context) => Success(),
       '/ui/notifications': (context) => Notifications(),
       '/ui/recover_password': (context) => RecoverPassword(),
-      '/ui/verify_token': (context) => VerifyToken(),
-      '/ui/update_password_token': (context) => UpdatePasswordToken(),
       '/ui/employees': (context) => Employees(),
 
 
-      //lista horizontal
-      // Container(
-      //   height: 180,
-      //   child: ListView.builder(
-      //     scrollDirection: Axis.horizontal,
-      //     itemCount: /*numbersList.length*/ 2,
-      //     itemBuilder: (context, index) {
-      //       return Card(
-      //         shape: RoundedRectangleBorder(
-      //           borderRadius: BorderRadius.circular(
-      //               Dimens.minRadiusApplication),
-      //         ),
-      //         margin:
-      //             EdgeInsets.all(Dimens.minMarginApplication),
-      //         child: Container(
-      //           width: MediaQuery.of(context).size.width * 0.80,
-      //           padding:
-      //               EdgeInsets.all(Dimens.paddingApplication),
-      //         ),
-      //       );
-      //     },
-      //   ),
-      // ),
     },
   ));
 }

@@ -27,6 +27,8 @@ class User extends GlobalWSModel{
   final int saldo_aprovado;
   final String type;
   final int tipo;
+  final String cpf;
+  final String cnpj;
 
   User({
     required this.nome,
@@ -53,7 +55,9 @@ class User extends GlobalWSModel{
     required this.tipo_pessoa,
     required this.saldo_aprovado,
     required this.type,
-    required this.tipo, required super.status, required super.msg, required super.id, required super.rows,
+    required this.tipo,
+    required this.cpf,
+    required this.cnpj, required super.status, required super.msg, required super.id, required super.rows,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -83,6 +87,8 @@ class User extends GlobalWSModel{
       saldo_aprovado: json['saldo_aprovado'],
       type: json['type'],
       tipo: json['tipo'],
+      cpf: json['cpf'],
+      cnpj: json['cnpj'],
       status: json['status'],
       msg: json['msg'],
       id: json['id'],

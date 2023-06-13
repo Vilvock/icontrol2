@@ -145,7 +145,7 @@ class _ProfileState extends State<Profile> {
 
       fantasyNameController.text = _profileResponse!.nome.toString();
       emailController.text = _profileResponse!.email.toString();
-      documentController.text = _profileResponse!.documento.toString();
+      documentController.text = _profileResponse!.cpf.toString();
       cellphoneController.text = _profileResponse!.celular.toString();
       // });
       // } else {}
@@ -157,12 +157,12 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> updateUserDataRequest(
-      String name, String documentCnpj, String cellphone, String email) async {
+      String name, String document, String cellphone, String email) async {
     try {
       final body = {
         "id": await Preferences.getUserData()!.id,
         "nome": name,
-        "documento": documentCnpj,
+        "cpf": document,
         "celular": cellphone,
         "email": email,
         "token": ApplicationConstant.TOKEN
@@ -446,10 +446,10 @@ class _ProfileState extends State<Profile> {
                                   if (!validator.validateGenericTextField(
                                       fantasyNameController.text, "Nome fantasia"))
                                     return;
-                                  if (!validator.validateEmail(emailController.text))
-                                    return;
-                                  if (!validator.validateCNPJ(documentController.text))
-                                    return;
+                                  // if (!validator.validateEmail(emailController.text))
+                                  //   return;
+                                  // if (!validator.validateCNPJ(documentController.text))
+                                  //   return;
                                   if (!validator.validateCellphone(
                                       cellphoneController.text)) return;
 

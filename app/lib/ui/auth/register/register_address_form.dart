@@ -28,6 +28,7 @@ class RegisterAddressForm extends StatefulWidget {
 
 class _RegisterAddressFormState extends State<RegisterAddressForm> {
 
+  bool _isLoading = false;
   late Validator validator;
   final postRequest = PostRequest();
 
@@ -59,6 +60,13 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
   final TextEditingController numberController = TextEditingController();
   final TextEditingController complementController = TextEditingController();
 
+
+  Future<void> saveUserToPreferences(User user) async {
+    final prefs = await SharedPreferences.getInstance();
+    final userData = user.toJson();
+    await prefs.setString('user', jsonEncode(userData));
+  }
+
   Future<void> getCepInfo(String cep) async {
     try {
       final json = await postRequest.getCepRequest("$cep/json/");
@@ -81,9 +89,77 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
   }
 
 
+  Future<void> registerRequest(
+      String email,
+      String password,
+      String ownerName,
+      String cpf,
+      String cellphone,
+      String fantasyName,
+      String socialReason,
+      String cnpj,
+      String cep,
+      String state,
+      String city,
+      String address,
+      String nbh,
+      String number,
+      String complement) async {
+
+    try {
+      final body = {
+        "razao_social": socialReason,
+        "nome_fantasia": fantasyName,
+        "nome_responsavel": ownerName,
+        "cpf_responsavel": cpf,
+        "cnpj": cnpj,
+        "email": email,
+        "celular": cellphone,
+        "password": password,
+        "cep": cep,
+        "estado": state,
+        "cidade": city,
+        "bairro": nbh,
+        "endereco": address,
+        "numero": number,
+        "complemento": complement,
+        "token": ApplicationConstant.TOKEN
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json = await postRequest.sendPostRequest(Links.REGISTER_W_ADDRESS, body);
+      // final parsedResponse = jsonDecode(json); // pegar um objeto so
+
+      List<Map<String, dynamic>> _map = [];
+      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+
+      print('HTTP_RESPONSE: $_map');
+
+      final response = User.fromJson(_map[0]);
+
+      if (response.status == "01") {
+        setState(() {
+          saveUserToPreferences(response);
+
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+              ModalRoute.withName("/ui/home"));
+        });
+      } else {
+        ApplicationMessages(context: context).showMessage(response.msg);
+      }
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    Map data = {};
+    data = ModalRoute.of(context)!.settings.arguments as Map;
 
     return Scaffold(
         resizeToAvoidBottomInset: true,
@@ -353,13 +429,58 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
                                 width: double.infinity,
                                 child: ElevatedButton(
                                     style: Styles().styleDefaultButton,
-                                    onPressed: () {
+                                    onPressed: _isLoading
+                                        ? null
+                                        : () async {
 
+                                      if (!validator.validateCEP(cepController.text)) return;
+                                      if (!validator.validateGenericTextField(
+                                          cityController.text, "Cidade")) return;
+                                      if (!validator.validateGenericTextField(
+                                          stateController.text, "Estado")) return;
+                                      if (!validator.validateGenericTextField(
+                                          addressController.text, "Endereço")) return;
+                                      if (!validator.validateGenericTextField(
+                                          nbhController.text, "Bairro")) return;
+                                      if (!validator.validateGenericTextField(
+                                          numberController.text, "Número")) return;
+
+                                      setState(() {
+                                        _isLoading = true;
+                                      });
+
+                                      registerRequest(
+                                          data['email'],
+                                          data['password'],
+                                          data['owner_name'],
+                                          data['cpf'],
+                                          data['cellphone'],
+                                          data['fantasy_name'],
+                                          data['social_reason'],
+                                          data['cnpj'],
+                                          cepController.text.toString(),
+                                          stateController.text.toString(),
+                                          cityController.text.toString(),
+                                          addressController.text.toString(),
+                                          nbhController.text.toString(),
+                                          numberController.text.toString(),
+                                          complementController.text.toString());
+
+                                      setState(() {
+                                        _isLoading = false;
+                                      });
                                     },
-                                    child: Text(
-                                        "Finalizar cadastro",
-                                        style: Styles().styleDefaultTextButton
-                                    )),
+                                    child: (_isLoading)
+                                        ? const SizedBox(
+                                        width: Dimens.buttonIndicatorWidth,
+                                        height: Dimens.buttonIndicatorHeight,
+                                        child: CircularProgressIndicator(
+                                          color: OwnerColors.colorAccent,
+                                          strokeWidth: Dimens.buttonIndicatorStrokes,
+                                        ))
+                                        : Text("Entrar",
+                                        style: Styles().styleDefaultTextButton),
+                                    ),
                               ),
                             ]))),
                   ],

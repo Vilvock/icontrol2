@@ -30,6 +30,8 @@ class _RegisterCompanyDataState extends State<RegisterCompanyData> {
 
   late Validator validator;
 
+
+
   @override
   void initState() {
     validator = Validator(context: context);
@@ -50,6 +52,10 @@ class _RegisterCompanyDataState extends State<RegisterCompanyData> {
 
   @override
   Widget build(BuildContext context) {
+
+    Map data = {};
+    data = ModalRoute.of(context)!.settings.arguments as Map;
+
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: CustomAppBar(isVisibleBackButton: true,),
@@ -192,8 +198,17 @@ class _RegisterCompanyDataState extends State<RegisterCompanyData> {
                                           cnpjController.text)) return;
 
 
-                                      Navigator.pushNamed(context, "/ui/register_address_form");
-
+                                      Navigator.pushNamed(context, "/ui/register_address_form",
+                                          arguments: {
+                                        "owner_name": data['owner_name'],
+                                        "cellphone": data['cellphone'],
+                                        "email": data['email'],
+                                        "password": data['password'],
+                                        "cpf": data['cpf'],
+                                        "social_reason": socialReasonController.text.toString(),
+                                        "fantasy_name": fantasyNameController.text.toString(),
+                                        "cnpj": cnpjController.text.toString(),
+                                      });
                                     },
                                     child: Text(
                                         "Avançar",

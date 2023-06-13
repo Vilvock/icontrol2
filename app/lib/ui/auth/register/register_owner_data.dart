@@ -72,74 +72,6 @@ class _RegisterOwnerDataState extends State<RegisterOwnerData> {
     super.dispose();
   }
 
-  Future<void> saveUserToPreferences(User user) async {
-    final prefs = await SharedPreferences.getInstance();
-    final userData = user.toJson();
-    await prefs.setString('user', jsonEncode(userData));
-  }
-
-
-  Future<void> registerRequest(
-      String email,
-      String password,
-      String ownerName,
-      String cpf,
-      String cellphone,
-      String fantasyName,
-      String socialReason,
-      String cnpj,
-      /*String latitude,
-      String longitude*/) async {
-
-    try {
-      final body = {
-        "razao_social": socialReason,
-        "nome_fantasia": fantasyName,
-        "nome_responsavel": ownerName,
-        "cpf_responsavel": cpf,
-        "cnpj": cnpj,
-        "email": email,
-        "celular": cellphone,
-        "password": password,
-        "cep": "12425-210",
-        "estado": "SP",
-        "cidade": "Pindamonhangaba",
-        "bairro": "Mombaça",
-        "endereco": "rua prof isis castro de melo cesar",
-        "numero": "111",
-        "complemento": "casa",
-        "token": ApplicationConstant.TOKEN
-      };
-
-      print('HTTP_BODY: $body');
-
-      final json = await postRequest.sendPostRequest(Links.REGISTER_W_ADDRESS, body);
-      // final parsedResponse = jsonDecode(json); // pegar um objeto so
-
-      List<Map<String, dynamic>> _map = [];
-      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
-
-      print('HTTP_RESPONSE: $_map');
-
-      final response = User.fromJson(_map[0]);
-
-      if (response.status == "01") {
-        setState(() {
-          _registerResponse = response;
-          saveUserToPreferences(_registerResponse!);
-
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => Home()),
-              ModalRoute.withName("/ui/home"));
-        });
-      } else {
-        ApplicationMessages(context: context).showMessage(response.msg);
-      }
-    } catch (e) {
-      throw Exception('HTTP_ERROR: $e');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -516,6 +448,8 @@ class _RegisterOwnerDataState extends State<RegisterOwnerData> {
                                       if (!validator.validateGenericTextField(
                                           ownerNameController.text,
                                           "Nome resposável")) return;
+                                      if (!validator.validateCPF(
+                                          cpfController.text)) return;
                                       if (!validator.validateCellphone(
                                           cellphoneController.text)) return;
                                       if (!validator.validateEmail(
@@ -527,7 +461,13 @@ class _RegisterOwnerDataState extends State<RegisterOwnerData> {
                                           coPasswordController.text)) return;
 
 
-                                      Navigator.pushNamed(context, "/ui/register_company_data");
+                                      Navigator.pushNamed(context, "/ui/register_company_data", arguments: {
+                                        "owner_name": ownerNameController.text.toString(),
+                                        "cellphone": cellphoneController.text.toString(),
+                                        "email": emailController.text.toString(),
+                                        "password": passwordController.text.toString(),
+                                        "cpf": cpfController.text.toString(),
+                                      });
 
                                     },
                                     child: Text(

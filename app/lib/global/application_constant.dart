@@ -17,6 +17,8 @@ class ApplicationConstant {
   static const int TICKET_IN_TERM = 4;
 
   static const String URL_AVATAR = URL + "uploads/avatar/";
+  static const String URL_ATTACHMENTS = URL + "uploads/anexos/";
+  static const String URL_FLEETS = URL + "uploads/frotas/";
 
 
 }

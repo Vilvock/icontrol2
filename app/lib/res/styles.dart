@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:icontrol/res/strings.dart';
 
 import 'dimens.dart';
 import 'owner_colors.dart';
@@ -54,4 +55,8 @@ class Styles {
     width: 2,
     thickness: 1.5,
   );
+
+  var defaultLoading = Center(child: CircularProgressIndicator());
+
+  var defaultErrorRequest = Text(Strings.no_connection_description);
 }

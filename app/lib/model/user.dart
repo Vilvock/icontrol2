@@ -29,6 +29,7 @@ class User extends GlobalWSModel{
   final int tipo;
   final String cpf;
   final String cnpj;
+  final int id_empresa;
 
   User({
     required this.nome,
@@ -57,7 +58,8 @@ class User extends GlobalWSModel{
     required this.type,
     required this.tipo,
     required this.cpf,
-    required this.cnpj, required super.status, required super.msg, required super.id, required super.rows,
+    required this.cnpj,
+    required this.id_empresa, required super.status, required super.msg, required super.id, required super.rows,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -89,6 +91,7 @@ class User extends GlobalWSModel{
       tipo: json['tipo'],
       cpf: json['cpf'],
       cnpj: json['cnpj'],
+      id_empresa: json['id_empresa'],
       status: json['status'],
       msg: json['msg'],
       id: json['id'],
@@ -105,6 +108,7 @@ class User extends GlobalWSModel{
       'celular': celular,
       'avatar': avatar,
       'tipo': tipo,
+      'id_empresa': id_empresa,
       'status': status,
       'msg': msg,
       'id': id,

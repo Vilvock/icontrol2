@@ -111,7 +111,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               context,
               ModalRoute.withName('/ui/home'),
             );
-            Navigator.pushNamed(context, "/ui/user_addresses");
+            Navigator.pushNamed(context, "/ui/employees");
           }
         },
       ));

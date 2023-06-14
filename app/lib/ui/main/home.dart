@@ -43,7 +43,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-
     var widgetItems = <Widget>[];
 
     widgetItems.add(ContainerHome());
@@ -78,7 +77,6 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var bottomNavigationBarItems = <BottomNavigationBarItem>[];
 
     bottomNavigationBarItems.add(BottomNavigationBarItem(
@@ -100,22 +98,21 @@ class BottomNavBar extends StatelessWidget {
     // label: Strings.search,
     // ));
     bottomNavigationBarItems.add(BottomNavigationBarItem(
-    icon: Icon(Icons.person_outline),
-    label: Strings.menu,
+      icon: Icon(Icons.person_outline),
+      label: Strings.menu,
     ));
 
     return BottomNavigationBar(
-      elevation: Dimens.elevationApplication,
-      currentIndex: currentIndex,
-      onTap: onTap,
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: OwnerColors.colorPrimary,
-      selectedItemColor: OwnerColors.colorAccent,
-      unselectedItemColor: OwnerColors.lightGrey,
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      items: bottomNavigationBarItems
-    );
+        elevation: Dimens.elevationApplication,
+        currentIndex: currentIndex,
+        onTap: onTap,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: OwnerColors.colorPrimary,
+        selectedItemColor: OwnerColors.colorAccent,
+        unselectedItemColor: OwnerColors.lightGrey,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: bottomNavigationBarItems);
   }
 }
 
@@ -134,9 +131,7 @@ class _ContainerHomeState extends State<ContainerHome> {
     saveFcm();
   }
 
-
   Future<void> saveFcm() async {
-
     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
     try {
@@ -185,7 +180,6 @@ class _ContainerHomeState extends State<ContainerHome> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -214,7 +208,6 @@ class _ContainerHomeState extends State<ContainerHome> {
                     margin: EdgeInsets.all(Dimens.minMarginApplication),
                     child: Container(
                         width: MediaQuery.of(context).size.width * 0.80,
-                        padding: EdgeInsets.all(Dimens.minPaddingApplication),
                         child: Wrap(
                           children: [
                             Column(children: [
@@ -225,6 +218,8 @@ class _ContainerHomeState extends State<ContainerHome> {
                                     "Frota 1",
                                     style: Styles().styleDescriptionText,
                                   ),
+                                  margin: EdgeInsets.only(
+                                      left: Dimens.marginApplication),
                                 )),
                                 PopupMenuButton<SampleItem>(
                                   initialValue: selectedMenu,
@@ -252,39 +247,161 @@ class _ContainerHomeState extends State<ContainerHome> {
                                 ),
                               ]),
                               ConstrainedBox(
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: 5,
-                                  itemBuilder: (context, index) {
-                                    return Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            Dimens.radiusApplication),
-                                      ),
-                                      margin: EdgeInsets.all(
-                                          Dimens.minMarginApplication),
-                                      child: Container(
-                                        padding: EdgeInsets.all(
-                                            Dimens.paddingApplication),
-                                        child: Text("dsda"),
-                                      ),
-                                    );
-                                  },
-                                ),
+                                child: SingleChildScrollView(
+                                    child: Column(children: [
+                                  Image.asset(
+                                    'images/random.jpg',
+                                    height: 190,
+                                    width: double.infinity,
+                                    fit: BoxFit.fitWidth,
+                                  ),
+                                  ListView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    itemCount: 10,
+                                    itemBuilder: (context, index) {
+
+                                      var _statusColor = Colors.blue;
+
+                                      // switch (response.status_pagamento) {
+                                      //   case "Pendente":
+                                      //     _statusColor = OwnerColors.darkGrey;
+                                      //     break;
+                                      //   case "Aprovado":
+                                      //
+                                      //     _statusColor = OwnerColors.colorPrimaryDark;
+                                      //     break;
+                                      //   case "Rejeitado":
+                                      //
+                                      //     _statusColor = Colors.yellow[700];
+                                      //     break;
+                                      //   case "Cancelado":
+                                      //
+                                      //     _statusColor = Colors.red;
+                                      //     break;
+                                      //   case "Devolvido":
+                                      //
+                                      //     _statusColor = OwnerColors.darkGrey;
+                                      //     break;
+                                      // }
+
+                                      return InkWell(
+                                          onTap: () => {
+                                            // Navigator.pushNamed(
+                                            //     context, "/ui/order_detail",
+                                            //     arguments: {
+                                            //       "id": response.id,
+                                            //     })
+                                          },
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(Dimens.minRadiusApplication),
+                                            ),
+                                            margin: EdgeInsets.all(Dimens.minMarginApplication),
+                                            child: Container(
+                                              padding: EdgeInsets.all(Dimens.paddingApplication),
+                                              child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  // Container(
+                                                  //     margin: EdgeInsets.only(
+                                                  //         right: Dimens.minMarginApplication),
+                                                  //     child: ClipRRect(
+                                                  //         borderRadius: BorderRadius.circular(
+                                                  //             Dimens.minRadiusApplication),
+                                                  //         child: Image.asset(
+                                                  //           'images/person.jpg',
+                                                  //           height: 90,
+                                                  //           width: 90,
+                                                  //         ))),
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Align(
+                                                            alignment: AlignmentDirectional.topStart,
+                                                            child: Card(
+                                                                color: _statusColor,
+                                                                shape: RoundedRectangleBorder(
+                                                                  borderRadius: BorderRadius.circular(
+                                                                      Dimens.minRadiusApplication),
+                                                                ),
+                                                                child: Container(
+                                                                    padding: EdgeInsets.all(
+                                                                        Dimens.minPaddingApplication),
+                                                                    child: Text(
+                                                                      "status",
+                                                                      style: TextStyle(
+                                                                        fontFamily: 'Inter',
+                                                                        fontSize: Dimens.textSize5,
+                                                                        color: Colors.white,
+                                                                      ),
+                                                                    )))),
+
+                                                        SizedBox(height: Dimens.minMarginApplication),
+                                                        Text(
+                                                          "Equipamento $index",
+                                                          style: TextStyle(
+                                                            fontFamily: 'Inter',
+                                                            fontSize: Dimens.textSize5,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: Dimens.minMarginApplication),
+                                                        Text(
+                                                          "Data: 00/00/0000",
+                                                          style: TextStyle(
+                                                            fontFamily: 'Inter',
+                                                            fontSize: Dimens.textSize4,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ));
+                                    },
+                                  )
+                                ])),
                                 constraints: BoxConstraints(
                                     maxHeight:
                                         MediaQuery.of(context).size.height *
                                             0.70),
                               ),
+
                               Container(
-                                  width: double.infinity,
-                                  child: Text(
-                                    "Adicionar card",
-                                    style: TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: Dimens.textSize6,
-                                      color: OwnerColors.colorPrimary,
+                                padding: EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: OwnerColors.colorPrimary,
+                                    borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(Dimens.radiusApplication),
+                                        bottomLeft: Radius.circular(Dimens.radiusApplication)
                                     ),
+
+                                  ),
+                                  alignment: Alignment.center,
+                                  width: double.infinity,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        size: 24,
+                                        Icons.add,
+                                        color: Colors.white,
+                                      ),
+                                      Text("Adicionar card",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize6,
+                                            color: Colors.white,
+                                          )),
+                                    ],
                                   ))
                             ])
                           ],

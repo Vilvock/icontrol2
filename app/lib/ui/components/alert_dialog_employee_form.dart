@@ -94,6 +94,10 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
       print('HTTP_RESPONSE: $parsedResponse');
 
       final response = Employee.fromJson(parsedResponse);
+      if (response.status == "01") {
+        Navigator.of(context).pop(true);
+      } else {}
+      ApplicationMessages(context: context).showMessage(response.msg);
 
       return parsedResponse;
     } catch (e) {
@@ -123,6 +127,10 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
       print('HTTP_RESPONSE: $_map');
 
       final response = Employee.fromJson(_map[0]);
+      if (response.status == "01") {
+        Navigator.of(context).pop(true);
+      } else {}
+      ApplicationMessages(context: context).showMessage(response.msg);
 
       return _map;
     } catch (e) {
@@ -341,7 +349,7 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
                       if (!validator.validateEmail(emailController.text)) return;
                       if (!validator.validateCellphone(cellphoneController.text)) return;
                       if (!validator.validateCPF(cpfController.text)) return;
-                      if (!validator.validateBirth(birthController.text)) return;
+                      // if (!validator.validateBirth(birthController.text)) return;
 
                       setState(() {
                         _isLoading = true;

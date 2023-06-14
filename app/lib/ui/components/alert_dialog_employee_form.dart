@@ -161,7 +161,7 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
                 Container(
                   width: double.infinity,
                   child: Text(
-                    "Adicionar funcionário",
+                    widget.id != null ?  "Editar funcionário" :"Adicionar funcionário",
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: Dimens.textSize6,
@@ -184,7 +184,7 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
                           borderSide:
                               BorderSide(color: Colors.grey, width: 1.0),
                         ),
-                        hintText: 'Nome do local',
+                        hintText: 'Nome',
                         hintStyle: TextStyle(color: Colors.grey),
                         border: OutlineInputBorder(
                           borderRadius:

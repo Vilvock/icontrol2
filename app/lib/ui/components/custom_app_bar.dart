@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:icontrol/res/dimens.dart';
+import 'package:icontrol/ui/components/alert_dialog_employee_form.dart';
+
+import '../../res/styles.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   String title;
@@ -90,8 +93,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Icons.add,
           color: Colors.black,
         ),
-        onPressed: () {
-          // do something
+        onPressed: () async {
+
+          final result = await showModalBottomSheet<dynamic>(
+              isScrollControlled: true,
+              context: context,
+              shape: Styles().styleShapeBottomSheet,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              builder: (BuildContext context) {
+                return EmployeeFormAlertDialog();}
+          );
+          if(result == true){
+            Navigator.popUntil(
+              context,
+              ModalRoute.withName('/ui/home'),
+            );
+            Navigator.pushNamed(context, "/ui/user_addresses");
+          }
         },
       ));
     }

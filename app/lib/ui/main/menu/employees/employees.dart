@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:icontrol/res/styles.dart';
+import 'package:icontrol/ui/components/alert_dialog_employee_form.dart';
 import 'package:lottie/lottie.dart';
 import '../../../../config/application_messages.dart';
 import '../../../../config/preferences.dart';
@@ -34,17 +35,14 @@ class _Employees extends State<Employees> {
 
   final postRequest = PostRequest();
 
-
   Future<List<Map<String, dynamic>>> verifyTokenRegister(String token) async {
     try {
-      final body = {
-        "token_cadastro": token
-      };
+      final body = {"token_cadastro": token};
 
       print('HTTP_BODY: $body');
 
       final json =
-      await postRequest.sendPostRequest(Links.VERIFY_TOKEN_REGISTER, body);
+          await postRequest.sendPostRequest(Links.VERIFY_TOKEN_REGISTER, body);
 
       List<Map<String, dynamic>> _map = [];
       _map = List<Map<String, dynamic>>.from(jsonDecode(json));
@@ -69,7 +67,7 @@ class _Employees extends State<Employees> {
       print('HTTP_BODY: $body');
 
       final json =
-      await postRequest.sendPostRequest(Links.LIST_EMPLOYEES, body);
+          await postRequest.sendPostRequest(Links.LIST_EMPLOYEES, body);
 
       List<Map<String, dynamic>> _map = [];
       _map = List<Map<String, dynamic>>.from(jsonDecode(json));
@@ -84,7 +82,8 @@ class _Employees extends State<Employees> {
     }
   }
 
-  Future<List<Map<String, dynamic>>> listIdEmployee(String idCompany, String idEmployee) async {
+  Future<List<Map<String, dynamic>>> listIdEmployee(
+      String idCompany, String idEmployee) async {
     try {
       final body = {
         "id_empresa": idCompany,
@@ -95,7 +94,7 @@ class _Employees extends State<Employees> {
       print('HTTP_BODY: $body');
 
       final json =
-      await postRequest.sendPostRequest(Links.LIST_ID_EMPLOYEE, body);
+          await postRequest.sendPostRequest(Links.LIST_ID_EMPLOYEE, body);
 
       List<Map<String, dynamic>> _map = [];
       _map = List<Map<String, dynamic>>.from(jsonDecode(json));
@@ -110,7 +109,8 @@ class _Employees extends State<Employees> {
     }
   }
 
-  Future<Map<String, dynamic>> changeStatusEmployee(String idCompany, String idEmployee) async {
+  Future<Map<String, dynamic>> changeStatusEmployee(
+      String idCompany, String idEmployee) async {
     try {
       final body = {
         "id_empresa": idCompany,
@@ -120,7 +120,8 @@ class _Employees extends State<Employees> {
 
       print('HTTP_BODY: $body');
 
-      final json = await postRequest.sendPostRequest(Links.UPDATE_STATUS_EMPLOYEE, body);
+      final json =
+          await postRequest.sendPostRequest(Links.UPDATE_STATUS_EMPLOYEE, body);
       final parsedResponse = jsonDecode(json);
 
       print('HTTP_RESPONSE: $parsedResponse');
@@ -133,7 +134,8 @@ class _Employees extends State<Employees> {
     }
   }
 
-  Future<Map<String, dynamic>> deleteEmployee(String idCompany, String idEmployee) async {
+  Future<Map<String, dynamic>> deleteEmployee(
+      String idCompany, String idEmployee) async {
     try {
       final body = {
         "id_empresa": idCompany,
@@ -143,12 +145,17 @@ class _Employees extends State<Employees> {
 
       print('HTTP_BODY: $body');
 
-      final json = await postRequest.sendPostRequest(Links.DELETE_EMPLOYEE, body);
+      final json =
+          await postRequest.sendPostRequest(Links.DELETE_EMPLOYEE, body);
       final parsedResponse = jsonDecode(json);
 
       print('HTTP_RESPONSE: $parsedResponse');
 
       final response = Employee.fromJson(parsedResponse);
+
+      setState(() {});
+
+      ApplicationMessages(context: context).showMessage(response.msg);
 
       return parsedResponse;
     } catch (e) {
@@ -165,7 +172,8 @@ class _Employees extends State<Employees> {
 
       print('HTTP_BODY: $body');
 
-      final json = await postRequest.sendPostRequest(Links.LIST_EMPLOYEES_TOKEN, body);
+      final json =
+          await postRequest.sendPostRequest(Links.LIST_EMPLOYEES_TOKEN, body);
 
       List<Map<String, dynamic>> _map = [];
       _map = List<Map<String, dynamic>>.from(jsonDecode(json));
@@ -180,7 +188,8 @@ class _Employees extends State<Employees> {
     }
   }
 
-  Future<Map<String, dynamic>> completeRegister(String token, String pass) async {
+  Future<Map<String, dynamic>> completeRegister(
+      String token, String pass) async {
     try {
       final body = {
         "token_cadastro": token,
@@ -190,7 +199,8 @@ class _Employees extends State<Employees> {
 
       print('HTTP_BODY: $body');
 
-      final json = await postRequest.sendPostRequest(Links.REGISTER_EMPLOYEE, body);
+      final json =
+          await postRequest.sendPostRequest(Links.REGISTER_EMPLOYEE, body);
       final parsedResponse = jsonDecode(json);
 
       print('HTTP_RESPONSE: $parsedResponse');
@@ -207,11 +217,16 @@ class _Employees extends State<Employees> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: CustomAppBar(title: "Meus funcionários", isVisibleBackButton: true, isVisibleAddButton: true,),
+      appBar: CustomAppBar(
+        title: "Meus funcionários",
+        isVisibleBackButton: true,
+        isVisibleAddButton: true,
+      ),
       body: RefreshIndicator(
         onRefresh: _pullRefresh,
         child: FutureBuilder<List<Map<String, dynamic>>>(
-          future: listEmployees(Preferences.getUserData()!.id_empresa.toString()),
+          future:
+              listEmployees(Preferences.getUserData()!.id_empresa.toString()),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final responseItem = Employee.fromJson(snapshot.data![0]);
@@ -220,16 +235,10 @@ class _Employees extends State<Employees> {
                 return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    final response =  Employee.fromJson(snapshot.data![index]);
+                    final response = Employee.fromJson(snapshot.data![index]);
 
                     return InkWell(
-                        onTap: () => {
-                          // Navigator.pushNamed(
-                          //     context, "/ui/product_detail",
-                          //     arguments: {
-                          //       "id_product": response.id_produto,
-                          //     })
-                        },
+                        onTap: () => {},
                         child: Card(
                           elevation: Dimens.minElevationApplication,
                           color: Colors.white,
@@ -239,8 +248,7 @@ class _Employees extends State<Employees> {
                                 Dimens.minRadiusApplication),
                           ),
                           child: Container(
-                            padding:
-                            EdgeInsets.all(Dimens.paddingApplication),
+                            padding: EdgeInsets.all(Dimens.paddingApplication),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -251,23 +259,22 @@ class _Employees extends State<Employees> {
                                         borderRadius: BorderRadius.circular(
                                             Dimens.minRadiusApplication),
                                         child: Image.network(
-                                          ApplicationConstant
-                                              .URL_AVATAR +
+                                          ApplicationConstant.URL_AVATAR +
                                               response.avatar.toString(),
                                           height: 90,
                                           width: 90,
                                           errorBuilder: (context, exception,
-                                              stackTrack) =>
+                                                  stackTrack) =>
                                               Image.asset(
-                                                'images/default.png',
-                                                height: 90,
-                                                width: 90,
-                                              ),
+                                            'images/default.png',
+                                            height: 90,
+                                            width: 90,
+                                          ),
                                         ))),
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         response.nome,
@@ -281,10 +288,11 @@ class _Employees extends State<Employees> {
                                         ),
                                       ),
                                       SizedBox(
-                                          height:
-                                          Dimens.minMarginApplication),
+                                          height: Dimens.minMarginApplication),
                                       Text(
-                                        response.email + "\n" + response.celular,
+                                        response.email +
+                                            "\n" +
+                                            response.celular,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
@@ -294,126 +302,159 @@ class _Employees extends State<Employees> {
                                         ),
                                       ),
                                       SizedBox(
-                                          height:
-                                          Dimens.minMarginApplication),
+                                          height: Dimens.minMarginApplication),
                                       Styles().div_horizontal,
                                       SizedBox(
-                                          height:
-                                          Dimens.minMarginApplication),
+                                          height: Dimens.minMarginApplication),
                                       Container(
                                           child: IntrinsicHeight(
                                               child: Row(
-                                                children: [
-                                                  Expanded(
-                                                      child: Container(
-                                                        child: Wrap(
-                                                          direction: Axis.horizontal,
-                                                          alignment: WrapAlignment.center,
-                                                          crossAxisAlignment:
-                                                          WrapCrossAlignment.center,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets.only(
-                                                                  right: Dimens
-                                                                      .minMarginApplication),
-                                                              child: Icon(
-                                                                  size: 20,
-                                                                  Icons.edit_note_outlined),
-                                                            ),
-                                                            GestureDetector(
-                                                                onTap: () => {
+                                        children: [
+                                          Expanded(
+                                              child: Container(
+                                            child: Wrap(
+                                              direction: Axis.horizontal,
+                                              alignment: WrapAlignment.center,
+                                              crossAxisAlignment:
+                                                  WrapCrossAlignment.center,
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      right: Dimens
+                                                          .minMarginApplication),
+                                                  child: Icon(
+                                                      size: 20,
+                                                      Icons.edit_note_outlined),
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () async {
+                                                      final result =
+                                                          await showModalBottomSheet<
+                                                                  dynamic>(
+                                                              isScrollControlled:
+                                                                  true,
+                                                              context: context,
+                                                              shape: Styles()
+                                                                  .styleShapeBottomSheet,
+                                                              clipBehavior: Clip
+                                                                  .antiAliasWithSaveLayer,
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
+                                                                return EmployeeFormAlertDialog(
+                                                                    id: response
+                                                                        .id
+                                                                        .toString(),
+                                                                    id_company: Preferences.getUserData()!.id_empresa.toString(),
+                                                                    name: response
+                                                                        .nome,
+                                                                    email: response
+                                                                        .email,
+                                                                    cellphone: response
+                                                                        .celular,
+                                                                    cpf: response
+                                                                        .cpf,
+                                                                    birth: response
+                                                                        .data_nascimento.toString());
+                                                              });
+                                                      if (result == true) {
+                                                        setState(() {
 
-
-                                                                },
-                                                                child: Text(
-                                                                  "Editar",
-                                                                  style: TextStyle(
-                                                                    fontFamily: 'Inter',
-                                                                    fontSize:
-                                                                    Dimens.textSize4,
-                                                                    color: Colors.black,
-                                                                  ),
-                                                                )),
-                                                          ],
-                                                        ),
-                                                      )),
-                                                  Container(
-                                                    child: Styles().div_vertical,
-                                                  ),
-                                                  Expanded(
-                                                      child: Container(
-                                                        child: Wrap(
-                                                          direction: Axis.horizontal,
-                                                          alignment: WrapAlignment.center,
-                                                          crossAxisAlignment:
-                                                          WrapCrossAlignment.center,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets.only(
-                                                                  right: Dimens
-                                                                      .minMarginApplication),
-                                                              child: Icon(
-                                                                  size: 20,
-                                                                  Icons.delete_outline),
-                                                            ),
-                                                            GestureDetector(
-                                                                onTap: () => {
-                                                                  showModalBottomSheet<
-                                                                      dynamic>(
-                                                                    isScrollControlled:
-                                                                    true,
-                                                                    context: context,
-                                                                    shape: Styles()
-                                                                        .styleShapeBottomSheet,
-                                                                    clipBehavior: Clip
-                                                                        .antiAliasWithSaveLayer,
-                                                                    builder:
-                                                                        (BuildContext
+                                                        });
+                                                      }
+                                                    },
+                                                    child: Text(
+                                                      "Editar",
+                                                      style: TextStyle(
+                                                        fontFamily: 'Inter',
+                                                        fontSize:
+                                                            Dimens.textSize4,
+                                                        color: Colors.black,
+                                                      ),
+                                                    )),
+                                              ],
+                                            ),
+                                          )),
+                                          Container(
+                                            child: Styles().div_vertical,
+                                          ),
+                                          Expanded(
+                                              child: Container(
+                                            child: Wrap(
+                                              direction: Axis.horizontal,
+                                              alignment: WrapAlignment.center,
+                                              crossAxisAlignment:
+                                                  WrapCrossAlignment.center,
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      right: Dimens
+                                                          .minMarginApplication),
+                                                  child: Icon(
+                                                      size: 20,
+                                                      Icons.delete_outline),
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () => {
+                                                          showModalBottomSheet<
+                                                              dynamic>(
+                                                            isScrollControlled:
+                                                                true,
+                                                            context: context,
+                                                            shape: Styles()
+                                                                .styleShapeBottomSheet,
+                                                            clipBehavior: Clip
+                                                                .antiAliasWithSaveLayer,
+                                                            builder:
+                                                                (BuildContext
                                                                     context) {
-                                                                      return GenericAlertDialog(
-                                                                          title: Strings
-                                                                              .attention,
-                                                                          content:
-                                                                          "Tem certeza que deseja remover este produto dos favoritos?",
-                                                                          btnBack:
-                                                                          TextButton(
-                                                                              child:
+                                                              return GenericAlertDialog(
+                                                                  title: Strings
+                                                                      .attention,
+                                                                  content:
+                                                                      "Tem certeza que deseja remover este produto dos favoritos?",
+                                                                  btnBack:
+                                                                      TextButton(
+                                                                          child:
                                                                               Text(
-                                                                                Strings.no,
-                                                                                style: TextStyle(
-                                                                                  fontFamily: 'Inter',
-                                                                                  color: Colors.black54,
-                                                                                ),
-                                                                              ),
-                                                                              onPressed:
-                                                                                  () {
-                                                                                Navigator.of(context).pop();
-                                                                              }),
-                                                                          btnConfirm:
-                                                                          TextButton(
-                                                                              child:
-                                                                              Text(Strings.yes),
-                                                                              onPressed: () {
-                                                                                // deleteEmployee(idCompany, response.id.toString());
-                                                                                Navigator.of(context).pop();
-                                                                              }));
-                                                                    },
-                                                                  )
-                                                                },
-                                                                child: Text(
-                                                                  "Remover",
-                                                                  style: TextStyle(
-                                                                    fontFamily: 'Inter',
-                                                                    fontSize:
-                                                                    Dimens.textSize4,
-                                                                    color: Colors.black,
-                                                                  ),
-                                                                )),
-                                                          ],
-                                                        ),
-                                                      )),
-                                                ],
-                                              )))
+                                                                            Strings.no,
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontFamily: 'Inter',
+                                                                              color: Colors.black54,
+                                                                            ),
+                                                                          ),
+                                                                          onPressed:
+                                                                              () {
+                                                                            Navigator.of(context).pop();
+                                                                          }),
+                                                                  btnConfirm:
+                                                                      TextButton(
+                                                                          child: Text(Strings
+                                                                              .yes),
+                                                                          onPressed:
+                                                                              () {
+                                                                            deleteEmployee(Preferences.getUserData()!.id_empresa.toString(),
+                                                                                response.id.toString());
+                                                                            Navigator.of(context).pop();
+                                                                          }));
+                                                            },
+                                                          )
+                                                        },
+                                                    child: Text(
+                                                      "Remover",
+                                                      style: TextStyle(
+                                                        fontFamily: 'Inter',
+                                                        fontSize:
+                                                            Dimens.textSize4,
+                                                        color: Colors.black,
+                                                      ),
+                                                    )),
+                                              ],
+                                            ),
+                                          )),
+                                        ],
+                                      )))
                                     ],
                                   ),
                                 ),

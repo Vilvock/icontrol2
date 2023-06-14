@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:icontrol/res/styles.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
+import '../../config/application_messages.dart';
 import '../../config/preferences.dart';
 import '../../global/application_constant.dart';
 import '../../model/user.dart';
@@ -129,6 +130,34 @@ class _ContainerHomeState extends State<ContainerHome> {
   void initState() {
     super.initState();
     saveFcm();
+    verifyPlan();
+  }
+
+  Future<List<Map<String, dynamic>>> verifyPlan() async {
+    try {
+      final body = {
+        "id_user": Preferences.getUserData()!.id,
+        "token": ApplicationConstant.TOKEN
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json =
+      await postRequest.sendPostRequest(Links.VERIFY_PLAN, body);
+
+      List<Map<String, dynamic>> _map = [];
+      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+
+      print('HTTP_RESPONSE: $_map');
+
+      final response = User.fromJson(_map[0]);
+
+      ApplicationMessages(context: context).showMessage(response.mensagem);
+
+      return _map;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
   }
 
   Future<void> saveFcm() async {

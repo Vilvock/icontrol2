@@ -10,6 +10,17 @@ class Validator {
 
   Validator({Key? key, required this.context});
 
+  bool validateBirth(String birth) {
+    if (RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(birth)) {
+      return true;
+    } else {
+      ApplicationMessages(context: context).showMessage(Strings.email_denied);
+      return false;
+    }
+  }
+
   bool validateEmail(String email) {
     if (RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")

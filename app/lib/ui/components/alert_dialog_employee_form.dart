@@ -7,6 +7,7 @@ import '../../config/masks.dart';
 import '../../config/preferences.dart';
 import '../../config/validator.dart';
 import '../../global/application_constant.dart';
+import '../../model/employee.dart';
 import '../../model/user.dart';
 import '../../res/dimens.dart';
 import '../../res/owner_colors.dart';
@@ -16,8 +17,16 @@ import '../../web_service/service_response.dart';
 
 class EmployeeFormAlertDialog extends StatefulWidget {
 
+  final String? id;
+  final String? id_company;
+  final String? name;
+  final String? email;
+  final String? cellphone;
+  final String? cpf;
+  final String? birth;
+
   EmployeeFormAlertDialog({
-    Key? key,
+    Key? key, this.id, this.id_company, this.name, this.email, this.cellphone, this.cpf, this.birth,
   });
 
   // DialogGeneric({Key? key}) : super(key: key);
@@ -28,11 +37,22 @@ class EmployeeFormAlertDialog extends StatefulWidget {
 
 class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
   late Validator validator;
-  final postRequest = PostRequest();
   bool _isLoading = false;
+
+  final postRequest = PostRequest();
 
   @override
   void initState() {
+    validator = Validator(context: context);
+
+    if (widget.id != null) {
+      nameController.text = widget.name!;
+      emailController.text = widget.email!;
+      cellphoneController.text = widget.cellphone!;
+      cpfController.text = widget.cpf!;
+      birthController.text = widget.birth!;
+    }
+
     super.initState();
   }
 
@@ -52,9 +72,66 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
     super.dispose();
   }
 
+
+  Future<Map<String, dynamic>> updateEmployee(String idCompany, String idEmployee, String name, String email, String cellphone, String cpf, String birth) async {
+    try {
+      final body = {
+        "id_empresa": idCompany,
+        "id_funcionario": idEmployee,
+        "nome": name,
+        "email": email,
+        "celular": cellphone,
+        "cpf": cpf,
+        "data_nascimento": birth,
+        "token": ApplicationConstant.TOKEN
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json = await postRequest.sendPostRequest(Links.EDIT_EMPLOYEE, body);
+      final parsedResponse = jsonDecode(json);
+
+      print('HTTP_RESPONSE: $parsedResponse');
+
+      final response = Employee.fromJson(parsedResponse);
+
+      return parsedResponse;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> saveEmployee(String idCompany, String name, String email, String cellphone, String cpf, String birth) async {
+    try {
+      final body = {
+        "id_empresa": idCompany,
+        "nome": name,
+        "email": email,
+        "celular": cellphone,
+        "cpf": cpf,
+        "data_nascimento": birth,
+        "token": ApplicationConstant.TOKEN
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json = await postRequest.sendPostRequest(Links.SAVE_EMPLOYEE, body);
+
+      List<Map<String, dynamic>> _map = [];
+      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+
+      print('HTTP_RESPONSE: $_map');
+
+      final response = Employee.fromJson(_map[0]);
+
+      return _map;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    validator = Validator(context: context);
 
     return SingleChildScrollView(
         child: Column(
@@ -84,7 +161,7 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
                 Container(
                   width: double.infinity,
                   child: Text(
-                    "Adicione funcionário",
+                    "Adicionar funcionário",
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: Dimens.textSize6,
@@ -259,7 +336,39 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
                   child: ElevatedButton(
                     style: Styles().styleDefaultButton,
                     onPressed: () async {
+                      if (!validator.validateGenericTextField(
+                          nameController.text, "Nome")) return;
+                      if (!validator.validateEmail(emailController.text)) return;
+                      if (!validator.validateCellphone(cellphoneController.text)) return;
+                      if (!validator.validateCPF(cpfController.text)) return;
+                      if (!validator.validateBirth(birthController.text)) return;
 
+                      setState(() {
+                        _isLoading = true;
+                      });
+
+                      if (widget.id != null) {
+                        await updateEmployee(
+                            Preferences.getUserData()!.id_empresa.toString(),
+                            widget.id!,
+                            nameController.text.toString(),
+                            emailController.text.toString(),
+                            cellphoneController.text.toString(),
+                            cpfController.text.toString(),
+                            birthController.text.toString());
+                      } else {
+                        await saveEmployee(
+                            Preferences.getUserData()!.id_empresa.toString(),
+                            nameController.text.toString(),
+                            emailController.text.toString(),
+                            cellphoneController.text.toString(),
+                            cpfController.text.toString(),
+                            birthController.text.toString());
+                      }
+
+                      setState(() {
+                        _isLoading = false;
+                      });
                     },
                     child: (_isLoading)
                         ? const SizedBox(

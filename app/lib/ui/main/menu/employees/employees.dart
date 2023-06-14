@@ -156,63 +156,6 @@ class _Employees extends State<Employees> {
     }
   }
 
-  Future<Map<String, dynamic>> updateEmployee(String idCompany, String idEmployee, String name, String email, String cellphone, String cpf, String birth) async {
-    try {
-      final body = {
-        "id_empresa": idCompany,
-        "id_funcionario": idEmployee,
-        "nome": name,
-        "email": email,
-        "celular": cellphone,
-        "cpf": cpf,
-        "data_nascimento": birth,
-        "token": ApplicationConstant.TOKEN
-      };
-
-      print('HTTP_BODY: $body');
-
-      final json = await postRequest.sendPostRequest(Links.EDIT_EMPLOYEE, body);
-      final parsedResponse = jsonDecode(json);
-
-      print('HTTP_RESPONSE: $parsedResponse');
-
-      final response = Employee.fromJson(parsedResponse);
-
-      return parsedResponse;
-    } catch (e) {
-      throw Exception('HTTP_ERROR: $e');
-    }
-  }
-
-  Future<List<Map<String, dynamic>>> saveEmployee(String idCompany, String name, String email, String cellphone, String cpf, String birth) async {
-    try {
-      final body = {
-        "id_empresa": idCompany,
-        "nome": name,
-        "email": email,
-        "celular": cellphone,
-        "cpf": cpf,
-        "data_nascimento": birth,
-        "token": ApplicationConstant.TOKEN
-      };
-
-      print('HTTP_BODY: $body');
-
-      final json = await postRequest.sendPostRequest(Links.SAVE_EMPLOYEE, body);
-
-      List<Map<String, dynamic>> _map = [];
-      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
-
-      print('HTTP_RESPONSE: $_map');
-
-      final response = Employee.fromJson(_map[0]);
-
-      return _map;
-    } catch (e) {
-      throw Exception('HTTP_ERROR: $e');
-    }
-  }
-
   Future<List<Map<String, dynamic>>> listEmployeesByToken(String token) async {
     try {
       final body = {

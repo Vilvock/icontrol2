@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../config/application_messages.dart';
 import '../../../config/masks.dart';
+import '../../../config/preferences.dart';
 import '../../../config/validator.dart';
 import '../../../global/application_constant.dart';
 import '../../../model/user.dart';
@@ -60,12 +61,6 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
   final TextEditingController numberController = TextEditingController();
   final TextEditingController complementController = TextEditingController();
 
-
-  Future<void> saveUserToPreferences(User user) async {
-    final prefs = await SharedPreferences.getInstance();
-    final userData = user.toJson();
-    await prefs.setString('user', jsonEncode(userData));
-  }
 
   Future<void> getCepInfo(String cep) async {
     try {
@@ -139,14 +134,15 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
       final response = User.fromJson(_map[0]);
 
       if (response.status == "01") {
-        setState(() {
-          saveUserToPreferences(response);
+        // setState(() {
+          await Preferences.setUserData(response);
+          await Preferences.setLogin(true);
 
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => Home()),
               ModalRoute.withName("/ui/home"));
-        });
+        // });
       } else {
         ApplicationMessages(context: context).showMessage(response.msg);
       }
@@ -449,7 +445,7 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
                                         _isLoading = true;
                                       });
 
-                                      registerRequest(
+                                      await registerRequest(
                                           data['email'],
                                           data['password'],
                                           data['owner_name'],
@@ -478,7 +474,7 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
                                           color: OwnerColors.colorAccent,
                                           strokeWidth: Dimens.buttonIndicatorStrokes,
                                         ))
-                                        : Text("Entrar",
+                                        : Text("Finalizar cadastro",
                                         style: Styles().styleDefaultTextButton),
                                     ),
                               ),

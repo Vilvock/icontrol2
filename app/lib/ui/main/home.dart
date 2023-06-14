@@ -33,13 +33,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
-  List<Widget> _widgetOptions = [
-    ContainerHome(),
-    TiresControl(),
-    Plan(),
-    Search(),
-    MainMenu()
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -50,6 +43,18 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+    var widgetItems = <Widget>[];
+
+    widgetItems.add(ContainerHome());
+    widgetItems.add(TiresControl());
+    if (Preferences.getUserData()!.tipo == 1) {
+      widgetItems.add(Plan());
+    }
+    widgetItems.add(MainMenu());
+
+    List<Widget> _widgetOptions = widgetItems;
+
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar:
@@ -73,6 +78,32 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var bottomNavigationBarItems = <BottomNavigationBarItem>[];
+
+    bottomNavigationBarItems.add(BottomNavigationBarItem(
+      icon: Icon(Icons.home_outlined),
+      label: Strings.home,
+    ));
+    bottomNavigationBarItems.add(BottomNavigationBarItem(
+      icon: Icon(Icons.tire_repair),
+      label: Strings.tire,
+    ));
+    if (Preferences.getUserData()!.tipo == 1) {
+      bottomNavigationBarItems.add(BottomNavigationBarItem(
+        icon: Icon(Icons.shield_outlined),
+        label: Strings.plan,
+      ));
+    }
+    // bottomNavigationBarItems.add(BottomNavigationBarItem(
+    // icon: Icon(Icons.map_outlined),
+    // label: Strings.search,
+    // ));
+    bottomNavigationBarItems.add(BottomNavigationBarItem(
+    icon: Icon(Icons.person_outline),
+    label: Strings.menu,
+    ));
+
     return BottomNavigationBar(
       elevation: Dimens.elevationApplication,
       currentIndex: currentIndex,
@@ -83,28 +114,7 @@ class BottomNavBar extends StatelessWidget {
       unselectedItemColor: OwnerColors.lightGrey,
       showSelectedLabels: false,
       showUnselectedLabels: false,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined),
-          label: Strings.home,
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.tire_repair),
-          label: Strings.tire,
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.shield_outlined),
-          label: Strings.plan,
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.map_outlined),
-          label: Strings.search,
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person_outline),
-          label: Strings.menu,
-        ),
-      ],
+      items: bottomNavigationBarItems
     );
   }
 }
@@ -184,7 +194,7 @@ class _ContainerHomeState extends State<ContainerHome> {
         isVisibleBackButton: false,
         isVisibleSearchButton: true,
         isVisibleNotificationsButton: true,
-        isVisibleAddButton: true,
+        isVisibleTaskAddButton: true,
       ),
       body: Container(
         child: ListView.builder(

@@ -121,13 +121,15 @@ class _MainMenu extends State<MainMenu> {
                                     child: SizedBox.fromSize(
                                       size: Size.fromRadius(32), // Image radius
                                       child: Image.network(
-                                        ApplicationConstant.URL_AVATAR +
-                                            response.avatar.toString(),
-                                        fit: BoxFit.cover, /*fit: BoxFit.cover*/
-                                          errorBuilder: (context, exception, stackTrack) => Image.asset(
-                                            'images/main_logo_1.png',
-                                          )
-                                      ),
+                                          ApplicationConstant.URL_AVATAR +
+                                              response.avatar.toString(),
+                                          fit: BoxFit.cover,
+                                          /*fit: BoxFit.cover*/
+                                          errorBuilder: (context, exception,
+                                                  stackTrack) =>
+                                              Image.asset(
+                                                'images/main_logo_1.png',
+                                              )),
                                     ),
                                   ),
                                 ),
@@ -174,122 +176,136 @@ class _MainMenu extends State<MainMenu> {
                     return Center(child: CircularProgressIndicator());
                   },
                 ),
-                GestureDetector(
-                    child: Container(
-                      padding: EdgeInsets.all(Dimens.maxPaddingApplication),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Histórico de pagamentos",
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: Dimens.textSize5,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                Visibility(
+                    visible: Preferences.getUserData()!.tipo == 1,
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                            child: Container(
+                              padding:
+                                  EdgeInsets.all(Dimens.maxPaddingApplication),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Histórico de pagamentos",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize5,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            height:
+                                                Dimens.minMarginApplication),
+                                        Text(
+                                          "Visualize pagamentos recentes",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize4,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: Dimens.minMarginApplication),
-                                Text(
-                                  "Visualize pagamentos recentes",
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: Dimens.textSize4,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, "/ui/payments");
-                    }),
-
-                Styles().div_horizontal,
-
-                GestureDetector(
-                    child: Container(
-                      padding: EdgeInsets.all(Dimens.maxPaddingApplication),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Equipamentos",
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: Dimens.textSize5,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                            onTap: () {
+                              Navigator.pushNamed(context, "/ui/payments");
+                            }),
+                        Styles().div_horizontal,
+                        GestureDetector(
+                            child: Container(
+                              padding:
+                                  EdgeInsets.all(Dimens.maxPaddingApplication),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Equipamentos",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize5,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            height:
+                                                Dimens.minMarginApplication),
+                                        Text(
+                                          "Gerencie Equipamentos",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize4,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: Dimens.minMarginApplication),
-                                Text(
-                                  "Gerencie Equipamentos",
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: Dimens.textSize4,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, "/ui/user_addresses");
-                    }),
-
-                Styles().div_horizontal,
-
-                GestureDetector(
-                    child: Container(
-                      padding: EdgeInsets.all(Dimens.maxPaddingApplication),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Funcionários",
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: Dimens.textSize5,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, "/ui/user_addresses");
+                            }),
+                        Styles().div_horizontal,
+                        GestureDetector(
+                            child: Container(
+                              padding:
+                                  EdgeInsets.all(Dimens.maxPaddingApplication),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Funcionários",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize5,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            height:
+                                                Dimens.minMarginApplication),
+                                        Text(
+                                          "Gerencie seus Funcionários",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize4,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: Dimens.minMarginApplication),
-                                Text(
-                                  "Gerencie seus Funcionários",
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: Dimens.textSize4,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, "/ui/employees");
-                    }),
-
-                Styles().div_horizontal,
+                            onTap: () {
+                              Navigator.pushNamed(context, "/ui/employees");
+                            }),
+                        Styles().div_horizontal,
+                      ],
+                    )),
 
                 GestureDetector(
                     child: Container(

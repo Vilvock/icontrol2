@@ -8,22 +8,24 @@ import '../../res/styles.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   String title;
   bool isVisibleBackButton;
-  bool isVisibleAddButton;
+  bool isVisibleEmployeeAddButton;
+  bool isVisibleTaskAddButton;
   bool isVisibleNotificationsButton;
   bool isVisibleSearchButton;
 
   CustomAppBar(
       {this.title: "",
       this.isVisibleBackButton = false,
-      this.isVisibleAddButton = false,
+      this.isVisibleEmployeeAddButton = false,
+      this.isVisibleTaskAddButton = false,
       this.isVisibleNotificationsButton = false,
       this.isVisibleSearchButton = false});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      actions: _returnFavoriteIcon(this.isVisibleAddButton,
-          this.isVisibleNotificationsButton, this.isVisibleSearchButton, context),
+      actions: _returnFavoriteIcon(this.isVisibleEmployeeAddButton,
+          this.isVisibleNotificationsButton, this.isVisibleSearchButton, this.isVisibleTaskAddButton, context),
       automaticallyImplyLeading: this.isVisibleBackButton,
       leading: _returnBackIcon(this.isVisibleBackButton, context),
       backgroundColor: Colors.transparent,
@@ -81,13 +83,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   List<Widget> _returnFavoriteIcon(
-      bool isVisibleAddButton,
+      bool isVisibleEmployeeAddButton,
       bool isVisibleNotificationsButton,
       bool isVisibleSearchButton,
+      bool isVisibleTaskAddButton,
       BuildContext context) {
     List<Widget> _widgetList = <Widget>[];
 
-    if (isVisibleAddButton) {
+    if (isVisibleEmployeeAddButton) {
       _widgetList.add(IconButton(
         icon: Icon(
           Icons.add,
@@ -110,6 +113,33 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             );
             Navigator.pushNamed(context, "/ui/user_addresses");
           }
+        },
+      ));
+    }
+
+    if (isVisibleTaskAddButton) {
+      _widgetList.add(IconButton(
+        icon: Icon(
+          Icons.add,
+          color: Colors.black,
+        ),
+        onPressed: () async {
+
+          // final result = await showModalBottomSheet<dynamic>(
+          //     isScrollControlled: true,
+          //     context: context,
+          //     shape: Styles().styleShapeBottomSheet,
+          //     clipBehavior: Clip.antiAliasWithSaveLayer,
+          //     builder: (BuildContext context) {
+          //       return EmployeeFormAlertDialog();}
+          // );
+          // if(result == true){
+          //   Navigator.popUntil(
+          //     context,
+          //     ModalRoute.withName('/ui/home'),
+          //   );
+          //   Navigator.pushNamed(context, "/ui/user_addresses");
+          // }
         },
       ));
     }

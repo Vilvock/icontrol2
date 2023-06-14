@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../res/dimens.dart';
 import '../../res/owner_colors.dart';
@@ -15,216 +16,186 @@ class TiresControl extends StatefulWidget {
 class _TiresControl extends State<TiresControl> {
   bool _isLoading = false;
 
+  Future<void> _pullRefresh() async {
+    setState(() {
+      _isLoading = true;
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: CustomAppBar(title: "Controle de pneus", isVisibleBackButton: false),
-        body:  Container(
-                height: double.infinity,
-                child: Stack(children: [
-                  ListView.builder(
-                    padding: EdgeInsets.only(bottom: 300),
-                    itemCount: 7,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              Dimens.radiusApplication),
-                        ),
-                        margin: EdgeInsets.all(Dimens.minMarginApplication),
-                        child: Container(
-                          padding: EdgeInsets.all(Dimens.paddingApplication),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.only(
-                                      right: Dimens.minMarginApplication),
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                          Dimens.radiusApplication),
-                                      child: Image.asset(
-                                        'images/person.jpg',
-                                        height: 90,
-                                        width: 90,
-                                      ))),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      Strings.shortLoremIpsum,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: Dimens.textSize6,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        height: Dimens.minMarginApplication),
-                                    Text(
-                                      Strings.longLoremIpsum,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: Dimens.textSize5,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    SizedBox(height: Dimens.marginApplication),
-                                    Text(
-                                      "R\$ 50,00",
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: Dimens.textSize6,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        height: Dimens.minMarginApplication),
-                                    Divider(
-                                      color: Colors.black12,
-                                      height: 2,
-                                      thickness: 1.5,
-                                    ),
-                                    SizedBox(
-                                        height: Dimens.minMarginApplication),
-                                    IntrinsicHeight(
-                                        child: Row(
-                                          children: [
-                                            Icon(size: 20,Icons.favorite_border_outlined),
-                                            Text(
-                                              "Mover para os favoritos",
-                                              style: TextStyle(
-                                                fontFamily: 'Inter',
-                                                fontSize: Dimens.textSize4,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            SizedBox(width: Dimens.minMarginApplication),
-                                            VerticalDivider(
-                                              color: Colors.black12,
-                                              width: 2,
-                                              thickness: 1.5,
-                                            ),
-                                            SizedBox(width: Dimens.minMarginApplication),
+      resizeToAvoidBottomInset: false,
+      appBar:
+          CustomAppBar(title: "Controle de pneus", isVisibleBackButton: false),
+      body: RefreshIndicator(
+          onRefresh: _pullRefresh,
+          child: /*FutureBuilder<List<Map<String, dynamic>>>(
+            future: listOrders(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                // final responseItem = Order.fromJson(snapshot.data![0]);
 
-                                            Icon(size: 20,Icons.delete_outline),
-                                            Text(
-                                              "Remover",
+                if (responseItem.rows != 0) {
+                  return */
+              ListView.builder(
+            itemCount: 5,
+            itemBuilder: (context, index) {
+              // final response = Order.fromJson(snapshot.data![index]);
+
+              // Pendente,Aprovado,Rejeitado,Cancelado,Devolvido
+
+              var _statusColor = OwnerColors.lightGrey;
+
+              // switch (response.status_pagamento) {
+              //   case "Pendente":
+              //     _statusColor = OwnerColors.darkGrey;
+              //     break;
+              //   case "Aprovado":
+              //
+              //     _statusColor = OwnerColors.colorPrimaryDark;
+              //     break;
+              //   case "Rejeitado":
+              //
+              //     _statusColor = Colors.yellow[700];
+              //     break;
+              //   case "Cancelado":
+              //
+              //     _statusColor = Colors.red;
+              //     break;
+              //   case "Devolvido":
+              //
+              //     _statusColor = OwnerColors.darkGrey;
+              //     break;
+              // }
+
+              return InkWell(
+                  onTap: () => {
+                        // Navigator.pushNamed(
+                        //     context, "/ui/order_detail",
+                        //     arguments: {
+                        //       "id": response.id,
+                        //     })
+                      },
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(Dimens.minRadiusApplication),
+                    ),
+                    margin: EdgeInsets.all(Dimens.minMarginApplication),
+                    child: Container(
+                      padding: EdgeInsets.all(Dimens.paddingApplication),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Container(
+                          //     margin: EdgeInsets.only(
+                          //         right: Dimens.minMarginApplication),
+                          //     child: ClipRRect(
+                          //         borderRadius: BorderRadius.circular(
+                          //             Dimens.minRadiusApplication),
+                          //         child: Image.asset(
+                          //           'images/person.jpg',
+                          //           height: 90,
+                          //           width: 90,
+                          //         ))),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  Strings.littleLoremIpsum,
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: Dimens.textSize5,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height: Dimens.minMarginApplication),
+                                Text(
+                                  Strings.littleLoremIpsum,
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: Dimens.textSize4,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height: Dimens.marginApplication),
+                                Text(
+                                  "Ver detalhes",
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: Dimens.textSize4,
+                                    color: OwnerColors.colorPrimary,
+                                  ),
+                                ),
+                                SizedBox(height: Dimens.minMarginApplication),
+                                Divider(
+                                  color: Colors.black12,
+                                  height: 2,
+                                  thickness: 1.5,
+                                ),
+                                SizedBox(height: Dimens.minMarginApplication),
+                                Align(
+                                    alignment: AlignmentDirectional.bottomEnd,
+                                    child: Card(
+                                        color: _statusColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              Dimens.minRadiusApplication),
+                                        ),
+                                        child: Container(
+                                            padding: EdgeInsets.all(
+                                                Dimens.minPaddingApplication),
+                                            child: Text(
+                                              "status",
                                               style: TextStyle(
                                                 fontFamily: 'Inter',
-                                                fontSize: Dimens.textSize4,
-                                                color: Colors.black,
+                                                fontSize: Dimens.textSize5,
+                                                color: Colors.white,
                                               ),
-                                            ),
-                                          ],
-                                        ))
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                Dimens.radiusApplication),
-                          ),
-                          margin: EdgeInsets.all(Dimens.minMarginApplication),
-                          child: Container(
-                            padding: EdgeInsets.all(Dimens.paddingApplication),
-                            child: Column(children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Subtotal",
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: Dimens.textSize5,
-                                        color: Colors.black45,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    "-- , --",
-                                    style: TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: Dimens.textSize5,
-                                      color: Colors.black45,
-                                    ),
-                                  ),
-                                ],
+                                            )))),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ));
+            },
+          )
+          /* } else {
+                  return Container(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height / 20),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                                child: Lottie.network(
+                                    height: 160,
+                                    'https://assets3.lottiefiles.com/private_files/lf30_cgfdhxgx.json')),
+                            SizedBox(height: Dimens.marginApplication),
+                            Text(
+                              Strings.empty_list,
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: Dimens.textSize5,
+                                color: Colors.black,
                               ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Total",
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: Dimens.textSize6,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    "-- , --",
-                                    style: TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: Dimens.textSize6,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: Dimens.marginApplication),
-                              Divider(
-                                color: Colors.black12,
-                                height: 2,
-                                thickness: 1.5,
-                              ),
-                              SizedBox(height: Dimens.marginApplication),
-                              Container(
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              OwnerColors.colorPrimary),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pushNamed(context, "/ui/method_payment");
-                                    },
-                                    child: Text(
-                                      "Escolher método de pagamento",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: Dimens.textSize8,
-                                          color: Colors.white,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.normal,
-                                          decoration: TextDecoration.none),
-                                    )),
-                              ),
-                            ]),
-                          ))
-                    ],
-                  )
-                ])));
+                            ),
+                          ]));
+                }
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+              return Center(child: CircularProgressIndicator());
+            },
+          ),
+     */
+          ),
+    );
   }
 }

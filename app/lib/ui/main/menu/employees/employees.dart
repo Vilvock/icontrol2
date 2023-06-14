@@ -220,7 +220,7 @@ class _Employees extends State<Employees> {
       appBar: CustomAppBar(
         title: "Meus funcionários",
         isVisibleBackButton: true,
-        isVisibleAddButton: true,
+        isVisibleEmployeeAddButton: true,
       ),
       body: RefreshIndicator(
         onRefresh: _pullRefresh,

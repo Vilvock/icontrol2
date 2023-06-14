@@ -121,6 +121,7 @@ class _ContainerHomeState extends State<ContainerHome> {
   @override
   void initState() {
     super.initState();
+    saveFcm();
   }
 
 

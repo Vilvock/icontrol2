@@ -226,7 +226,7 @@ class _Employees extends State<Employees> {
         onRefresh: _pullRefresh,
         child: FutureBuilder<List<Map<String, dynamic>>>(
           future:
-              listEmployees(Preferences.getUserData()!.id_empresa.toString()),
+              listEmployees(Preferences.getUserData()!.id.toString()),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final responseItem = Employee.fromJson(snapshot.data![0]);
@@ -434,7 +434,7 @@ class _Employees extends State<Employees> {
                                                                               .yes),
                                                                           onPressed:
                                                                               () {
-                                                                            deleteEmployee(Preferences.getUserData()!.id_empresa.toString(),
+                                                                            deleteEmployee(Preferences.getUserData()!.id.toString(),
                                                                                 response.id.toString());
                                                                             Navigator.of(context).pop();
                                                                           }));

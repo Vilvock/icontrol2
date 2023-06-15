@@ -357,7 +357,7 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
 
                       if (widget.id != null) {
                         await updateEmployee(
-                            Preferences.getUserData()!.id_empresa.toString(),
+                            Preferences.getUserData()!.id.toString(),
                             widget.id!,
                             nameController.text.toString(),
                             emailController.text.toString(),
@@ -366,7 +366,7 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
                             birthController.text.toString());
                       } else {
                         await saveEmployee(
-                            Preferences.getUserData()!.id_empresa.toString(),
+                            Preferences.getUserData()!.id.toString(),
                             nameController.text.toString(),
                             emailController.text.toString(),
                             cellphoneController.text.toString(),

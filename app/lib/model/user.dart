@@ -31,6 +31,13 @@ class User extends GlobalWSModel{
   final String cnpj;
   final int id_empresa;
   final String mensagem;
+  final String plano_id;
+  final String plano_nome;
+  final String tempo_total_dias;
+  final String tempo_restante_dias;
+  final String tempo_restante_horas;
+  final String tempo_restante_minutos;
+
 
   User({
     required this.nome,
@@ -61,7 +68,13 @@ class User extends GlobalWSModel{
     required this.cpf,
     required this.cnpj,
     required this.id_empresa,
-    required this.mensagem, required super.status, required super.msg, required super.id, required super.rows,
+    required this.mensagem,
+    required this.plano_id,
+    required this.plano_nome,
+    required this.tempo_total_dias,
+    required this.tempo_restante_dias,
+    required this.tempo_restante_horas,
+    required this.tempo_restante_minutos, required super.status, required super.msg, required super.id, required super.rows,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -95,6 +108,12 @@ class User extends GlobalWSModel{
       cnpj: json['cnpj'],
       id_empresa: json['id_empresa'],
       mensagem: json['mensagem'],
+      plano_id: json['plano_id'],
+      plano_nome: json['plano_nome'],
+      tempo_total_dias: json['tempo_total_dias'],
+      tempo_restante_dias: json['tempo_restante_dias'],
+      tempo_restante_horas: json['tempo_restante_horas'],
+      tempo_restante_minutos: json['tempo_restante_minutos'],
       status: json['status'],
       msg: json['msg'],
       id: json['id'],

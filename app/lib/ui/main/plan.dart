@@ -146,13 +146,31 @@ class _Plan extends State<Plan> {
                               ),
                             ),
                             SizedBox(height: 4),
-                            Text(
-                              Strings.littleLoremIpsum,
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: Dimens.textSize6,
-                                color: OwnerColors.colorPrimary,
-                              ),
+                            FutureBuilder<Map<String, dynamic>>(
+                              future: loadPlan(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  final response = User.fromJson(snapshot.data!);
+    // {
+    // "plano_id": 2,
+    // "plano_nome": "Mensal",
+    // "tempo_total_dias": 30,
+    // "tempo_restante_dias": 17,
+    // "tempo_restante_horas": 7,
+    // "tempo_restante_minutos": 3,
+                                  return Text(
+                                    Strings.littleLoremIpsum,
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: Dimens.textSize6,
+                                      color: OwnerColors.colorPrimary,
+                                    ),
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return Text('${snapshot.error}');
+                                }
+                                return Styles().defaultLoading;
+                              },
                             ),
                             SizedBox(height: Dimens.marginApplication),
                             Styles().div_horizontal,

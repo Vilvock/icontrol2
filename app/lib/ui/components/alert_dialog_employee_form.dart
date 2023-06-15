@@ -349,7 +349,7 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
                       if (!validator.validateEmail(emailController.text)) return;
                       if (!validator.validateCellphone(cellphoneController.text)) return;
                       if (!validator.validateCPF(cpfController.text)) return;
-                      // if (!validator.validateBirth(birthController.text)) return;
+                      if (!validator.validateBirth(birthController.text, "dd/MM/yyyy")) return;
 
                       setState(() {
                         _isLoading = true;

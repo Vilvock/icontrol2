@@ -27,49 +27,56 @@ class Validator {
     * */
 
   bool validateBirth(String date, String format) {
-    try {
-      int day = 1, month = 1, year = 2000;
+    int day = 1, month = 1, year = 2000;
 
-      //Get separator data  10/10/2020, 2020-10-10, 10.10.2020
-      String separator = RegExp("([-/.])").firstMatch(date)!.group(0)![0];
+    //Get separator data  10/10/2020, 2020-10-10, 10.10.2020
+    String separator = RegExp("([-/.])").firstMatch(date)!.group(0)![0];
 
-      //Split by separator [mm, dd, yyyy]
-      var frSplit = format.split(separator);
-      //Split by separtor [10, 10, 2020]
-      var dtSplit = date.split(separator);
+    //Split by separator [mm, dd, yyyy]
+    var frSplit = format.split(separator);
+    //Split by separtor [10, 10, 2020]
+    var dtSplit = date.split(separator);
 
-      for (int i = 0; i < frSplit.length; i++) {
-        var frm = frSplit[i].toLowerCase();
-        var vl = dtSplit[i];
+    for (int i = 0; i < frSplit.length; i++) {
+      var frm = frSplit[i].toLowerCase();
+      var vl = dtSplit[i];
 
-        if (frm == "dd")
-          day = int.parse(vl);
-        else if (frm == "mm")
-          month = int.parse(vl);
-        else if (frm == "yyyy")
-          year = int.parse(vl);
-      }
+      if (frm == "dd")
+        day = int.parse(vl);
+      else if (frm == "mm")
+        month = int.parse(vl);
+      else if (frm == "yyyy") year = int.parse(vl);
+    }
 
-      //First date check
-      //The dart does not throw an exception for invalid date.
-      var now = DateTime.now();
-      if(month > 12 || month < 1 || day < 1 || day > daysInMonth(month, year) || year < 1810 || (year > now.year && day > now.day && month > now.month))
-        throw Exception("Date birth invalid.");
+    //First date check
+    //The dart does not throw an exception for invalid date.
+    var now = DateTime.now();
 
-      return true;
-    } catch (e) {
+    var validDate = now.year - 120;
+
+    if (month > 12 ||
+        month < 1 ||
+        day < 1 ||
+        day > daysInMonth(month, year) ||
+        year < validDate ||
+        (year > now.year && day > now.day && month > now.month)) {
       ApplicationMessages(context: context).showMessage(Strings.birth_denied);
       return false;
+    } else {
+      return true;
     }
   }
 
   static int daysInMonth(int month, int year) {
-    int days = 28 + (month + (month/8).floor()) % 2 + 2 % month + 2 * (1/month).floor();
-    return (isLeapYear(year) && month == 2)? 29 : days;
+    int days = 28 +
+        (month + (month / 8).floor()) % 2 +
+        2 % month +
+        2 * (1 / month).floor();
+    return (isLeapYear(year) && month == 2) ? 29 : days;
   }
 
-  static bool isLeapYear(int year)
-  => (( year % 4 == 0 && year % 100 != 0 ) || year % 400 == 0 );
+  static bool isLeapYear(int year) =>
+      ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0);
 
   bool validateEmail(String email) {
     if (RegExp(
@@ -83,8 +90,7 @@ class Validator {
   }
 
   bool validatePassword(String password) {
-    RegExp regex =
-        RegExp(r'^(?=.*?[A-Z]).{8,}$');
+    RegExp regex = RegExp(r'^(?=.*?[A-Z]).{8,}$');
     if (password.isEmpty) {
       ApplicationMessages(context: context)
           .showMessage(Strings.password_denied);

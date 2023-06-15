@@ -9,7 +9,7 @@ abstract class Links {
   static const String VERIFY_PLAN = "usuarios/verificaPlano/";
   static const String LOAD_PLAN = "usuarios/planoUser/";
   static const String LIST_PLANS = "usuarios/listPlanos/";
-  static const String LIST_HISTORY_USER_PLANS = "/usuarios/planosHistorico/";
+  static const String LIST_HISTORY_USER_PLANS = "usuarios/planosHistorico/";
   static const String UPDATE_USER_DATA = "usuarios/updateUser/";
   static const String LOAD_PROFILE = "usuarios/perfil/";
   static const String UPDATE_AVATAR = "usuarios/updateavatar/";

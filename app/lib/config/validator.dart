@@ -59,7 +59,9 @@ class Validator {
         day < 1 ||
         day > daysInMonth(month, year) ||
         year < validDate ||
-        (year > now.year && day > now.day && month > now.month)) {
+        year > now.year ||
+        (year == now.year && month > now.month) ||
+        (year == now.year && month == now.month && day > now.day)) {
       ApplicationMessages(context: context).showMessage(Strings.birth_denied);
       return false;
     } else {

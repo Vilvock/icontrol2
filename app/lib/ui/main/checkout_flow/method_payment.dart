@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../global/application_constant.dart';
 import '../../../res/dimens.dart';
 import '../../../res/owner_colors.dart';
 import '../../../res/styles.dart';
@@ -15,12 +16,25 @@ class MethodPayment extends StatefulWidget {
 class _MethodPayment extends State<MethodPayment> {
   bool _isLoading = false;
 
+  late int _idPlan;
+
+  void goToCheckout(String typePayment) {
+
+
+    Navigator.pushNamed(
+        context, "/ui/checkout",
+        arguments: {
+          "type_payment": typePayment,
+          "id_plan": _idPlan,
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     Map data = {};
     data = ModalRoute.of(context)!.settings.arguments as Map;
 
-    // _idPlan = data['id_plan'];
+    _idPlan = data['id_plan'];
 
 
     return Scaffold(
@@ -35,7 +49,7 @@ class _MethodPayment extends State<MethodPayment> {
                   SizedBox(height: Dimens.minMarginApplication),
                   InkWell(
                       onTap: () {
-                        // goToCheckout(ApplicationConstant.PIX.toString());
+                        goToCheckout(ApplicationConstant.PIX.toString());
                       },
                       child: Card(
                           shape: RoundedRectangleBorder(
@@ -92,7 +106,7 @@ class _MethodPayment extends State<MethodPayment> {
                   InkWell(
                       onTap: () {
 
-                        // goToCheckout(ApplicationConstant.CREDIT_CARD.toString());
+                        goToCheckout(ApplicationConstant.CREDIT_CARD.toString());
 
                       },
                       child: Card(
@@ -150,7 +164,7 @@ class _MethodPayment extends State<MethodPayment> {
                   InkWell(
                       onTap: () {
 
-                        // goToCheckout(ApplicationConstant.TICKET.toString());
+                        goToCheckout(ApplicationConstant.TICKET.toString());
                       },
                       child: Card(
                           shape: RoundedRectangleBorder(
@@ -209,7 +223,7 @@ class _MethodPayment extends State<MethodPayment> {
                   InkWell(
                       onTap: () {
 
-                        // goToCheckout(ApplicationConstant.TICKET_IN_TERM.toString());
+                        goToCheckout(ApplicationConstant.TICKET_IN_TERM.toString());
 
                       },
                       child: Card(

@@ -179,11 +179,7 @@ class _Plan extends State<Plan> {
                                   style: Styles().styleDefaultButton,
                                   onPressed: () {
 
-                                    Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Plans()),
-                                        ModalRoute.withName("/ui/plans"));
+                                    Navigator.pushNamed(context, "/ui/plans");
                                   },
                                   child: Text(
                                     "Mostrar planos",

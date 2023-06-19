@@ -28,21 +28,7 @@ class _Checkout extends State<Checkout> {
   bool _isLoading = false;
   bool _isLoadingDialog = false;
 
-  late int _idCart;
-  late String _totalValue;
   late String _typePayment;
-
-  late String _idAddress;
-  late String _cep;
-  late String _city;
-  late String _state;
-  late String _nbh;
-  late String _address;
-  late String _number;
-  late String _complement;
-
-  late String _cartValue;
-  late String _freightValue;
 
   final postRequest = PostRequest();
 
@@ -104,7 +90,7 @@ class _Checkout extends State<Checkout> {
         ApplicationMessages(context: context)
             .showMessage("Não foi possível autenticar este cartão!");
       } else {
-        payWithCreditCard(idOrder, _totalValue, response.id);
+        payWithCreditCard(idOrder, "", response.id);
       }
 
       // setState(() {});
@@ -142,19 +128,7 @@ class _Checkout extends State<Checkout> {
           Navigator.pushNamedAndRemoveUntil(
               context, "/ui/success", (route) => false,
               arguments: {
-                "id_cart": _idCart,
                 "payment_type": _typePaymentName,
-                "id_order": idOrder,
-                "cep": _cep.toString(),
-                "estado": _state.toString(),
-                "cidade": _city.toString(),
-                "endereco": _address.toString(),
-                "bairro": _nbh.toString(),
-                "numero": _number.toString(),
-                "complemento": _complement.toString(),
-                "total_items": _cartValue,
-                "freight_value": _freightValue,
-                "total_value": _totalValue,
               });
         });
       } else {}
@@ -191,19 +165,7 @@ class _Checkout extends State<Checkout> {
           Navigator.pushNamedAndRemoveUntil(
               context, "/ui/success", (route) => false,
               arguments: {
-                "id_cart": _idCart,
                 "payment_type": _typePaymentName,
-                "id_order": idOrder,
-                "cep": _cep.toString(),
-                "estado": _state.toString(),
-                "cidade": _city.toString(),
-                "endereco": _address.toString(),
-                "bairro": _nbh.toString(),
-                "numero": _number.toString(),
-                "complemento": _complement.toString(),
-                "total_items": _cartValue,
-                "freight_value": _freightValue,
-                "total_value": _totalValue,
               });
         });
       } else {}
@@ -253,20 +215,7 @@ class _Checkout extends State<Checkout> {
           Navigator.pushNamedAndRemoveUntil(
               context, "/ui/success", (route) => false,
               arguments: {
-                "id_cart": _idCart,
                 "payment_type": _typePaymentName,
-                "id_order": idOrder,
-                "barCode": response.cod_barras,
-                "cep": _cep.toString(),
-                "estado": _state.toString(),
-                "cidade": _city.toString(),
-                "endereco": _address.toString(),
-                "bairro": _nbh.toString(),
-                "numero": _number.toString(),
-                "complemento": _complement.toString(),
-                "total_items": _cartValue,
-                "freight_value": _freightValue,
-                "total_value": _totalValue,
               });
         });
       } else {}
@@ -301,21 +250,7 @@ class _Checkout extends State<Checkout> {
         Navigator.pushNamedAndRemoveUntil(
             context, "/ui/success", (route) => false,
             arguments: {
-              "id_cart": _idCart,
-              "base64": response.qrcode_64,
-              "qrCodeClipboard": response.qrcode,
               "payment_type": _typePaymentName,
-              "id_order": idOrder,
-              "cep": _cep.toString(),
-              "estado": _state.toString(),
-              "cidade": _city.toString(),
-              "endereco": _address.toString(),
-              "bairro": _nbh.toString(),
-              "numero": _number.toString(),
-              "complemento": _complement.toString(),
-              "total_items": _cartValue,
-              "freight_value": _freightValue,
-              "total_value": _totalValue,
             });
       } else {}
       ApplicationMessages(context: context).showMessage(response.msg);
@@ -331,6 +266,20 @@ class _Checkout extends State<Checkout> {
 
     _typePayment = data['type_payment'];
 
+    switch (_typePayment) {
+      case "1":
+        _typePaymentName = "Cartão de crédito";
+        break;
+      case "2":
+        _typePaymentName = "Boleto bancário";
+        break;
+      case "3":
+        _typePaymentName = "PIX";
+        break;
+      case "4":
+        _typePaymentName = "Boleto à prazo";
+        break;
+    }
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -412,7 +361,7 @@ class _Checkout extends State<Checkout> {
                                       ),
                                     ),
                                     Text(
-                                      _totalValue,
+                                      "",
                                       style: TextStyle(
                                           fontFamily: 'Inter',
                                           fontSize: Dimens.textSize6,

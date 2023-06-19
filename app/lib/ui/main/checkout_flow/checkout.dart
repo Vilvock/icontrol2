@@ -13,6 +13,8 @@ import '../../../../res/strings.dart';
 import '../../../../web_service/links.dart';
 import '../../../../web_service/service_response.dart';
 import '../../../model/payment.dart';
+import '../../../res/styles.dart';
+import '../../components/alert_dialog_credit_card_form.dart';
 import '../../components/custom_app_bar.dart';
 
 class Checkout extends StatefulWidget {
@@ -357,171 +359,6 @@ class _Checkout extends State<Checkout> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Text(
-                            //   "Resumo",
-                            //   style: TextStyle(
-                            //     fontFamily: 'Inter',
-                            //     fontSize: Dimens.textSize6,
-                            //     fontWeight: FontWeight.bold,
-                            //     color: Colors.black,
-                            //   ),
-                            // ),
-                            // SizedBox(height: Dimens.minMarginApplication),
-                            Text(
-                              "Endereço para entrega:",
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: Dimens.textSize5,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                            SizedBox(height: Dimens.minMarginApplication),
-                            Text(
-                              "$_city - $_state" +
-                                  "\n" +
-                                  "$_nbh, $_address $_number" +
-                                  "\n\n" +
-                                  "$_complement",
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: Dimens.textSize5,
-                                color: Colors.black,
-                              ),
-                            ),
-                            SizedBox(height: Dimens.marginApplication),
-                            Styles().div_horizontal,
-                            SizedBox(height: Dimens.marginApplication),
-                            Text(
-                              "Produtos:",
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: Dimens.textSize5,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                            FutureBuilder<Cart>(
-                              future: listCartItems(_idCart.toString()),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return ListView.builder(
-                                    primary: false,
-                                    shrinkWrap: true,
-                                    itemCount: snapshot.data!.itens.length,
-                                    itemBuilder: (context, index) {
-                                      final response = Item.fromJson(
-                                          snapshot.data!.itens[index]);
-
-                                      return InkWell(
-                                          onTap: () => {},
-                                          child: Card(
-                                            elevation: 0,
-                                            color:
-                                                OwnerColors.categoryLightGrey,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(Dimens
-                                                      .minRadiusApplication),
-                                            ),
-                                            margin: EdgeInsets.all(
-                                                Dimens.minMarginApplication),
-                                            child: Container(
-                                              padding: EdgeInsets.all(
-                                                  Dimens.paddingApplication),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: Dimens
-                                                              .minMarginApplication),
-                                                      child: ClipRRect(
-                                                          borderRadius: BorderRadius
-                                                              .circular(Dimens
-                                                                  .minRadiusApplication),
-                                                          child: Image.network(
-                                                            ApplicationConstant
-                                                                    .URL_PRODUCT_PHOTO +
-                                                                response
-                                                                    .url_foto
-                                                                    .toString(),
-                                                            height: 90,
-                                                            width: 90,
-                                                            errorBuilder: (context,
-                                                                    exception,
-                                                                    stackTrack) =>
-                                                                Icon(
-                                                                    Icons.error,
-                                                                    size: 90),
-                                                          ))),
-                                                  Expanded(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          response.nome_produto,
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: TextStyle(
-                                                            fontFamily: 'Inter',
-                                                            fontSize: Dimens
-                                                                .textSize5,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Colors.black,
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                            height: Dimens
-                                                                .minMarginApplication),
-                                                        Text(
-                                                          "Quantidade: " +
-                                                              response.qtd
-                                                                  .toString(),
-                                                          style: TextStyle(
-                                                            fontFamily: 'Inter',
-                                                            fontSize: Dimens
-                                                                .textSize4,
-                                                            color: Colors.black,
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                            height: Dimens
-                                                                .minMarginApplication),
-                                                        Text(
-                                                          response.valor,
-                                                          style: TextStyle(
-                                                            fontFamily: 'Inter',
-                                                            fontSize: Dimens
-                                                                .textSize6,
-                                                            color: OwnerColors
-                                                                .darkGreen,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ));
-                                    },
-                                  );
-                                } else if (snapshot.hasError) {
-                                  return Text('${snapshot.error}');
-                                }
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              },
-                            ),
-                            SizedBox(height: Dimens.marginApplication),
-                            Styles().div_horizontal,
-                            SizedBox(height: Dimens.marginApplication),
                             Text(
                               "Pagamento",
                               style: TextStyle(
@@ -566,53 +403,7 @@ class _Checkout extends State<Checkout> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Frete",
-                                        style: TextStyle(
-                                          fontFamily: 'Inter',
-                                          fontSize: Dimens.textSize5,
-                                          color: Colors.black45,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      _freightValue,
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: Dimens.textSize5,
-                                        color: Colors.black45,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: Dimens.minMarginApplication),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "Valor total em produtos",
-                                        style: TextStyle(
-                                          fontFamily: 'Inter',
-                                          fontSize: Dimens.textSize5,
-                                          color: Colors.black45,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      _cartValue,
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: Dimens.textSize5,
-                                        color: Colors.black45,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: Dimens.minMarginApplication),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "Valor total com a entrega",
+                                        "Valor total",
                                         style: TextStyle(
                                           fontFamily: 'Inter',
                                           fontSize: Dimens.textSize6,
@@ -688,20 +479,6 @@ class _Checkout extends State<Checkout> {
                                                                               true;
                                                                         });
 
-                                                                        await addOrder(
-                                                                            _idCart.toString(),
-                                                                            ApplicationConstant
-                                                                                .TYPE_DELIVERY_1
-                                                                                .toString(),
-                                                                            _idAddress.toString(),
-                                                                            null,
-                                                                            null,
-                                                                            _typePayment,
-                                                                            _cartValue,
-                                                                            _freightValue,
-                                                                            _totalValue,
-                                                                            "");
-
                                                                         setState(
                                                                             () {
                                                                           _isLoadingDialog =
@@ -726,39 +503,16 @@ class _Checkout extends State<Checkout> {
                                                                               Dimens.buttonIndicatorStrokes,
                                                                         ))
                                                                     : Text(
-                                                                        "Realizar pedido",
+                                                                        "Realizar compra",
                                                                         style: Styles()
                                                                             .styleDefaultTextButton),
                                                           ),
                                                         ),
                                                       );
                                                     });
-                                                // if(result == true){
-                                                //   Navigator.popUntil(
-                                                //     context,
-                                                //     ModalRoute.withName('/ui/home'),
-                                                //   );
-                                                //   Navigator.pushNamed(context, "/ui/user_addresses");
-                                                // }
-                                                //
-                                                // await payWithCreditCard(
-                                                //     _idOrder.toString(),
-                                                //     _totalValue,
-                                                //     "");
+
                                               } else {
-                                                await addOrder(
-                                                    _idCart.toString(),
-                                                    ApplicationConstant
-                                                        .TYPE_DELIVERY_1
-                                                        .toString(),
-                                                    _idAddress.toString(),
-                                                    null,
-                                                    null,
-                                                    _typePayment,
-                                                    _cartValue,
-                                                    _freightValue,
-                                                    _totalValue,
-                                                    "");
+
                                               }
 
                                               setState(() {
@@ -780,7 +534,7 @@ class _Checkout extends State<Checkout> {
                                               _typePaymentName ==
                                                       "Cartão de crédito"
                                                   ? "Inserir dados do cartão"
-                                                  : "Realizar pedido",
+                                                  : "Realizar compra",
                                               style: Styles()
                                                   .styleDefaultTextButton),
                                     )),

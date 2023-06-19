@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../res/dimens.dart';
 import '../../../res/owner_colors.dart';
+import '../../../res/styles.dart';
 import '../../components/custom_app_bar.dart';
 
 class MethodPayment extends StatefulWidget {
@@ -15,21 +17,254 @@ class _MethodPayment extends State<MethodPayment> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar:
-            CustomAppBar(title: "Escolha um Método de pagamento", isVisibleBackButton: true),
-        body:
-                RefreshIndicator(onRefresh: _pullRefresh, child: Container()));
-  }
+    Map data = {};
+    data = ModalRoute.of(context)!.settings.arguments as Map;
 
-  Future<void> _pullRefresh() async {
-    setState(() {
-      _isLoading = true;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Sending Message"),
-      ));
-      _isLoading = false;
-    });
+    // _idPlan = data['id_plan'];
+
+
+    return Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: CustomAppBar(
+            title: "Escolha um Método de pagamento", isVisibleBackButton: true),
+        body: Container(
+            child: SingleChildScrollView(
+                child: Column(children: [
+                  SizedBox(height: Dimens.minMarginApplication),
+                  Styles().div_horizontal,
+                  SizedBox(height: Dimens.minMarginApplication),
+                  InkWell(
+                      onTap: () {
+                        // goToCheckout(ApplicationConstant.PIX.toString());
+                      },
+                      child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.circular(Dimens.minRadiusApplication),
+                          ),
+                          margin: EdgeInsets.all(Dimens.minMarginApplication),
+                          child: Container(
+                            padding: EdgeInsets.all(Dimens.minPaddingApplication),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                    margin: EdgeInsets.all(Dimens.minMarginApplication),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.minRadiusApplication),
+                                        child: Image.asset('images/qr_code.png',
+                                          height: 50, width: 50, color: Colors.black54,))),
+                                Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "PIX",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize5,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: Dimens.minMarginApplication,
+                                        ),
+                                        Text(
+                                          "Liberação das moedas de forma instantânea.",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize4,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.black38,
+                                  size: 20,
+                                ),
+                              ],
+                            ),
+                          ))),
+                  InkWell(
+                      onTap: () {
+
+                        // goToCheckout(ApplicationConstant.CREDIT_CARD.toString());
+
+                      },
+                      child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.circular(Dimens.minRadiusApplication),
+                          ),
+                          margin: EdgeInsets.all(Dimens.minMarginApplication),
+                          child: Container(
+                            padding: EdgeInsets.all(Dimens.minPaddingApplication),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                    margin: EdgeInsets.all(Dimens.minMarginApplication),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.minRadiusApplication),
+                                        child: Image.asset('images/credit_card.png',
+                                            height: 50, width: 50, color: Colors.black54))),
+                                Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Novo Cartão de Crédito",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize5,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: Dimens.minMarginApplication,
+                                        ),
+                                        Text(
+                                          "Pagamento de forma segura e instantânea.",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize4,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.black38,
+                                  size: 20,
+                                ),
+                              ],
+                            ),
+                          ))),
+                  InkWell(
+                      onTap: () {
+
+                        // goToCheckout(ApplicationConstant.TICKET.toString());
+                      },
+                      child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.circular(Dimens.minRadiusApplication),
+                          ),
+                          margin: EdgeInsets.all(Dimens.minMarginApplication),
+                          child: Container(
+                            padding: EdgeInsets.all(Dimens.minPaddingApplication),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                    margin: EdgeInsets.all(Dimens.minMarginApplication),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.minRadiusApplication),
+                                        child: Image.asset('images/ticket.png',
+                                            height: 50, width: 50, color: Colors.black54))),
+                                Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Boleto",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize5,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: Dimens.minMarginApplication,
+                                        ),
+                                        Text(
+                                          "Será aprovado em 1 a 2 dias úteis.",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize4,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.black38,
+                                  size: 20,
+                                ),
+                              ],
+                            ),
+                          ))),
+
+                  Visibility(/*visible: _profileResponse?.saldo_aprovado == 1, */child:
+                  InkWell(
+                      onTap: () {
+
+                        // goToCheckout(ApplicationConstant.TICKET_IN_TERM.toString());
+
+                      },
+                      child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.circular(Dimens.minRadiusApplication),
+                          ),
+                          margin: EdgeInsets.all(Dimens.minMarginApplication),
+                          child: Container(
+                            padding: EdgeInsets.all(Dimens.minPaddingApplication),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                    margin: EdgeInsets.all(Dimens.minMarginApplication),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.minRadiusApplication),
+                                        child: Image.asset('images/calendar.png',
+                                            height: 50, width: 50, color: Colors.black54))),
+                                Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Boleto à prazo",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize5,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: Dimens.minMarginApplication,
+                                        ),
+                                        Text(
+                                          "Parcele o valor total da compra.",
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: Dimens.textSize4,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.black38,
+                                  size: 20,
+                                ),
+
+                              ],
+                            ),
+                          ))))
+                ]))));
   }
 }

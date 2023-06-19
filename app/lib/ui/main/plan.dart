@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:icontrol/ui/main/plans.dart';
 
 import '../../config/preferences.dart';
 import '../../global/application_constant.dart';
@@ -48,27 +49,6 @@ class _Plan extends State<Plan> {
       final response = User.fromJson(parsedResponse);
 
       return parsedResponse;
-    } catch (e) {
-      throw Exception('HTTP_ERROR: $e');
-    }
-  }
-
-  Future<List<Map<String, dynamic>>> listAllPlans() async {
-    try {
-      final body = {"token": ApplicationConstant.TOKEN};
-
-      print('HTTP_BODY: $body');
-
-      final json = await postRequest.sendPostRequest(Links.LIST_PLANS, body);
-
-      List<Map<String, dynamic>> _map = [];
-      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
-
-      print('HTTP_RESPONSE: $_map');
-
-      final response = User.fromJson(_map[0]);
-
-      return _map;
     } catch (e) {
       throw Exception('HTTP_ERROR: $e');
     }
@@ -159,7 +139,7 @@ class _Plan extends State<Plan> {
     // "tempo_restante_horas": 7,
     // "tempo_restante_minutos": 3,
                                   return Text(
-                                    Strings.littleLoremIpsum,
+                                    response.plano_nome,
                                     style: TextStyle(
                                       fontFamily: 'Inter',
                                       fontSize: Dimens.textSize6,
@@ -197,7 +177,14 @@ class _Plan extends State<Plan> {
                               width: double.infinity,
                               child: ElevatedButton(
                                   style: Styles().styleDefaultButton,
-                                  onPressed: () {},
+                                  onPressed: () {
+
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Plans()),
+                                        ModalRoute.withName("/ui/plans"));
+                                  },
                                   child: Text(
                                     "Mostrar planos",
                                     style: Styles().styleDefaultTextButton,

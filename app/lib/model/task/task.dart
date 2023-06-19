@@ -1,5 +1,5 @@
 
-import 'global_ws_model.dart';
+import '../global_ws_model.dart';
 
 class Task extends GlobalWSModel{
   final String url;

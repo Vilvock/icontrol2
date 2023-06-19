@@ -12,6 +12,7 @@ import 'package:icontrol/ui/auth/register/register_company_data.dart';
 import 'package:icontrol/ui/auth/register/register_owner_data.dart';
 import 'package:icontrol/ui/intro/onboarding.dart';
 import 'package:icontrol/ui/intro/splash.dart';
+import 'package:icontrol/ui/main/checkout_flow/checkout.dart';
 import 'package:icontrol/ui/main/checkout_flow/method_payment.dart';
 import 'package:icontrol/ui/main/checkout_flow/sucess.dart';
 import 'package:icontrol/ui/main/home.dart';
@@ -19,6 +20,7 @@ import 'package:icontrol/ui/main/menu/employees/employees.dart';
 import 'package:icontrol/ui/main/menu/payments/payments.dart';
 import 'package:icontrol/ui/main/menu/user/profile.dart';
 import 'package:icontrol/ui/main/notifications/notifications.dart';
+import 'package:icontrol/ui/main/plans.dart';
 import 'package:icontrol/ui/utilities/pdf_viewer.dart';
 
 import 'config/notification_helper.dart';
@@ -107,6 +109,8 @@ void main() async {
       '/ui/notifications': (context) => Notifications(),
       '/ui/recover_password': (context) => RecoverPassword(),
       '/ui/employees': (context) => Employees(),
+      '/ui/plans': (context) => Plans(),
+      '/ui/checkout': (context) => Checkout(),
 
 
     },

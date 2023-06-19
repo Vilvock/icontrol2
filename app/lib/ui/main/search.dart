@@ -5,7 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:icontrol/model/employee.dart';
 import 'package:icontrol/model/equipment.dart';
-import 'package:icontrol/model/task.dart';
+import 'package:icontrol/model/task/task.dart';
 
 import '../../config/application_messages.dart';
 import '../../config/preferences.dart';

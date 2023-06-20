@@ -43,7 +43,7 @@ abstract class Links {
 
   //marcas
 
-  static const String SAVE_BRAND = "usuarios/saveMarca/";
+  static const String SAVE_BRAND = "usuarios/saveMarcas/";
   static const String UPDATE_BRAND = "usuarios/updateMarcas/";
   static const String LIST_BRANDS = "usuarios/listMarcas/";
   static const String DELETE_BRAND = "usuarios/excluirMarcas/";

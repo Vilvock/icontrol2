@@ -220,7 +220,7 @@ class _BrandFormAlertDialog extends State<BrandFormAlertDialog> {
                     // }
                         await saveBrand(
                           nameController.text.toString(),
-                          "",);
+                          "1",);
                       }
 
                       setState(() {

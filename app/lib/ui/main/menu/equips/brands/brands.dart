@@ -73,6 +73,8 @@ class _Brands extends State<Brands> {
 
       final response = Brand.fromJson(parsedResponse);
 
+      setState(() {});
+
       return parsedResponse;
     } catch (e) {
       throw Exception('HTTP_ERROR: $e');
@@ -113,8 +115,7 @@ class _Brands extends State<Brands> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(
                                         Dimens.minRadiusApplication),
-                                    side: response.status == 1
-                                            .toString() ? BorderSide(color: OwnerColors.colorPrimary, width: 2.0) : BorderSide(color: Colors.transparent, width: 0),
+                                    side: response.status == 1 ? BorderSide(color: OwnerColors.colorPrimary, width: 2.0) : BorderSide(color: Colors.transparent, width: 0),
                                   ),
                                   child: Container(
                                     padding: EdgeInsets.all(Dimens.paddingApplication),
@@ -152,7 +153,8 @@ class _Brands extends State<Brands> {
                                               SizedBox(
                                                   height: Dimens.minMarginApplication),
                                               Container(
-                                                  width: MediaQuery.of(context).size.width * 0.45,
+                                                  width: MediaQuery.of(context).size.width * 0.30,
+                                                  height: 40,
                                                   child: ElevatedButton(
                                                     style:
                                                     Styles().styleAlternativeButton,

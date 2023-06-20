@@ -5,10 +5,10 @@ colocar dados para atualizar no perfil os mesmo que ele colocou no cadastro
 retorno historico planos bugado
 
 1 - crud marcas OK (falta empilhamento de telas)
-2 - crud modelos (dentro de cada marca)
+2 - crud modelos (dentro de cada marca) (falta empilhamento de telas)
 3 - terminar fluxo compra de plano (todos metodos)
 
-4 - terminar crud funcionarios
+4 - terminar crud funcionarios (perguntar pro carlos se ta safe)
 5 - crud frotas
 6 - crud equipamentos
 

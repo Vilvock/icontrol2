@@ -72,6 +72,9 @@ class _Models extends State<Models> {
 
       final response = Model.fromJson(parsedResponse);
 
+
+      setState(() {});
+
       return parsedResponse;
     } catch (e) {
       throw Exception('HTTP_ERROR: $e');

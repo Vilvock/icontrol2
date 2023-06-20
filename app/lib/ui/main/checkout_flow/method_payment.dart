@@ -219,66 +219,66 @@ class _MethodPayment extends State<MethodPayment> {
                             ),
                           ))),
 
-                  Visibility(/*visible: _profileResponse?.saldo_aprovado == 1, */child:
-                  InkWell(
-                      onTap: () {
-
-                        goToCheckout(ApplicationConstant.TICKET_IN_TERM.toString());
-
-                      },
-                      child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.circular(Dimens.minRadiusApplication),
-                          ),
-                          margin: EdgeInsets.all(Dimens.minMarginApplication),
-                          child: Container(
-                            padding: EdgeInsets.all(Dimens.minPaddingApplication),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                    margin: EdgeInsets.all(Dimens.minMarginApplication),
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                            Dimens.minRadiusApplication),
-                                        child: Image.asset('images/calendar.png',
-                                            height: 50, width: 50, color: Colors.black54))),
-                                Expanded(
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Boleto à prazo",
-                                          style: TextStyle(
-                                            fontFamily: 'Inter',
-                                            fontSize: Dimens.textSize5,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: Dimens.minMarginApplication,
-                                        ),
-                                        Text(
-                                          "Parcele o valor total da compra.",
-                                          style: TextStyle(
-                                            fontFamily: 'Inter',
-                                            fontSize: Dimens.textSize4,
-                                            color: Colors.black87,
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.black38,
-                                  size: 20,
-                                ),
-
-                              ],
-                            ),
-                          ))))
+                  // Visibility(/*visible: _profileResponse?.saldo_aprovado == 1, */child:
+                  // InkWell(
+                  //     onTap: () {
+                  //
+                  //       goToCheckout(ApplicationConstant.TICKET_IN_TERM.toString());
+                  //
+                  //     },
+                  //     child: Card(
+                  //         shape: RoundedRectangleBorder(
+                  //           borderRadius:
+                  //           BorderRadius.circular(Dimens.minRadiusApplication),
+                  //         ),
+                  //         margin: EdgeInsets.all(Dimens.minMarginApplication),
+                  //         child: Container(
+                  //           padding: EdgeInsets.all(Dimens.minPaddingApplication),
+                  //           child: Row(
+                  //             crossAxisAlignment: CrossAxisAlignment.center,
+                  //             children: [
+                  //               Container(
+                  //                   margin: EdgeInsets.all(Dimens.minMarginApplication),
+                  //                   child: ClipRRect(
+                  //                       borderRadius: BorderRadius.circular(
+                  //                           Dimens.minRadiusApplication),
+                  //                       child: Image.asset('images/calendar.png',
+                  //                           height: 50, width: 50, color: Colors.black54))),
+                  //               Expanded(
+                  //                   child: Column(
+                  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //                     crossAxisAlignment: CrossAxisAlignment.start,
+                  //                     children: [
+                  //                       Text(
+                  //                         "Boleto à prazo",
+                  //                         style: TextStyle(
+                  //                           fontFamily: 'Inter',
+                  //                           fontSize: Dimens.textSize5,
+                  //                           color: Colors.black,
+                  //                         ),
+                  //                       ),
+                  //                       SizedBox(
+                  //                         height: Dimens.minMarginApplication,
+                  //                       ),
+                  //                       Text(
+                  //                         "Parcele o valor total da compra.",
+                  //                         style: TextStyle(
+                  //                           fontFamily: 'Inter',
+                  //                           fontSize: Dimens.textSize4,
+                  //                           color: Colors.black87,
+                  //                         ),
+                  //                       ),
+                  //                     ],
+                  //                   )),
+                  //               Icon(
+                  //                 Icons.arrow_forward_ios,
+                  //                 color: Colors.black38,
+                  //                 size: 20,
+                  //               ),
+                  //
+                  //             ],
+                  //           ),
+                  //         ))))
                 ]))));
   }
 }

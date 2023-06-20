@@ -28,6 +28,7 @@ class _Checkout extends State<Checkout> {
   bool _isLoading = false;
   bool _isLoadingDialog = false;
 
+  late int _idPlan;
   late String _typePayment;
 
   final postRequest = PostRequest();
@@ -58,7 +59,7 @@ class _Checkout extends State<Checkout> {
   }
 
   Future<void> createTokenCreditCard(
-      String idOrder,
+      String idPlan,
       String cardNumber,
       String expirationMonth,
       String expirationYear,
@@ -90,7 +91,7 @@ class _Checkout extends State<Checkout> {
         ApplicationMessages(context: context)
             .showMessage("Não foi possível autenticar este cartão!");
       } else {
-        payWithCreditCard(idOrder, "", response.id);
+        payWithCreditCard(idPlan, response.id);
       }
 
       // setState(() {});
@@ -100,14 +101,13 @@ class _Checkout extends State<Checkout> {
   }
 
   Future<void> payWithCreditCard(
-      String idOrder, String totalValue, String idCreditCard) async {
+      String idPlan, String idCreditCard) async {
     try {
       final body = {
-        "id_usuario": await Preferences.getUserData()!.id,
-        "id_pedido": idOrder,
+        "id_plano": idPlan,
+        "id_usuario": Preferences.getUserData()!.id,
         "tipo_pagamento": ApplicationConstant.CREDIT_CARD,
         "payment_id": "",
-        "valor": totalValue,
         "card": idCreditCard,
         "token": ApplicationConstant.TOKEN
       };
@@ -138,46 +138,8 @@ class _Checkout extends State<Checkout> {
     }
   }
 
-  Future<void> payWithTicketWithOutAddress(
-      String idOrder, String totalValue) async {
-    try {
-      final body = {
-        "id_pedido": idOrder,
-        "id_usuario": await Preferences.getUserData()!.id,
-        "tipo_pagamento": ApplicationConstant.TICKET_IN_TERM,
-        "valor": totalValue,
-        "token": ApplicationConstant.TOKEN
-      };
-
-      print('HTTP_BODY: $body');
-
-      final json = await postRequest.sendPostRequest(Links.ADD_PAYMENT, body);
-
-      List<Map<String, dynamic>> _map = [];
-      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
-
-      print('HTTP_RESPONSE: $_map');
-
-      final response = Payment.fromJson(_map[0]);
-
-      if (response.status == "01") {
-        setState(() {
-          Navigator.pushNamedAndRemoveUntil(
-              context, "/ui/success", (route) => false,
-              arguments: {
-                "payment_type": _typePaymentName,
-              });
-        });
-      } else {}
-      ApplicationMessages(context: context).showMessage(response.msg);
-    } catch (e) {
-      throw Exception('HTTP_ERROR: $e');
-    }
-  }
-
   Future<void> payWithTicket(
-      String idOrder,
-      String totalValue,
+      String idPlan,
       String cep,
       String state,
       String city,
@@ -186,16 +148,15 @@ class _Checkout extends State<Checkout> {
       String number) async {
     try {
       final body = {
-        "id_pedido": idOrder,
-        "id_usuario": await Preferences.getUserData()!.id,
+        "id_plano": idPlan,
+        "id_usuario": Preferences.getUserData()!.id,
         "tipo_pagamento": ApplicationConstant.TICKET,
-        "valor": totalValue,
-        "cep": cep,
-        "estado": state,
-        "cidade": city,
-        "endereco": address,
-        "bairro": nbh,
-        "numero": number,
+        "cep": "12425-210",
+        "estado": "SP",
+        "cidade": "Pindamonhangaba",
+        "endereco": "Rua professora isis castro de melo cesar",
+        "bairro": "mombaça",
+        "numero": "111",
         "token": ApplicationConstant.TOKEN
       };
 
@@ -225,13 +186,12 @@ class _Checkout extends State<Checkout> {
     }
   }
 
-  Future<void> payWithPIX(String idOrder, String totalValue) async {
+  Future<void> payWithPIX(String idPlan) async {
     try {
       final body = {
-        "id_pedido": idOrder,
-        "id_usuario": await Preferences.getUserData()!.id,
+        "id_plano": idPlan,
+        "id_usuario": Preferences.getUserData()!.id,
         "tipo_pagamento": ApplicationConstant.PIX,
-        "valor": totalValue,
         "token": ApplicationConstant.TOKEN
       };
 
@@ -265,6 +225,7 @@ class _Checkout extends State<Checkout> {
     data = ModalRoute.of(context)!.settings.arguments as Map;
 
     _typePayment = data['type_payment'];
+    _idPlan = data['id_plan'];
 
     switch (_typePayment) {
       case "1":

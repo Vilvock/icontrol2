@@ -36,6 +36,8 @@ class _BrandFormAlertDialog extends State<BrandFormAlertDialog> {
   late Validator validator;
   bool _isLoading = false;
 
+  bool light = false;
+
   final postRequest = PostRequest();
 
   @override
@@ -44,6 +46,12 @@ class _BrandFormAlertDialog extends State<BrandFormAlertDialog> {
 
     if (widget.id != null) {
       nameController.text = widget.name!;
+
+      if (widget.status == "1") {
+         light = true;
+      } else {
+         light = false;
+      }
     }
 
     super.initState();
@@ -184,8 +192,24 @@ class _BrandFormAlertDialog extends State<BrandFormAlertDialog> {
                 ]),
                 SizedBox(height: Dimens.marginApplication),
                 Styles().div_horizontal,
-                SizedBox(height: Dimens.marginApplication),
-                /////////////////////////////////////////////
+                Visibility(visible: widget.id != null, child: Row(children: [
+                  Text(
+                    "Status (Inativo / Ativo)",
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: Dimens.textSize5,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Switch(
+                    value: light,
+                    onChanged: (bool value) {
+                      setState(() {
+                        light = value;
+                      });
+                    },
+                  ),
+                ],)),
                 SizedBox(height: Dimens.marginApplication),
                 Container(
                   margin: EdgeInsets.only(top: Dimens.marginApplication),
@@ -210,7 +234,7 @@ class _BrandFormAlertDialog extends State<BrandFormAlertDialog> {
                         await updateBrand(
                             widget.id!,
                             nameController.text.toString(),
-                            "",);
+                            light ? "1" : "2");
                       } else {
                     //     {
                     //       "id_user": 21,

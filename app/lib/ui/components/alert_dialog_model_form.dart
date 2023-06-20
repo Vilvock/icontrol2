@@ -147,7 +147,7 @@ class _ModelFormAlertDialog extends State<ModelFormAlertDialog> {
                     Container(
                       width: double.infinity,
                       child: Text(
-                        widget.id != null ?  "Editar Marca" :"Adicionar Marca",
+                        widget.id != null ?  "Editar Modelo" :"Adicionar Modelo",
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: Dimens.textSize6,

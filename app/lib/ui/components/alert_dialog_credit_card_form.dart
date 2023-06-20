@@ -302,7 +302,7 @@ class _CreditCardAlertDialog extends State<CreditCardAlertDialog> {
                     contentPadding:
                         EdgeInsets.all(Dimens.textFieldPaddingApplication),
                   ),
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: Dimens.textSize5,

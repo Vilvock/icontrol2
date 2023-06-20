@@ -1,6 +1,14 @@
 
-tela planos e fluxo pagamento ate method payment pelo menos (estatico)
 
 colocar dados para atualizar no perfil os mesmo que ele colocou no cadastro
 
 retorno historico planos bugado
+
+1 - crud marcas
+2 - crud modelos (dentro de cada marca)
+3 - terminar fluxo compra de plano (todos metodos)
+
+4 - terminar crud funcionarios
+5 - crud frotas
+6 - crud equipamentos
+

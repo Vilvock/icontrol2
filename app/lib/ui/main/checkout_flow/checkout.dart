@@ -129,6 +129,7 @@ class _Checkout extends State<Checkout> {
               context, "/ui/success", (route) => false,
               arguments: {
                 "payment_type": _typePaymentName,
+                // "total_value": _totalValue,
               });
         });
       } else {}
@@ -140,12 +141,12 @@ class _Checkout extends State<Checkout> {
 
   Future<void> payWithTicket(
       String idPlan,
-      String cep,
+    /*  String cep,
       String state,
       String city,
       String address,
       String nbh,
-      String number) async {
+      String number*/) async {
     try {
       final body = {
         "id_plano": idPlan,
@@ -177,6 +178,8 @@ class _Checkout extends State<Checkout> {
               context, "/ui/success", (route) => false,
               arguments: {
                 "payment_type": _typePaymentName,
+                "barCode": response.cod_barras,
+                // "total_value": _totalValue,
               });
         });
       } else {}
@@ -211,6 +214,9 @@ class _Checkout extends State<Checkout> {
             context, "/ui/success", (route) => false,
             arguments: {
               "payment_type": _typePaymentName,
+              "base64": response.qrcode_64,
+              "qrCodeClipboard": response.qrcode,
+              // "total_value": _totalValue,
             });
       } else {}
       ApplicationMessages(context: context).showMessage(response.msg);
@@ -389,6 +395,19 @@ class _Checkout extends State<Checkout> {
                                                                               true;
                                                                         });
 
+                                                                        var _formattedCardNumber = cardNumberController.text.replaceAll(
+                                                                            new RegExp(r'[^0-9]'),
+                                                                            '');
+
+                                                                        await createTokenCreditCard(
+                                                                            _idPlan.toString(),
+                                                                            _formattedCardNumber.toString(),
+                                                                            monthController.text.toString(),
+                                                                            yearController.text.toString(),
+                                                                            securityCodeController.text.toString(),
+                                                                            nameController.text.toString(),
+                                                                            cpfController.text.toString());
+
                                                                         setState(
                                                                             () {
                                                                           _isLoadingDialog =
@@ -421,8 +440,15 @@ class _Checkout extends State<Checkout> {
                                                       );
                                                     });
 
-                                              } else {
+                                              } else if (_typePayment ==
+                                                  ApplicationConstant
+                                                      .PIX
+                                                      .toString()) {
 
+                                                await payWithPIX(_idPlan.toString());
+
+                                              } else {
+                                                await payWithTicket(_idPlan.toString());
                                               }
 
                                               setState(() {

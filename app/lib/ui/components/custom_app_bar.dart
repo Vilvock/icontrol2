@@ -8,6 +8,7 @@ import '../../res/styles.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   String title;
   bool isVisibleBackButton;
+  bool isVisibleModelAddButton;
   bool isVisibleBrandAddButton;
   bool isVisibleFleetAddButton;
   bool isVisibleEquipmentAddButton;
@@ -19,6 +20,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   CustomAppBar(
       {this.title: "",
       this.isVisibleBackButton = false,
+      this.isVisibleModelAddButton = false,
       this.isVisibleBrandAddButton = false,
       this.isVisibleFleetAddButton = false,
       this.isVisibleEquipmentAddButton = false,
@@ -31,6 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       actions: _returnFavoriteIcon(
+          this.isVisibleModelAddButton,
           this.isVisibleBrandAddButton,
           this.isVisibleFleetAddButton,
           this.isVisibleEquipmentAddButton,
@@ -96,6 +99,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   List<Widget> _returnFavoriteIcon(
+      bool isVisibleModelAddButton,
       bool isVisibleBrandAddButton,
       bool isVisibleFleetAddButton,
       bool isVisibleEmployeeAddButton,

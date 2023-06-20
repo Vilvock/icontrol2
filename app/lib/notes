@@ -4,7 +4,7 @@ colocar dados para atualizar no perfil os mesmo que ele colocou no cadastro
 
 retorno historico planos bugado
 
-1 - crud marcas
+1 - crud marcas OK (falta empilhamento de telas)
 2 - crud modelos (dentro de cada marca)
 3 - terminar fluxo compra de plano (todos metodos)
 

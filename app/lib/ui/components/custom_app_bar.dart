@@ -21,8 +21,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   bool isVisibleNotificationsButton;
   bool isVisibleSearchButton;
 
+
+  String idBrand;
+
   CustomAppBar(
       {this.title: "",
+        this.idBrand: "",
       this.isVisibleBackButton = false,
       this.isVisibleModelAddButton = false,
       this.isVisibleBrandAddButton = false,
@@ -201,7 +205,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               shape: Styles().styleShapeBottomSheet,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               builder: (BuildContext context) {
-                return ModelFormAlertDialog();
+                return ModelFormAlertDialog(idBrand: idBrand,);
               });
           if (result == true) {
 

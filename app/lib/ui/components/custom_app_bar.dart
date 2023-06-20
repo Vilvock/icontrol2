@@ -8,6 +8,9 @@ import '../../res/styles.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   String title;
   bool isVisibleBackButton;
+  bool isVisibleBrandAddButton;
+  bool isVisibleFleetAddButton;
+  bool isVisibleEquipmentAddButton;
   bool isVisibleEmployeeAddButton;
   bool isVisibleTaskAddButton;
   bool isVisibleNotificationsButton;
@@ -16,6 +19,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   CustomAppBar(
       {this.title: "",
       this.isVisibleBackButton = false,
+      this.isVisibleBrandAddButton = false,
+      this.isVisibleFleetAddButton = false,
+      this.isVisibleEquipmentAddButton = false,
       this.isVisibleEmployeeAddButton = false,
       this.isVisibleTaskAddButton = false,
       this.isVisibleNotificationsButton = false,
@@ -24,8 +30,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      actions: _returnFavoriteIcon(this.isVisibleEmployeeAddButton,
-          this.isVisibleNotificationsButton, this.isVisibleSearchButton, this.isVisibleTaskAddButton, context),
+      actions: _returnFavoriteIcon(
+          this.isVisibleBrandAddButton,
+          this.isVisibleFleetAddButton,
+          this.isVisibleEquipmentAddButton,
+          this.isVisibleEmployeeAddButton,
+          this.isVisibleNotificationsButton,
+          this.isVisibleSearchButton,
+          this.isVisibleTaskAddButton,
+          context),
       automaticallyImplyLeading: this.isVisibleBackButton,
       leading: _returnBackIcon(this.isVisibleBackButton, context),
       backgroundColor: Colors.transparent,
@@ -83,7 +96,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   List<Widget> _returnFavoriteIcon(
+      bool isVisibleBrandAddButton,
+      bool isVisibleFleetAddButton,
       bool isVisibleEmployeeAddButton,
+      bool isVisibleEquipmentAddButton,
       bool isVisibleNotificationsButton,
       bool isVisibleSearchButton,
       bool isVisibleTaskAddButton,
@@ -97,16 +113,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.black,
         ),
         onPressed: () async {
-
           final result = await showModalBottomSheet<dynamic>(
               isScrollControlled: true,
               context: context,
               shape: Styles().styleShapeBottomSheet,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               builder: (BuildContext context) {
-                return EmployeeFormAlertDialog();}
-          );
-          if(result == true){
+                return EmployeeFormAlertDialog();
+              });
+          if (result == true) {
             Navigator.popUntil(
               context,
               ModalRoute.withName('/ui/home'),
@@ -124,7 +139,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.black,
         ),
         onPressed: () async {
-
           // final result = await showModalBottomSheet<dynamic>(
           //     isScrollControlled: true,
           //     context: context,
@@ -161,12 +175,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.black,
         ),
         onPressed: () {
-
           Navigator.pushNamed(context, "/ui/notifications");
         },
       ));
     }
-
 
     return _widgetList;
   }

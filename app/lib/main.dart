@@ -17,6 +17,9 @@ import 'package:icontrol/ui/main/checkout_flow/method_payment.dart';
 import 'package:icontrol/ui/main/checkout_flow/sucess.dart';
 import 'package:icontrol/ui/main/home.dart';
 import 'package:icontrol/ui/main/menu/employees/employees.dart';
+import 'package:icontrol/ui/main/menu/equips/brand/brands.dart';
+import 'package:icontrol/ui/main/menu/equips/equipments.dart';
+import 'package:icontrol/ui/main/menu/equips/fleet/fleets.dart';
 import 'package:icontrol/ui/main/menu/payments/payments.dart';
 import 'package:icontrol/ui/main/menu/user/profile.dart';
 import 'package:icontrol/ui/main/notifications/notifications.dart';
@@ -111,6 +114,9 @@ void main() async {
       '/ui/employees': (context) => Employees(),
       '/ui/plans': (context) => Plans(),
       '/ui/checkout': (context) => Checkout(),
+      '/ui/equipments': (context) => Equipments(),
+      '/ui/fleets': (context) => Fleets(),
+      '/ui/brands': (context) => Brands()
 
 
     },

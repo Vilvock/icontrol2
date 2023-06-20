@@ -260,7 +260,7 @@ class _MainMenu extends State<MainMenu> {
                             ),
                             onTap: () {
                               Navigator.pushNamed(
-                                  context, "/ui/user_addresses");
+                                  context, "/ui/equipments");
                             }),
                         Styles().div_horizontal,
                         GestureDetector(

@@ -29,10 +29,18 @@ class _Equipments extends State<Equipments> {
 
   final postRequest = PostRequest();
 
-
   //////////////
 
-  Future<Map<String, dynamic>> saveEquip(String idBrand, String idModel, String name, String status, String year, String series, String hour, String tag, String owner) async {
+  Future<Map<String, dynamic>> saveEquip(
+      String idBrand,
+      String idModel,
+      String name,
+      String status,
+      String year,
+      String series,
+      String hour,
+      String tag,
+      String owner) async {
     try {
       final body = {
         "id_marca": idBrand,
@@ -49,7 +57,8 @@ class _Equipments extends State<Equipments> {
 
       print('HTTP_BODY: $body');
 
-      final json = await postRequest.sendPostRequest(Links.SAVE_EQUIPMENT, body);
+      final json =
+          await postRequest.sendPostRequest(Links.SAVE_EQUIPMENT, body);
       final parsedResponse = jsonDecode(json);
 
       print('HTTP_RESPONSE: $parsedResponse');
@@ -62,7 +71,17 @@ class _Equipments extends State<Equipments> {
     }
   }
 
-  Future<Map<String, dynamic>> updateEquip(String idEquip, String idBrand, String idModel, String name, String status, String year, String series, String hour, String tag, String owner) async {
+  Future<Map<String, dynamic>> updateEquip(
+      String idEquip,
+      String idBrand,
+      String idModel,
+      String name,
+      String status,
+      String year,
+      String series,
+      String hour,
+      String tag,
+      String owner) async {
     try {
       final body = {
         "id_equipamento": idEquip,
@@ -81,7 +100,7 @@ class _Equipments extends State<Equipments> {
       print('HTTP_BODY: $body');
 
       final json =
-      await postRequest.sendPostRequest(Links.UPDATE_EQUIPMENT, body);
+          await postRequest.sendPostRequest(Links.UPDATE_EQUIPMENT, body);
 
       final parsedResponse = jsonDecode(json);
 
@@ -105,7 +124,7 @@ class _Equipments extends State<Equipments> {
       print('HTTP_BODY: $body');
 
       final json =
-      await postRequest.sendPostRequest(Links.LIST_EQUIPMENTS, body);
+          await postRequest.sendPostRequest(Links.LIST_EQUIPMENTS, body);
 
       List<Map<String, dynamic>> _map = [];
       _map = List<Map<String, dynamic>>.from(jsonDecode(json));
@@ -129,7 +148,8 @@ class _Equipments extends State<Equipments> {
 
       print('HTTP_BODY: $body');
 
-      final json = await postRequest.sendPostRequest(Links.DELETE_EQUIPMENT, body);
+      final json =
+          await postRequest.sendPostRequest(Links.DELETE_EQUIPMENT, body);
       final parsedResponse = jsonDecode(json);
 
       print('HTTP_RESPONSE: $parsedResponse');
@@ -145,13 +165,81 @@ class _Equipments extends State<Equipments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: CustomAppBar(title: "Equipamentos", isVisibleBackButton: true),
-      body: RefreshIndicator(
-        onRefresh: _pullRefresh,
-        child: Container()
-      ),
-    );
+        resizeToAvoidBottomInset: true,
+        appBar: CustomAppBar(title: "Equipamentos", isVisibleBackButton: true, isVisibleEquipmentAddButton: true),
+        body: RefreshIndicator(
+            onRefresh: _pullRefresh,
+            child: RefreshIndicator(
+                onRefresh: _pullRefresh,
+                child: FutureBuilder<List<Map<String, dynamic>>>(
+                  future: listEquips(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      // final response = Product.fromJson(snapshot.data![0]);
+
+                      return Stack(children: [
+                        SingleChildScrollView(
+                            child: Container(
+                          padding: EdgeInsets.only(bottom: 100),
+                          child: Column(
+                            children: [
+                              Container(
+                                  margin:
+                                      EdgeInsets.all(Dimens.marginApplication),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [],
+                                  ))
+                            ],
+                          ),
+                        )),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                  margin: EdgeInsets.all(
+                                      Dimens.minMarginApplication),
+                                  width: double.infinity,
+                                  child: Column(children: [
+                                    Container(
+                                        width: double.infinity,
+                                        child: ElevatedButton(
+                                          style:
+                                              Styles().styleAlternativeButton,
+                                          onPressed: () {
+                                            Navigator.pushNamed(
+                                                context, "/ui/fleets");
+                                                },
+                                          child: Text("Frotas",
+                                              style: Styles()
+                                                  .styleDefaultTextButton),
+                                        )),
+                                    SizedBox(height: Dimens.marginApplication),
+                                    Container(
+                                        width: double.infinity,
+                                        child: ElevatedButton(
+                                          style:
+                                              Styles().styleAlternativeButton,
+                                          onPressed: () {
+                                            Navigator.pushNamed(
+                                                context, "/ui/brands");
+                                          },
+                                          child: Text("Marcas",
+                                              style: Styles()
+                                                  .styleDefaultTextButton),
+                                        )),
+                                  ])),
+                            ])
+                      ]);
+                    } else if (snapshot.hasError) {
+                      return Text('${snapshot.error}');
+                    }
+                    return Styles().defaultLoading;
+                  },
+                ))));
   }
 
   Future<void> _pullRefresh() async {

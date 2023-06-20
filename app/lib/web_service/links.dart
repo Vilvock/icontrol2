@@ -37,7 +37,7 @@ abstract class Links {
 
   static const String SAVE_FLEET = "usuarios/saveFrotas/";
   static const String UPDATE_FLEET = "usuarios/updateFrotas/";
-  static const String LSIT_FLEETS = "usuarios/listFrotas/";
+  static const String LIST_FLEETS = "usuarios/listFrotas/";
   static const String DELETE_FLEET = "usuarios/excluirFrotas/";
   static const String UPDATE_SEQUENCE = "usuarios/updateOrdem/";
 

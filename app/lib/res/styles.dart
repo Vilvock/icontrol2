@@ -17,7 +17,7 @@ class Styles {
   var styleAlternativeButton = ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsets>(
         EdgeInsets.all(Dimens.buttonPaddingApplication)),
-    backgroundColor: MaterialStateProperty.all(OwnerColors.colorPrimaryDark),
+    backgroundColor: MaterialStateProperty.all(Colors.black),
   );
 
   var styleDefaultTextButton = TextStyle(

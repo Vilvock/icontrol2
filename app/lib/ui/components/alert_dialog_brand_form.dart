@@ -7,6 +7,7 @@ import '../../config/masks.dart';
 import '../../config/preferences.dart';
 import '../../config/validator.dart';
 import '../../global/application_constant.dart';
+import '../../model/brand.dart';
 import '../../model/employee.dart';
 import '../../model/user.dart';
 import '../../res/dimens.dart';
@@ -18,15 +19,11 @@ import '../../web_service/service_response.dart';
 class BrandFormAlertDialog extends StatefulWidget {
 
   final String? id;
-  final String? id_company;
   final String? name;
-  final String? email;
-  final String? cellphone;
-  final String? cpf;
-  final String? birth;
+  final String? status;
 
   BrandFormAlertDialog({
-    Key? key, this.id, this.id_company, this.name, this.email, this.cellphone, this.cpf, this.birth,
+    Key? key, this.id, this.name, this.status,
   });
 
   // DialogGeneric({Key? key}) : super(key: key);
@@ -47,57 +44,37 @@ class _BrandFormAlertDialog extends State<BrandFormAlertDialog> {
 
     if (widget.id != null) {
       nameController.text = widget.name!;
-      emailController.text = widget.email!;
-      cellphoneController.text = widget.cellphone!;
-      cpfController.text = widget.cpf!;
-      birthController.text = widget.birth!;
     }
 
     super.initState();
   }
 
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController cellphoneController = TextEditingController();
-  final TextEditingController cpfController = TextEditingController();
-  final TextEditingController birthController = TextEditingController();
 
   @override
   void dispose() {
     nameController.dispose();
-    emailController.dispose();
-    cellphoneController.dispose();
-    cpfController.dispose();
-    birthController.dispose();
     super.dispose();
   }
 
 
-  Future<Map<String, dynamic>> updateEmployee(String idCompany, String idEmployee, String name, String email, String cellphone, String cpf, String birth) async {
+  Future<Map<String, dynamic>> saveBrand(String name, String status) async {
     try {
       final body = {
-        "id_empresa": idCompany,
-        "id_funcionario": idEmployee,
+        "id_user": await Preferences.getUserData()!.id,
         "nome": name,
-        "email": email,
-        "celular": cellphone,
-        "cpf": cpf,
-        "data_nascimento": birth,
+        "status": status,
         "token": ApplicationConstant.TOKEN
       };
 
       print('HTTP_BODY: $body');
 
-      final json = await postRequest.sendPostRequest(Links.EDIT_EMPLOYEE, body);
+      final json = await postRequest.sendPostRequest(Links.SAVE_BRAND, body);
       final parsedResponse = jsonDecode(json);
 
       print('HTTP_RESPONSE: $parsedResponse');
 
-      final response = Employee.fromJson(parsedResponse);
-      if (response.status == "01") {
-        Navigator.of(context).pop(true);
-      } else {}
-      ApplicationMessages(context: context).showMessage(response.msg);
+      final response = Brand.fromJson(parsedResponse);
 
       return parsedResponse;
     } catch (e) {
@@ -105,34 +82,27 @@ class _BrandFormAlertDialog extends State<BrandFormAlertDialog> {
     }
   }
 
-  Future<List<Map<String, dynamic>>> saveEmployee(String idCompany, String name, String email, String cellphone, String cpf, String birth) async {
+  Future<Map<String, dynamic>> updateBrand(String idBrand, String name, String status) async {
     try {
       final body = {
-        "id_empresa": idCompany,
+        "id_marca": idBrand,
         "nome": name,
-        "email": email,
-        "celular": cellphone,
-        "cpf": cpf,
-        "data_nascimento": birth,
-        "token": ApplicationConstant.TOKEN
+        "status": status,
+        "token": ApplicationConstant.TOKEN,
       };
 
       print('HTTP_BODY: $body');
 
-      final json = await postRequest.sendPostRequest(Links.SAVE_EMPLOYEE, body);
+      final json =
+      await postRequest.sendPostRequest(Links.UPDATE_BRAND, body);
 
-      List<Map<String, dynamic>> _map = [];
-      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+      final parsedResponse = jsonDecode(json);
 
-      print('HTTP_RESPONSE: $_map');
+      print('HTTP_RESPONSE: $parsedResponse');
 
-      final response = Employee.fromJson(_map[0]);
-      if (response.status == "01") {
-        Navigator.of(context).pop(true);
-      } else {}
-      ApplicationMessages(context: context).showMessage(response.msg);
+      final response = Brand.fromJson(parsedResponse);
 
-      return _map;
+      return parsedResponse;
     } catch (e) {
       throw Exception('HTTP_ERROR: $e');
     }
@@ -169,7 +139,7 @@ class _BrandFormAlertDialog extends State<BrandFormAlertDialog> {
                 Container(
                   width: double.infinity,
                   child: Text(
-                    widget.id != null ?  "Editar funcionário" :"Adicionar funcionário",
+                    widget.id != null ?  "Editar Marca" :"Adicionar Marca",
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: Dimens.textSize6,
@@ -215,128 +185,7 @@ class _BrandFormAlertDialog extends State<BrandFormAlertDialog> {
                 SizedBox(height: Dimens.marginApplication),
                 Styles().div_horizontal,
                 SizedBox(height: Dimens.marginApplication),
-                TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: OwnerColors.colorPrimary, width: 1.5),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey, width: 1.0),
-                    ),
-                    hintText: 'E-mail',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    border: OutlineInputBorder(
-                      borderRadius:
-                      BorderRadius.circular(Dimens.radiusApplication),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding:
-                    EdgeInsets.all(Dimens.textFieldPaddingApplication),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: Dimens.textSize5,
-                  ),
-                ),
-                SizedBox(height: Dimens.marginApplication),
-                TextField(
-                  controller: cellphoneController,
-                  inputFormatters: [Masks().cellphoneMask()],
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: OwnerColors.colorPrimary, width: 1.5),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey, width: 1.0),
-                    ),
-                    hintText: 'Celular',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    border: OutlineInputBorder(
-                      borderRadius:
-                      BorderRadius.circular(Dimens.radiusApplication),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding:
-                    EdgeInsets.all(Dimens.textFieldPaddingApplication),
-                  ),
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: Dimens.textSize5,
-                  ),
-                ),
-                SizedBox(height: Dimens.marginApplication),
-                TextField(
-                  controller: cpfController,
-                  inputFormatters: [Masks().cpfMask()],
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: OwnerColors.colorPrimary, width: 1.5),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey, width: 1.0),
-                    ),
-                    hintText: 'CPF',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    border: OutlineInputBorder(
-                      borderRadius:
-                      BorderRadius.circular(Dimens.radiusApplication),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: EdgeInsets.all(
-                        Dimens.textFieldPaddingApplication),
-                  ),
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: Dimens.textSize5,
-                  ),
-                ),
-                SizedBox(height: Dimens.marginApplication),
-                TextField(
-                  controller: birthController,
-                  inputFormatters: [Masks().birthMask()],
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: OwnerColors.colorPrimary, width: 1.5),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey, width: 1.0),
-                    ),
-                    hintText: 'Data de nascimento',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    border: OutlineInputBorder(
-                      borderRadius:
-                      BorderRadius.circular(Dimens.radiusApplication),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: EdgeInsets.all(
-                        Dimens.textFieldPaddingApplication),
-                  ),
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: Dimens.textSize5,
-                  ),
-                ),
+                /////////////////////////////////////////////
                 SizedBox(height: Dimens.marginApplication),
                 Container(
                   margin: EdgeInsets.only(top: Dimens.marginApplication),
@@ -346,32 +195,32 @@ class _BrandFormAlertDialog extends State<BrandFormAlertDialog> {
                     onPressed: () async {
                       if (!validator.validateGenericTextField(
                           nameController.text, "Nome")) return;
-                      if (!validator.validateEmail(emailController.text)) return;
-                      if (!validator.validateCellphone(cellphoneController.text)) return;
-                      if (!validator.validateCPF(cpfController.text)) return;
-                      if (!validator.validateBirth(birthController.text, "dd/MM/yyyy")) return;
 
                       setState(() {
                         _isLoading = true;
                       });
 
                       if (widget.id != null) {
-                        await updateEmployee(
-                            Preferences.getUserData()!.id.toString(),
+                    //     {
+                    //       "id_marca": 1,
+                    //   "nome": "testeee",
+                    //   "status": 2,
+                    //   "token": "12Qge8d3"
+                    // }
+                        await updateBrand(
                             widget.id!,
                             nameController.text.toString(),
-                            emailController.text.toString(),
-                            cellphoneController.text.toString(),
-                            cpfController.text.toString(),
-                            birthController.text.toString());
+                            "",);
                       } else {
-                        await saveEmployee(
-                            Preferences.getUserData()!.id.toString(),
-                            nameController.text.toString(),
-                            emailController.text.toString(),
-                            cellphoneController.text.toString(),
-                            cpfController.text.toString(),
-                            birthController.text.toString());
+                    //     {
+                    //       "id_user": 21,
+                    //   "nome": "teste",
+                    //   "status": 1,
+                    //   "token": "12Qge8d3"
+                    // }
+                        await saveBrand(
+                          nameController.text.toString(),
+                          "",);
                       }
 
                       setState(() {

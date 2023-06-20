@@ -16,6 +16,8 @@ import '../../../../../res/strings.dart';
 import '../../../../../res/styles.dart';
 import '../../../../../web_service/links.dart';
 import '../../../../../web_service/service_response.dart';
+import '../../../../components/alert_dialog_brand_form.dart';
+import '../../../../components/alert_dialog_generic.dart';
 import '../../../../components/custom_app_bar.dart';
 
 class Brands extends StatefulWidget {
@@ -29,57 +31,6 @@ class _Brands extends State<Brands> {
   bool _isLoading = false;
 
   final postRequest = PostRequest();
-
-
-  Future<Map<String, dynamic>> saveBrand(String name, String status) async {
-    try {
-      final body = {
-        "id_user": await Preferences.getUserData()!.id,
-        "nome": name,
-        "status": status,
-        "token": ApplicationConstant.TOKEN
-      };
-
-      print('HTTP_BODY: $body');
-
-      final json = await postRequest.sendPostRequest(Links.SAVE_BRAND, body);
-      final parsedResponse = jsonDecode(json);
-
-      print('HTTP_RESPONSE: $parsedResponse');
-
-      final response = Brand.fromJson(parsedResponse);
-
-      return parsedResponse;
-    } catch (e) {
-      throw Exception('HTTP_ERROR: $e');
-    }
-  }
-
-  Future<Map<String, dynamic>> updateBrand(String idBrand, String name, String status) async {
-    try {
-      final body = {
-        "id_marca": idBrand,
-        "nome": name,
-        "status": status,
-        "token": ApplicationConstant.TOKEN,
-      };
-
-      print('HTTP_BODY: $body');
-
-      final json =
-      await postRequest.sendPostRequest(Links.UPDATE_BRAND, body);
-
-      final parsedResponse = jsonDecode(json);
-
-      print('HTTP_RESPONSE: $parsedResponse');
-
-      final response = Brand.fromJson(parsedResponse);
-
-      return parsedResponse;
-    } catch (e) {
-      throw Exception('HTTP_ERROR: $e');
-    }
-  }
 
   Future<List<Map<String, dynamic>>> listBrands() async {
     try {
@@ -139,18 +90,268 @@ class _Brands extends State<Brands> {
             child: RefreshIndicator(
                 onRefresh: _pullRefresh,
                 child: FutureBuilder<List<Map<String, dynamic>>>(
-                  future: listBrands(),
+                  future:
+                  listBrands(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      // final response = Product.fromJson(snapshot.data![0]);
+                      final responseItem = Brand.fromJson(snapshot.data![0]);
 
-                      return Container();
+                      if (responseItem.rows != 0) {
+                        return ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            final response = Brand.fromJson(snapshot.data![index]);
+
+                            return InkWell(
+                                onTap: () => {
+
+                                },
+                                child: Card(
+                                  elevation: Dimens.minElevationApplication,
+                                  color: Colors.white,
+                                  margin: EdgeInsets.all(Dimens.minMarginApplication),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        Dimens.minRadiusApplication),
+                                    side: response.status == 1
+                                            .toString() ? BorderSide(color: OwnerColors.colorPrimary, width: 2.0) : BorderSide(color: Colors.transparent, width: 0),
+                                  ),
+                                  child: Container(
+                                    padding: EdgeInsets.all(Dimens.paddingApplication),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                response.nome,
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: Dimens.textSize6,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                  height: Dimens.minMarginApplication),
+                                              Text(
+                                                response.status.toString() == "1" ? "Status: Ativo" : "Status: Inativo",
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: Dimens.textSize4,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                  height: Dimens.minMarginApplication),
+                                              Container(
+                                                  width: MediaQuery.of(context).size.width * 0.45,
+                                                  child: ElevatedButton(
+                                                    style:
+                                                    Styles().styleAlternativeButton,
+                                                    onPressed: () {
+                                                      Navigator.pushNamed(
+                                                          context, "/ui/models",
+                                                          arguments: {
+                                                          "id_brand": response.id
+                                                          });
+                                                    },
+                                                    child: Text("Modelos",
+                                                        style: TextStyle(
+                                                            fontFamily: 'Inter',
+                                                            fontSize: Dimens.textSize4,
+                                                            color: Colors.white),
+                                                  ))),
+                                              SizedBox(
+                                                  height: Dimens.minMarginApplication),
+                                              Styles().div_horizontal,
+                                              SizedBox(
+                                                  height: Dimens.minMarginApplication),
+                                              Container(
+                                                  child: IntrinsicHeight(
+                                                      child: Row(
+                                                        children: [
+                                                          Expanded(
+                                                              child: Container(
+                                                                child: Wrap(
+                                                                  direction: Axis.horizontal,
+                                                                  alignment: WrapAlignment.center,
+                                                                  crossAxisAlignment:
+                                                                  WrapCrossAlignment.center,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: Dimens
+                                                                              .minMarginApplication),
+                                                                      child: Icon(
+                                                                          size: 20,
+                                                                          Icons.edit_note_outlined),
+                                                                    ),
+                                                                    GestureDetector(
+                                                                        onTap: () async {
+                                                                          final result =
+                                                                          await showModalBottomSheet<
+                                                                              dynamic>(
+                                                                              isScrollControlled:
+                                                                              true,
+                                                                              context: context,
+                                                                              shape: Styles()
+                                                                                  .styleShapeBottomSheet,
+                                                                              clipBehavior: Clip
+                                                                                  .antiAliasWithSaveLayer,
+                                                                              builder:
+                                                                                  (BuildContext
+                                                                              context) {
+                                                                                return BrandFormAlertDialog(
+                                                                                    id: response
+                                                                                        .id
+                                                                                        .toString(),
+                                                                                    name: response
+                                                                                        .nome,
+                                                                                    status: response
+                                                                                        .status.toString());
+                                                                              });
+                                                                          if (result == true) {
+                                                                            setState(() {
+
+                                                                            });
+                                                                          }
+                                                                        },
+                                                                        child: Text(
+                                                                          "Editar",
+                                                                          style: TextStyle(
+                                                                            fontFamily: 'Inter',
+                                                                            fontSize:
+                                                                            Dimens.textSize4,
+                                                                            color: Colors.black,
+                                                                          ),
+                                                                        )),
+                                                                  ],
+                                                                ),
+                                                              )),
+                                                          Container(
+                                                            child: Styles().div_vertical,
+                                                          ),
+                                                          Expanded(
+                                                              child: Container(
+                                                                child: Wrap(
+                                                                  direction: Axis.horizontal,
+                                                                  alignment: WrapAlignment.center,
+                                                                  crossAxisAlignment:
+                                                                  WrapCrossAlignment.center,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right: Dimens
+                                                                              .minMarginApplication),
+                                                                      child: Icon(
+                                                                          size: 20,
+                                                                          Icons.delete_outline),
+                                                                    ),
+                                                                    GestureDetector(
+                                                                        onTap: () => {
+                                                                          showModalBottomSheet<
+                                                                              dynamic>(
+                                                                            isScrollControlled:
+                                                                            true,
+                                                                            context: context,
+                                                                            shape: Styles()
+                                                                                .styleShapeBottomSheet,
+                                                                            clipBehavior: Clip
+                                                                                .antiAliasWithSaveLayer,
+                                                                            builder:
+                                                                                (BuildContext
+                                                                            context) {
+                                                                              return GenericAlertDialog(
+                                                                                  title: Strings
+                                                                                      .attention,
+                                                                                  content:
+                                                                                  "Tem certeza que deseja remover esta marca?",
+                                                                                  btnBack:
+                                                                                  TextButton(
+                                                                                      child:
+                                                                                      Text(
+                                                                                        Strings.no,
+                                                                                        style:
+                                                                                        TextStyle(
+                                                                                          fontFamily: 'Inter',
+                                                                                          color: Colors.black54,
+                                                                                        ),
+                                                                                      ),
+                                                                                      onPressed:
+                                                                                          () {
+                                                                                        Navigator.of(context).pop();
+                                                                                      }),
+                                                                                  btnConfirm:
+                                                                                  TextButton(
+                                                                                      child: Text(Strings
+                                                                                          .yes),
+                                                                                      onPressed:
+                                                                                          () {
+                                                                                        deleteBrand(response.id.toString());
+                                                                                        Navigator.of(context).pop();
+                                                                                      }));
+                                                                            },
+                                                                          )
+                                                                        },
+                                                                        child: Text(
+                                                                          "Remover",
+                                                                          style: TextStyle(
+                                                                            fontFamily: 'Inter',
+                                                                            fontSize:
+                                                                            Dimens.textSize4,
+                                                                            color: Colors.black,
+                                                                          ),
+                                                                        )),
+                                                                  ],
+                                                                ),
+                                                              )),
+                                                        ],
+                                                      )))
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ));
+                          },
+                        );
+                      } else {
+                        return Container(
+                            padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height / 20),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Center(
+                                      child: Lottie.network(
+                                          height: 160,
+                                          'https://assets3.lottiefiles.com/private_files/lf30_cgfdhxgx.json')),
+                                  SizedBox(height: Dimens.marginApplication),
+                                  Text(
+                                    Strings.empty_list,
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: Dimens.textSize5,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ]));
+                      }
                     } else if (snapshot.hasError) {
-                      return Text('${snapshot.error}');
+                      return Styles().defaultErrorRequest;
                     }
                     return Styles().defaultLoading;
                   },
-                ))));
+                ),)));
   }
 
   Future<void> _pullRefresh() async {

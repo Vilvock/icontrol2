@@ -412,7 +412,7 @@ class _Employees extends State<Employees> {
                                                                   title: Strings
                                                                       .attention,
                                                                   content:
-                                                                      "Tem certeza que deseja remover este produto dos favoritos?",
+                                                                      "Tem certeza que deseja remover este funcionário?",
                                                                   btnBack:
                                                                       TextButton(
                                                                           child:

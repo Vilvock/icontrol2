@@ -176,6 +176,7 @@ class _Payment extends State<Payments> {
                                     ),
                                   ),
 
+                                  SizedBox(height: Dimens.minMarginApplication),
                                   Align(alignment: AlignmentDirectional.bottomStart, child:
                                   Card(
                                       color: _statusColor,

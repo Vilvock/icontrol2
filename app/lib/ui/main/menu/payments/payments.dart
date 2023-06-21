@@ -90,11 +90,11 @@ class _Payment extends State<Payments> {
 
                     switch (response.status_pagamento) {
                       case "Pendente":
-                        _statusColor = OwnerColors.darkGrey;
+                        _statusColor = Colors.blue;
                         break;
                       case "Aprovado":
 
-                        _statusColor = OwnerColors.colorPrimaryDark;
+                        _statusColor = Colors.green;
                         break;
                       case "Rejeitado":
 

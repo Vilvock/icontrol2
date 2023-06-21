@@ -42,14 +42,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       actions: _returnFavoriteIcon(
-          this.isVisibleModelAddButton,
-          this.isVisibleBrandAddButton,
-          this.isVisibleFleetAddButton,
-          this.isVisibleEquipmentAddButton,
-          this.isVisibleEmployeeAddButton,
-          this.isVisibleNotificationsButton,
-          this.isVisibleSearchButton,
-          this.isVisibleTaskAddButton,
           context),
       automaticallyImplyLeading: this.isVisibleBackButton,
       leading: _returnBackIcon(this.isVisibleBackButton, context),
@@ -108,14 +100,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   List<Widget> _returnFavoriteIcon(
-      bool isVisibleModelAddButton,
-      bool isVisibleBrandAddButton,
-      bool isVisibleFleetAddButton,
-      bool isVisibleEmployeeAddButton,
-      bool isVisibleEquipmentAddButton,
-      bool isVisibleNotificationsButton,
-      bool isVisibleSearchButton,
-      bool isVisibleTaskAddButton,
       BuildContext context) {
     List<Widget> _widgetList = <Widget>[];
 

@@ -16,18 +16,43 @@ import '../../web_service/links.dart';
 import '../../web_service/service_response.dart';
 
 class EquipmentFormAlertDialog extends StatefulWidget {
+  // {
+  // "id_equipamento": 2,
+  // "id_marca": 3,
+  // "id_modelo": 2,
+  // "nome": "testeEquipamento1",
+  // "ano": "2021",
+  // "serie": "111111sdasd",
+  // "horimetro": "2023-02-21 11:31:22",
+  // "proprietario": "José teste1",
+  // "tag": "11zu5",
+  // "status": 2,
+  // "token": "12Qge8d3"
+  // }
 
   final String? id;
-  final String? id_company;
+  final String? id_brand;
+  final String? id_model;
   final String? name;
-  final String? email;
-  final String? cellphone;
-  final String? cpf;
-  final String? birth;
+  final String? year;
+  final String? series;
+  final String? schedule;
+  final String? owner;
+  final String? tag;
+  final String? status;
 
-  EquipmentFormAlertDialog({
-    Key? key, this.id, this.id_company, this.name, this.email, this.cellphone, this.cpf, this.birth,
-  });
+  EquipmentFormAlertDialog(
+      {Key? key,
+      this.id,
+      this.id_brand,
+      this.id_model,
+      this.name,
+      this.year,
+      this.series,
+      this.schedule,
+      this.owner,
+      this.tag,
+      this.status});
 
   // DialogGeneric({Key? key}) : super(key: key);
 
@@ -36,7 +61,6 @@ class EquipmentFormAlertDialog extends StatefulWidget {
 }
 
 class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
-
   late Validator validator;
   bool _isLoading = false;
 
@@ -48,100 +72,36 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
 
     if (widget.id != null) {
       nameController.text = widget.name!;
-      emailController.text = widget.email!;
-      cellphoneController.text = widget.cellphone!;
-      cpfController.text = widget.cpf!;
-      birthController.text = widget.birth!;
+      yearController.text = widget.year!;
+      seriesController.text = widget.series!;
+      scheduleController.text = widget.schedule!;
+      ownerController.text = widget.owner!;
+      tagController.text = widget.tag!;
     }
 
     super.initState();
   }
 
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController cellphoneController = TextEditingController();
-  final TextEditingController cpfController = TextEditingController();
-  final TextEditingController birthController = TextEditingController();
+  final TextEditingController yearController = TextEditingController();
+  final TextEditingController seriesController = TextEditingController();
+  final TextEditingController scheduleController = TextEditingController();
+  final TextEditingController ownerController = TextEditingController();
+  final TextEditingController tagController = TextEditingController();
 
   @override
   void dispose() {
     nameController.dispose();
-    emailController.dispose();
-    cellphoneController.dispose();
-    cpfController.dispose();
-    birthController.dispose();
+    yearController.dispose();
+    seriesController.dispose();
+    scheduleController.dispose();
+    ownerController.dispose();
+    tagController.dispose();
     super.dispose();
-  }
-
-
-  Future<Map<String, dynamic>> updateEmployee(String idCompany, String idEmployee, String name, String email, String cellphone, String cpf, String birth) async {
-    try {
-      final body = {
-        "id_empresa": idCompany,
-        "id_funcionario": idEmployee,
-        "nome": name,
-        "email": email,
-        "celular": cellphone,
-        "cpf": cpf,
-        "data_nascimento": birth,
-        "token": ApplicationConstant.TOKEN
-      };
-
-      print('HTTP_BODY: $body');
-
-      final json = await postRequest.sendPostRequest(Links.EDIT_EMPLOYEE, body);
-      final parsedResponse = jsonDecode(json);
-
-      print('HTTP_RESPONSE: $parsedResponse');
-
-      final response = Employee.fromJson(parsedResponse);
-      if (response.status == "01") {
-        Navigator.of(context).pop(true);
-      } else {}
-      ApplicationMessages(context: context).showMessage(response.msg);
-
-      return parsedResponse;
-    } catch (e) {
-      throw Exception('HTTP_ERROR: $e');
-    }
-  }
-
-  Future<List<Map<String, dynamic>>> saveEmployee(String idCompany, String name, String email, String cellphone, String cpf, String birth) async {
-    try {
-      final body = {
-        "id_empresa": idCompany,
-        "nome": name,
-        "email": email,
-        "celular": cellphone,
-        "cpf": cpf,
-        "data_nascimento": birth,
-        "token": ApplicationConstant.TOKEN
-      };
-
-      print('HTTP_BODY: $body');
-
-      final json = await postRequest.sendPostRequest(Links.SAVE_EMPLOYEE, body);
-
-      List<Map<String, dynamic>> _map = [];
-      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
-
-      print('HTTP_RESPONSE: $_map');
-
-      final response = Employee.fromJson(_map[0]);
-      if (response.status == "01") {
-        Navigator.of(context).pop(true);
-      } else {}
-      ApplicationMessages(context: context).showMessage(response.msg);
-
-      return _map;
-    } catch (e) {
-      throw Exception('HTTP_ERROR: $e');
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-
     return SingleChildScrollView(
         child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -170,7 +130,9 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                 Container(
                   width: double.infinity,
                   child: Text(
-                    widget.id != null ?  "Editar funcionário" :"Adicionar funcionário",
+                    widget.id != null
+                        ? "Editar equipamento"
+                        : "Adicionar equipamento",
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: Dimens.textSize6,
@@ -180,54 +142,46 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                   ),
                 ),
                 SizedBox(height: Dimens.marginApplication),
-                Row(children: [
-                  Expanded(
-                    child: TextField(
-                      controller: nameController,
-                      decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: OwnerColors.colorPrimary, width: 1.5),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 1.0),
-                        ),
-                        hintText: 'Nome',
-                        hintStyle: TextStyle(color: Colors.grey),
-                        border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(Dimens.radiusApplication),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding:
-                            EdgeInsets.all(Dimens.textFieldPaddingApplication),
-                      ),
-                      keyboardType: TextInputType.text,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: Dimens.textSize5,
-                      ),
-                    ),
-                  ),
-                ]),
-                SizedBox(height: Dimens.marginApplication),
-                Styles().div_horizontal,
-                SizedBox(height: Dimens.marginApplication),
                 TextField(
-                  controller: emailController,
+                  controller: nameController,
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                           color: OwnerColors.colorPrimary, width: 1.5),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey, width: 1.0),
+                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
                     ),
-                    hintText: 'E-mail',
+                    hintText: 'Nome do equipamento',
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius:
+                          BorderRadius.circular(Dimens.radiusApplication),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding:
+                        EdgeInsets.all(Dimens.textFieldPaddingApplication),
+                  ),
+                  keyboardType: TextInputType.text,
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: Dimens.textSize5,
+                  ),
+                ),
+                SizedBox(height: Dimens.marginApplication),
+                TextField(
+                  controller: seriesController,
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: OwnerColors.colorPrimary, width: 1.5),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                    ),
+                    hintText: 'Série',
                     hintStyle: TextStyle(color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius:
@@ -239,7 +193,7 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                     contentPadding:
                     EdgeInsets.all(Dimens.textFieldPaddingApplication),
                   ),
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.text,
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: Dimens.textSize5,
@@ -247,8 +201,7 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                 ),
                 SizedBox(height: Dimens.marginApplication),
                 TextField(
-                  controller: cellphoneController,
-                  inputFormatters: [Masks().cellphoneMask()],
+                  controller: yearController,
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -258,38 +211,7 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                       borderSide:
                       BorderSide(color: Colors.grey, width: 1.0),
                     ),
-                    hintText: 'Celular',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    border: OutlineInputBorder(
-                      borderRadius:
-                      BorderRadius.circular(Dimens.radiusApplication),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding:
-                    EdgeInsets.all(Dimens.textFieldPaddingApplication),
-                  ),
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: Dimens.textSize5,
-                  ),
-                ),
-                SizedBox(height: Dimens.marginApplication),
-                TextField(
-                  controller: cpfController,
-                  inputFormatters: [Masks().cpfMask()],
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: OwnerColors.colorPrimary, width: 1.5),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey, width: 1.0),
-                    ),
-                    hintText: 'CPF',
+                    hintText: 'Ano',
                     hintStyle: TextStyle(color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius:
@@ -309,18 +231,16 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                 ),
                 SizedBox(height: Dimens.marginApplication),
                 TextField(
-                  controller: birthController,
-                  inputFormatters: [Masks().birthMask()],
+                  controller: ownerController,
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                           color: OwnerColors.colorPrimary, width: 1.5),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey, width: 1.0),
+                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
                     ),
-                    hintText: 'Data de nascimento',
+                    hintText: 'Proprietário',
                     hintStyle: TextStyle(color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius:
@@ -329,16 +249,44 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                     ),
                     filled: true,
                     fillColor: Colors.white,
-                    contentPadding: EdgeInsets.all(
-                        Dimens.textFieldPaddingApplication),
+                    contentPadding:
+                    EdgeInsets.all(Dimens.textFieldPaddingApplication),
                   ),
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.text,
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: Dimens.textSize5,
                   ),
                 ),
                 SizedBox(height: Dimens.marginApplication),
+                TextField(
+                  controller: tagController,
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: OwnerColors.colorPrimary, width: 1.5),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                    ),
+                    hintText: 'TAG',
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius:
+                      BorderRadius.circular(Dimens.radiusApplication),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding:
+                    EdgeInsets.all(Dimens.textFieldPaddingApplication),
+                  ),
+                  keyboardType: TextInputType.text,
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: Dimens.textSize5,
+                  ),
+                ),
                 Container(
                   margin: EdgeInsets.only(top: Dimens.marginApplication),
                   width: double.infinity,
@@ -347,32 +295,28 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                     onPressed: () async {
                       if (!validator.validateGenericTextField(
                           nameController.text, "Nome")) return;
-                      if (!validator.validateEmail(emailController.text)) return;
-                      if (!validator.validateCellphone(cellphoneController.text)) return;
-                      if (!validator.validateCPF(cpfController.text)) return;
-                      if (!validator.validateBirth(birthController.text, "dd/MM/yyyy")) return;
 
                       setState(() {
                         _isLoading = true;
                       });
 
                       if (widget.id != null) {
-                        await updateEmployee(
-                            Preferences.getUserData()!.id.toString(),
-                            widget.id!,
-                            nameController.text.toString(),
-                            emailController.text.toString(),
-                            cellphoneController.text.toString(),
-                            cpfController.text.toString(),
-                            birthController.text.toString());
+                        // await updateEmployee(
+                        //     Preferences.getUserData()!.id.toString(),
+                        //     widget.id!,
+                        //     nameController.text.toString(),
+                        //     emailController.text.toString(),
+                        //     cellphoneController.text.toString(),
+                        //     cpfController.text.toString(),
+                        //     birthController.text.toString());
                       } else {
-                        await saveEmployee(
-                            Preferences.getUserData()!.id.toString(),
-                            nameController.text.toString(),
-                            emailController.text.toString(),
-                            cellphoneController.text.toString(),
-                            cpfController.text.toString(),
-                            birthController.text.toString());
+                        // await saveEmployee(
+                        //     Preferences.getUserData()!.id.toString(),
+                        //     nameController.text.toString(),
+                        //     emailController.text.toString(),
+                        //     cellphoneController.text.toString(),
+                        //     cpfController.text.toString(),
+                        //     birthController.text.toString());
                       }
 
                       setState(() {

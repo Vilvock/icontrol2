@@ -9,12 +9,12 @@ retorno historico planos bugado
 3 - terminar fluxo compra de plano (polida no layout e tela de sucesso)
 
 4 - terminar crud funcionarios (perguntar pro carlos se ta safe)
-5 - crud frotas
-6 - crud equipamentos
+5 - crud frotas (requests)
+6 - crud equipamentos (requests)
 
 nome email celualr obrigatorio no funcionario data nascimento nao OK
 
-dias restantes pro fim do plano na tela meu plano
+dias restantes pro fim do plano na tela meu plano OK
 
 status colorido nos pagamentos
 

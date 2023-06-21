@@ -84,6 +84,33 @@ class _Payment extends State<Payments> {
                       methodPayment = "Boleto Bancário(Prazo)";
                     }
 
+                    // Pendente,Aprovado,Rejeitado,Cancelado,Devolvido
+
+                    var _statusColor;
+
+                    switch (response.status_pagamento) {
+                      case "Pendente":
+                        _statusColor = OwnerColors.darkGrey;
+                        break;
+                      case "Aprovado":
+
+                        _statusColor = OwnerColors.colorPrimaryDark;
+                        break;
+                      case "Rejeitado":
+
+                        _statusColor = Colors.yellow[700];
+                        break;
+                      case "Cancelado":
+
+                        _statusColor = Colors.red;
+                        break;
+                      case "Devolvido":
+
+                        _statusColor = OwnerColors.darkGrey;
+                        break;
+                    }
+
+
                     return Card(
                       shape: RoundedRectangleBorder(
                         borderRadius:
@@ -128,10 +155,9 @@ class _Payment extends State<Payments> {
                                       color: Colors.black,
                                     ),
                                   ),
+
                                   SizedBox(height: Dimens.minMarginApplication),
-
                                   Styles().div_horizontal,
-
                                   SizedBox(height: Dimens.minMarginApplication),
 
                                   Text(
@@ -149,6 +175,27 @@ class _Payment extends State<Payments> {
                                       color: Colors.black,
                                     ),
                                   ),
+
+                                  Align(alignment: AlignmentDirectional.bottomStart, child:
+                                  Card(
+                                      color: _statusColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(Dimens
+                                            .minRadiusApplication),
+                                      ),
+                                      child: Container(
+                                          padding: EdgeInsets.all(Dimens
+                                              .minPaddingApplication),
+                                          child: Text(
+                                            response.status_pagamento.toString(),
+                                            style: TextStyle(
+                                              fontFamily: 'Inter',
+                                              fontSize:
+                                              Dimens.textSize5,
+                                              color: Colors.white,
+                                            ),
+                                          )))),
                                 ],
                               ),
                             )
@@ -181,9 +228,9 @@ class _Payment extends State<Payments> {
                         ]));
               }
             } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
+              return Styles().defaultErrorRequest;
             }
-            return Center(child: CircularProgressIndicator());
+            return Styles().defaultLoading;
           },
         ),
       ),

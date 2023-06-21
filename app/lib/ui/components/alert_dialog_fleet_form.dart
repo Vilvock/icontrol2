@@ -21,16 +21,14 @@ import '../../web_service/service_response.dart';
 import 'alert_dialog_pick_images.dart';
 
 class FleetFormAlertDialog extends StatefulWidget {
-
   final String? id;
   final String? name;
   final String? obs;
   final String? status;
   final String? url;
 
-  FleetFormAlertDialog({
-    Key? key, this.id, this.name, this.obs, this.status, this.url
-  });
+  FleetFormAlertDialog(
+      {Key? key, this.id, this.name, this.obs, this.status, this.url});
 
   // DialogGeneric({Key? key}) : super(key: key);
 
@@ -39,11 +37,12 @@ class FleetFormAlertDialog extends StatefulWidget {
 }
 
 class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
-
   late Validator validator;
   bool _isLoading = false;
 
   bool light = false;
+
+  File _imagePicked = File("");
 
   final postRequest = PostRequest();
 
@@ -55,9 +54,9 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
       nameController.text = widget.name!;
 
       if (widget.status == "1") {
-         light = true;
+        light = true;
       } else {
-         light = false;
+        light = false;
       }
     }
 
@@ -80,7 +79,9 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
       if (image == null) return;
       final imageTemp = File(image.path);
 
-      // sendPhoto(imageTemp);
+      setState(() {
+        _imagePicked = imageTemp;
+      });
 
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
@@ -93,7 +94,9 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
       if (image == null) return;
       final imageTemp = File(image.path);
 
-      // sendPhoto(imageTemp);
+      setState(() {
+        _imagePicked = imageTemp;
+      });
 
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
@@ -102,7 +105,6 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
 
   @override
   Widget build(BuildContext context) {
-
     return SingleChildScrollView(
         child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -132,7 +134,7 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
                 Container(
                   width: double.infinity,
                   child: Text(
-                    widget.id != null ?  "Editar Frota" :"Adicionar Frota",
+                    widget.id != null ? "Editar Frota" : "Adicionar Frota",
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: Dimens.textSize6,
@@ -185,13 +187,13 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
                     hintStyle: TextStyle(color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius:
-                      BorderRadius.circular(Dimens.radiusApplication),
+                          BorderRadius.circular(Dimens.radiusApplication),
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
                     fillColor: Colors.white,
                     contentPadding:
-                    EdgeInsets.all(Dimens.textFieldPaddingApplication),
+                        EdgeInsets.all(Dimens.textFieldPaddingApplication),
                   ),
                   keyboardType: TextInputType.text,
                   style: TextStyle(
@@ -201,27 +203,31 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
                 ),
                 SizedBox(height: Dimens.marginApplication),
                 Styles().div_horizontal,
-                Visibility(visible: widget.id != null, child: Row(children: [
-                  Text(
-                    "Status (Inativo / Ativo)",
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: Dimens.textSize5,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Switch(
-                    value: light,
-                    onChanged: (bool value) {
-                      setState(() {
-                        light = value;
-                      });
-                    },
-                  ),
-                ],)),
+                Visibility(
+                    visible: widget.id != null,
+                    child: Row(
+                      children: [
+                        Text(
+                          "Status (Inativo / Ativo)",
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: Dimens.textSize5,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Switch(
+                          value: light,
+                          onChanged: (bool value) {
+                            setState(() {
+                              light = value;
+                            });
+                          },
+                        ),
+                      ],
+                    )),
                 SizedBox(height: Dimens.marginApplication),
                 Text(
-                  widget.id != null ? "Editar Imagem" :"Adicionar Imagem",
+                  widget.id != null ? "Editar Imagem" : "Adicionar Imagem",
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: Dimens.textSize5,
@@ -232,23 +238,19 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
                 Container(
                     height: 40,
                     child: ElevatedButton(
-                        style:
-                        Styles().styleAlternativeButton,
+                        style: Styles().styleAlternativeButton,
                         onPressed: () {
-
                           showModalBottomSheet<dynamic>(
                               isScrollControlled: true,
                               context: context,
                               shape: Styles().styleShapeBottomSheet,
-                              clipBehavior:
-                              Clip.antiAliasWithSaveLayer,
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
                               builder: (BuildContext context) {
                                 return PickImageAlertDialog(
                                     iconCamera: IconButton(
                                         onPressed: () {
                                           pickImageCamera();
-                                          Navigator.of(context)
-                                              .pop();
+                                          Navigator.of(context).pop();
                                         },
                                         icon: Icon(Icons.camera_alt,
                                             color: Colors.black),
@@ -256,20 +258,30 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
                                     iconGallery: IconButton(
                                         onPressed: () {
                                           pickImageGallery();
-                                          Navigator.of(context)
-                                              .pop();
+                                          Navigator.of(context).pop();
                                         },
                                         icon: Icon(Icons.photo,
                                             color: Colors.black),
                                         iconSize: 60));
                               });
                         },
-                        child: Text("Escolher Arquivo",
+                        child: Text(
+                          "Escolher Arquivo",
                           style: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: Dimens.textSize4,
                               color: Colors.white),
                         ))),
+                SizedBox(height: Dimens.marginApplication),
+                Visibility(
+                  visible: _imagePicked.path != "",
+                  child: Image.file(
+                    _imagePicked,
+                    fit: BoxFit.cover,
+                    height: 100,
+                    width: 100,
+                  ),
+                ),
                 SizedBox(height: Dimens.marginApplication),
                 Container(
                   margin: EdgeInsets.only(top: Dimens.marginApplication),
@@ -293,7 +305,6 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
                         //     nameController.text.toString(),
                         //     light ? "1" : "2");
                       } else {
-
                         // await saveBrand(
                         //   nameController.text.toString(),
                         //   "1",);

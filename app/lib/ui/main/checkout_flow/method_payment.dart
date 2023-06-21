@@ -44,9 +44,6 @@ class _MethodPayment extends State<MethodPayment> {
         body: Container(
             child: SingleChildScrollView(
                 child: Column(children: [
-                  SizedBox(height: Dimens.minMarginApplication),
-                  Styles().div_horizontal,
-                  SizedBox(height: Dimens.minMarginApplication),
                   InkWell(
                       onTap: () {
                         goToCheckout(ApplicationConstant.PIX.toString());

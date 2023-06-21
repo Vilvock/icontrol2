@@ -130,22 +130,34 @@ class _Plan extends State<Plan> {
                               future: loadPlan(),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
-                                  final response = User.fromJson(snapshot.data!);
-    // {
-    // "plano_id": 2,
-    // "plano_nome": "Mensal",
-    // "tempo_total_dias": 30,
-    // "tempo_restante_dias": 17,
-    // "tempo_restante_horas": 7,
-    // "tempo_restante_minutos": 3,
-                                  return Text(
-                                    response.plano_nome,
-                                    style: TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: Dimens.textSize6,
-                                      color: OwnerColors.colorPrimary,
-                                    ),
-                                  );
+                                  final response =
+                                      User.fromJson(snapshot.data!);
+                                  // {
+                                  // "plano_id": 2,
+                                  // "plano_nome": "Mensal",
+                                  // "tempo_total_dias": 30,
+                                  // "tempo_restante_dias": 17,
+                                  // "tempo_restante_horas": 7,
+                                  // "tempo_restante_minutos": 3,
+                                  return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(response.plano_nome,
+                                            style: TextStyle(
+                                              fontFamily: 'Inter',
+                                              fontSize: Dimens.textSize6,
+                                              color: OwnerColors.colorPrimary,
+                                            )),
+
+                                        SizedBox(height: Dimens.minMarginApplication),
+                                        Text("Dais restantes: " + response.tempo_restante_dias.toString(),
+                                            style: TextStyle(
+                                              fontFamily: 'Inter',
+                                              fontSize: Dimens.textSize4,
+                                              color: OwnerColors.colorPrimaryDark,
+                                            )),
+                                      ]);
                                 } else if (snapshot.hasError) {
                                   return Text('${snapshot.error}');
                                 }
@@ -178,7 +190,6 @@ class _Plan extends State<Plan> {
                               child: ElevatedButton(
                                   style: Styles().styleDefaultButton,
                                   onPressed: () {
-
                                     Navigator.pushNamed(context, "/ui/plans");
                                   },
                                   child: Text(
@@ -286,7 +297,8 @@ class _Plan extends State<Plan> {
                                                             height: Dimens
                                                                 .minMarginApplication),
                                                         Text(
-                                                          Strings.littleLoremIpsum,
+                                                          Strings
+                                                              .littleLoremIpsum,
                                                           style: TextStyle(
                                                             fontFamily: 'Inter',
                                                             fontSize: Dimens
@@ -303,7 +315,8 @@ class _Plan extends State<Plan> {
                                                             fontFamily: 'Inter',
                                                             fontSize: Dimens
                                                                 .textSize6,
-                                                            color: OwnerColors.darkGreen,
+                                                            color: OwnerColors
+                                                                .darkGreen,
                                                           ),
                                                         ),
                                                       ],

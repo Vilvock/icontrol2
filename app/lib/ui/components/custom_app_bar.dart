@@ -7,6 +7,7 @@ import 'package:icontrol/ui/main/menu/equips/equipments.dart';
 import '../../res/styles.dart';
 import 'alert_dialog_brand_form.dart';
 import 'alert_dialog_equipments_form.dart';
+import 'alert_dialog_fleet_form.dart';
 import 'alert_dialog_model_form.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -228,6 +229,29 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               clipBehavior: Clip.antiAliasWithSaveLayer,
               builder: (BuildContext context) {
                 return EquipmentFormAlertDialog();
+              });
+          if (result == true) {
+
+          }
+        },
+      ));
+    }
+
+    if (isVisibleFleetAddButton) {
+      _widgetList.add(IconButton(
+        icon: Icon(
+          Icons.add,
+          color: Colors.black,
+        ),
+        onPressed: () async {
+          final result = await showModalBottomSheet<dynamic>(
+              isScrollControlled: true,
+              context: context,
+              shape: Styles().styleShapeBottomSheet,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              builder: (BuildContext context) {
+                return
+                  FleetFormAlertDialog();
               });
           if (result == true) {
 

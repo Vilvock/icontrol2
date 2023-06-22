@@ -184,7 +184,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> updateUserDataRequest(
-      String name, String document, String cellphone, String email) async {
+      String name, String document, String cellphone, String email, String fantasyName, String socialReason) async {
     try {
       final body = {
         "id": await Preferences.getUserData()!.id,
@@ -192,6 +192,8 @@ class _ProfileState extends State<Profile> {
         "cpf": document,
         "celular": cellphone,
         "email": email,
+        "nome_fantasia": fantasyName,
+        "razao_social": socialReason,
         "token": ApplicationConstant.TOKEN
       };
 

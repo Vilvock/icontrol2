@@ -225,7 +225,7 @@ class _Plan extends State<Plan> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          "Plano atual",
+                                                          "Validade",
                                                           style: TextStyle(
                                                               fontFamily:
                                                                   'Inter',
@@ -239,7 +239,7 @@ class _Plan extends State<Plan> {
                                                         ),
                                                         SizedBox(height: 4),
                                                         Text(
-                                                            response.plano_nome,
+                                                            "00/00/0000",
                                                             style: TextStyle(
                                                               fontFamily:
                                                                   'Inter',
@@ -281,7 +281,7 @@ class _Plan extends State<Plan> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          "Plano atual",
+                                                          "Restante",
                                                           style: TextStyle(
                                                               fontFamily:
                                                                   'Inter',
@@ -295,7 +295,7 @@ class _Plan extends State<Plan> {
                                                         ),
                                                         SizedBox(height: 4),
                                                         Text(
-                                                            response.plano_nome,
+                                                            response.tempo_total_dias.toString() + " dia(s)",
                                                             style: TextStyle(
                                                               fontFamily:
                                                                   'Inter',
@@ -400,7 +400,7 @@ class _Plan extends State<Plan> {
                                                                           'Inter',
                                                                       fontSize:
                                                                           Dimens
-                                                                              .textSize6,
+                                                                              .textSize5,
                                                                       color: Colors
                                                                           .black,
                                                                       fontWeight:
@@ -423,28 +423,46 @@ class _Plan extends State<Plan> {
                                                                 mainAxisSize:
                                                                     MainAxisSize
                                                                         .max,
-                                                                children: <
-                                                                    Widget>[
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: [
+                                                                Row(children: [
                                                                   Container(
-                                                                      margin: EdgeInsets.only(
+                                                                      margin: EdgeInsets.only(top: 40, bottom: 40,
                                                                           left: Dimens
-                                                                              .marginApplication,
-                                                                          right:
-                                                                              60),
-                                                                      child:
-                                                                          Text(
-                                                                        response
-                                                                            .valor,
-                                                                        style:
-                                                                            TextStyle(
-                                                                          fontFamily:
-                                                                              'Inter',
-                                                                          fontSize:
-                                                                              Dimens.textSize6,
-                                                                          color:
-                                                                              OwnerColors.colorPrimary,
+                                                                              .marginApplication),
+                                                                      child: Text("R\$",
+                                                                        style: TextStyle(
+                                                                            fontFamily:
+                                                                            'Inter',
+                                                                            fontSize:
+                                                                            Dimens.textSize6,
+                                                                            color:
+                                                                            OwnerColors.colorPrimary,
+                                                                            fontWeight: FontWeight.bold
                                                                         ),
                                                                       )),
+
+                                                                  Container(
+                                                                      margin: EdgeInsets.only(top: 40, bottom: 40,
+                                                                      right:
+                                                                      30),
+                                                                      child:
+                                                                      Text(
+                                                                        response
+                                                                            .valor.replaceAll("R\$ ", ""),
+                                                                        style:
+                                                                        TextStyle(
+                                                                            fontFamily:
+                                                                            'Inter',
+                                                                            fontSize:
+                                                                            Dimens.textSize9,
+                                                                            color:
+                                                                            OwnerColors.colorPrimary,
+                                                                            fontWeight: FontWeight.bold
+                                                                        ),
+                                                                      )),
+                                                                ]),
+
                                                                 ]),
                                                           )),
                                                         ],

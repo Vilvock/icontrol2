@@ -24,9 +24,10 @@ class EmployeeFormAlertDialog extends StatefulWidget {
   final String? cellphone;
   final String? cpf;
   final String? birth;
+  final String? status;
 
   EmployeeFormAlertDialog({
-    Key? key, this.id, this.id_company, this.name, this.email, this.cellphone, this.cpf, this.birth,
+    Key? key, this.id, this.id_company, this.name, this.email, this.cellphone, this.cpf, this.birth, this.status
   });
 
   // DialogGeneric({Key? key}) : super(key: key);
@@ -38,6 +39,8 @@ class EmployeeFormAlertDialog extends StatefulWidget {
 class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
   late Validator validator;
   bool _isLoading = false;
+
+  bool light = false;
 
   final postRequest = PostRequest();
 
@@ -51,6 +54,12 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
       cellphoneController.text = widget.cellphone!;
       cpfController.text = widget.cpf!;
       birthController.text = widget.birth!;
+
+      if (widget.status == "1") {
+        light = true;
+      } else {
+        light = false;
+      }
     }
 
     super.initState();
@@ -73,7 +82,7 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
   }
 
 
-  Future<Map<String, dynamic>> updateEmployee(String idCompany, String idEmployee, String name, String email, String cellphone, String cpf, String birth) async {
+  Future<Map<String, dynamic>> updateEmployee(String idCompany, String idEmployee, String name, String email, String cellphone, String cpf, String birth, String status) async {
     try {
       final body = {
         "id_empresa": idCompany,
@@ -83,6 +92,7 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
         "celular": cellphone,
         "cpf": cpf,
         "data_nascimento": birth,
+        "status": status,
         "token": ApplicationConstant.TOKEN
       };
 
@@ -338,6 +348,26 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
                   ),
                 ),
                 SizedBox(height: Dimens.marginApplication),
+                Styles().div_horizontal,
+                Visibility(visible: widget.id != null, child: Row(children: [
+                  Text(
+                    "Status (Inativo / Ativo)",
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: Dimens.textSize5,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Switch(
+                    value: light,
+                    onChanged: (bool value) {
+                      setState(() {
+                        light = value;
+                      });
+                    },
+                  ),
+                ],)),
+                SizedBox(height: Dimens.marginApplication),
                 Container(
                   margin: EdgeInsets.only(top: Dimens.marginApplication),
                   width: double.infinity,
@@ -350,7 +380,7 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
                       if (!validator.validateCellphone(cellphoneController.text)) return;
                       if (!validator.validateCPF(cpfController.text)) return;
 
-                      if (birthController.text.isNotEmpty) {
+                      if (birthController.text.isNotEmpty && birthController.text != "00/00/0000") {
                         if (!validator.validateBirth(birthController.text, "dd/MM/yyyy")) return;
                       }
 
@@ -366,7 +396,8 @@ class _EmployeeFormAlertDialog extends State<EmployeeFormAlertDialog> {
                             emailController.text.toString(),
                             cellphoneController.text.toString(),
                             cpfController.text.toString(),
-                            birthController.text.toString());
+                            birthController.text.toString(),
+                            light ? "1" : "2");
                       } else {
                         await saveEmployee(
                             Preferences.getUserData()!.id.toString(),

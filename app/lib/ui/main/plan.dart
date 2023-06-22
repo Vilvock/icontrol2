@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:icontrol/ui/main/plans.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../config/preferences.dart';
 import '../../global/application_constant.dart';
@@ -31,6 +31,27 @@ class _Plan extends State<Plan> {
   }
 
   final postRequest = PostRequest();
+
+  Future<List<Map<String, dynamic>>> listAllPlans() async {
+    try {
+      final body = {"token": ApplicationConstant.TOKEN};
+
+      print('HTTP_BODY: $body');
+
+      final json = await postRequest.sendPostRequest(Links.LIST_PLANS, body);
+
+      List<Map<String, dynamic>> _map = [];
+      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+
+      print('HTTP_RESPONSE: $_map');
+
+      final response = User.fromJson(_map[0]);
+
+      return _map;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
 
   Future<Map<String, dynamic>> loadPlan() async {
     try {
@@ -88,50 +109,23 @@ class _Plan extends State<Plan> {
         ),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
-            child: /*FutureBuilder<List<Map<String, dynamic>>>(
-              future: loadProduct(),
+            child: FutureBuilder<Map<String, dynamic>>(
+              future: loadPlan(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
+                  final response = User.fromJson(snapshot.data!);
 
-                  final response = Product.fromJson(snapshot.data![0]);
-
-                  return */
-                Stack(children: [
-              SingleChildScrollView(
-                  child: Container(
-                padding: EdgeInsets.only(bottom: 100),
-                child: Column(
-                  children: [
-                    Container(
-                        margin: EdgeInsets.all(Dimens.marginApplication),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Text(
-                            //   "Resumo",
-                            //   style: TextStyle(
-                            //     fontFamily: 'Inter',
-                            //     fontSize: Dimens.textSize6,
-                            //     fontWeight: FontWeight.bold,
-                            //     color: Colors.black,
-                            //   ),
-                            // ),
-                            // SizedBox(height: Dimens.minMarginApplication),
-                            Text(
-                              "Plano atual",
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: Dimens.textSize4,
-                                color: Colors.black,
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            FutureBuilder<Map<String, dynamic>>(
-                              future: loadPlan(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  final response =
-                                      User.fromJson(snapshot.data!);
+                  return Stack(children: [
+                    SingleChildScrollView(
+                        child: Container(
+                      padding: EdgeInsets.only(bottom: 100),
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(Dimens.marginApplication),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
                                   // {
                                   // "plano_id": 2,
                                   // "plano_nome": "Mensal",
@@ -139,230 +133,432 @@ class _Plan extends State<Plan> {
                                   // "tempo_restante_dias": 17,
                                   // "tempo_restante_horas": 7,
                                   // "tempo_restante_minutos": 3,
-                                  return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(response.plano_nome,
-                                            style: TextStyle(
-                                              fontFamily: 'Inter',
-                                              fontSize: Dimens.textSize6,
-                                              color: OwnerColors.colorPrimary,
-                                            )),
-
-                                        SizedBox(height: Dimens.minMarginApplication),
-                                        Text("Dais restantes: " + response.tempo_restante_dias.toString(),
-                                            style: TextStyle(
-                                              fontFamily: 'Inter',
-                                              fontSize: Dimens.textSize4,
-                                              color: OwnerColors.colorPrimaryDark,
-                                            )),
-                                      ]);
-                                } else if (snapshot.hasError) {
-                                  return Text('${snapshot.error}');
-                                }
-                                return Styles().defaultLoading;
-                              },
-                            ),
-                            SizedBox(height: Dimens.marginApplication),
-                            Styles().div_horizontal,
-                            SizedBox(height: Dimens.marginApplication),
-                            // Text(
-                            //   "Planos",
-                            //   style: TextStyle(
-                            //     fontFamily: 'Inter',
-                            //     fontSize: Dimens.textSize6,
-                            //     color: Colors.black,
-                            //   ),
-                            // ),
-                            // SizedBox(height: 4),
-                            Text(
-                              "Você pode selecionar qualquer um dos planos para receber vantagens, como acesso a ferramentas vip!",
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: Dimens.textSize5,
-                                color: Colors.black87,
-                              ),
-                            ),
-                            SizedBox(height: Dimens.marginApplication),
-                            Container(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                  style: Styles().styleDefaultButton,
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, "/ui/plans");
-                                  },
-                                  child: Text(
-                                    "Mostrar planos",
-                                    style: Styles().styleDefaultTextButton,
-                                  )),
-                            ),
-
-                            SizedBox(height: Dimens.marginApplication),
-                            Styles().div_horizontal,
-                            SizedBox(height: Dimens.marginApplication),
-                            Text(
-                              "Histórico recente de planos",
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: Dimens.textSize6,
-                                color: Colors.black,
-                              ),
-                            ),
-                            SizedBox(height: Dimens.minMarginApplication),
-                            // {
-                            //   "id": 7,
-                            //   "data": "04/05/2023",
-                            //   "hora": "09:22",
-                            //   "tipo_pagamento": "Cartão de crédito",
-                            //   "valor": " R$ 10,00",
-                            //   "status": "Aprovado"
-                            // },
-                            FutureBuilder<List<Map<String, dynamic>>>(
-                              future: loadHistoryUserPlans(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return ListView.builder(
-                                    primary: false,
-                                    shrinkWrap: true,
-                                    itemCount: snapshot.data!.length,
-                                    itemBuilder: (context, index) {
-                                      final response =
-                                          User.fromJson(snapshot.data![index]);
-
-                                      return InkWell(
-                                          onTap: () => {},
-                                          child: Card(
-                                            elevation:
-                                                Dimens.minElevationApplication,
-                                            color: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(Dimens
-                                                      .minRadiusApplication),
-                                            ),
-                                            margin: EdgeInsets.all(
-                                                Dimens.minMarginApplication),
-                                            child: Container(
-                                              padding: EdgeInsets.all(
-                                                  Dimens.paddingApplication),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  // Container(
-                                                  //     margin: EdgeInsets.only(
-                                                  //         right: Dimens
-                                                  //             .minMarginApplication),
-                                                  //     child: ClipRRect(
-                                                  //         borderRadius: BorderRadius
-                                                  //             .circular(Dimens
-                                                  //                 .minRadiusApplication),
-                                                  //         child: Image.network(
-                                                  //           ApplicationConstant
-                                                  //                   .URL_PRODUCT_PHOTO +
-                                                  //               response
-                                                  //                   .url_foto
-                                                  //                   .toString(),
-                                                  //           height: 90,
-                                                  //           width: 90,
-                                                  //           errorBuilder: (context,
-                                                  //                   exception,
-                                                  //                   stackTrack) =>
-                                                  //               Icon(
-                                                  //                   Icons.error,
-                                                  //                   size: 90),
-                                                  //         ))),
-                                                  Expanded(
-                                                    child: Column(
+                                  Container(
+                                      padding: EdgeInsets.all(
+                                          Dimens.minPaddingApplication),
+                                      child: IntrinsicHeight(
+                                          child: Row(
+                                        children: [
+                                          Expanded(
+                                              child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Container(
+                                                    child: Wrap(
+                                                      direction: Axis.vertical,
+                                                      alignment:
+                                                          WrapAlignment.center,
                                                       crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
+                                                          WrapCrossAlignment
+                                                              .center,
                                                       children: [
-                                                        Text(
-                                                          "nome plano",
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: TextStyle(
-                                                            fontFamily: 'Inter',
-                                                            fontSize: Dimens
-                                                                .textSize5,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Colors.black,
+                                                        Container(
+                                                          decoration: BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              color: OwnerColors
+                                                                  .lightGrey),
+                                                          child: Padding(
+                                                            padding: EdgeInsets
+                                                                .all(Dimens
+                                                                    .minPaddingApplication),
+                                                            child: ImageIcon(
+                                                              AssetImage(
+                                                                  'images/crown.png'),
+                                                              size: 24,
+                                                            ),
                                                           ),
                                                         ),
-                                                        SizedBox(
-                                                            height: Dimens
-                                                                .minMarginApplication),
                                                         Text(
-                                                          Strings
-                                                              .littleLoremIpsum,
+                                                          "Plano atual",
                                                           style: TextStyle(
-                                                            fontFamily: 'Inter',
-                                                            fontSize: Dimens
-                                                                .textSize4,
-                                                            color: Colors.black,
-                                                          ),
+                                                              fontFamily:
+                                                                  'Inter',
+                                                              fontSize: Dimens
+                                                                  .textSize5,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
                                                         ),
-                                                        SizedBox(
-                                                            height: Dimens
-                                                                .minMarginApplication),
+                                                        SizedBox(height: 4),
                                                         Text(
-                                                          "valor",
-                                                          style: TextStyle(
-                                                            fontFamily: 'Inter',
-                                                            fontSize: Dimens
-                                                                .textSize6,
-                                                            color: OwnerColors
-                                                                .darkGreen,
-                                                          ),
-                                                        ),
+                                                            response.plano_nome,
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Inter',
+                                                              fontSize: Dimens
+                                                                  .textSize6,
+                                                              color: OwnerColors
+                                                                  .colorPrimary,
+                                                            )),
                                                       ],
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ));
+                                                  ))),
+                                          Expanded(
+                                              child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Container(
+                                                    child: Wrap(
+                                                      direction: Axis.vertical,
+                                                      alignment:
+                                                      WrapAlignment.center,
+                                                      crossAxisAlignment:
+                                                      WrapCrossAlignment
+                                                          .center,
+                                                      children: [
+                                                        Container(
+                                                          decoration: BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              color: OwnerColors
+                                                                  .lightGrey),
+                                                          child: Padding(
+                                                            padding: EdgeInsets
+                                                                .all(Dimens
+                                                                .minPaddingApplication),
+                                                            child: ImageIcon(
+                                                              AssetImage(
+                                                                  'images/crown.png'),
+                                                              size: 24,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          "Plano atual",
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                              'Inter',
+                                                              fontSize: Dimens
+                                                                  .textSize5,
+                                                              color:
+                                                              Colors.black,
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .bold),
+                                                        ),
+                                                        SizedBox(height: 4),
+                                                        Text(
+                                                            response.plano_nome,
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                              'Inter',
+                                                              fontSize: Dimens
+                                                                  .textSize6,
+                                                              color: OwnerColors
+                                                                  .colorPrimary,
+                                                            )),
+                                                      ],
+                                                    ),
+                                                  ))),
+                                          Expanded(
+                                              child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Container(
+                                                    child: Wrap(
+                                                      direction: Axis.vertical,
+                                                      alignment:
+                                                      WrapAlignment.center,
+                                                      crossAxisAlignment:
+                                                      WrapCrossAlignment
+                                                          .center,
+                                                      children: [
+                                                        Container(
+                                                          decoration: BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              color: OwnerColors
+                                                                  .lightGrey),
+                                                          child: Padding(
+                                                            padding: EdgeInsets
+                                                                .all(Dimens
+                                                                .minPaddingApplication),
+                                                            child: ImageIcon(
+                                                              AssetImage(
+                                                                  'images/crown.png'),
+                                                              size: 24,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          "Plano atual",
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                              'Inter',
+                                                              fontSize: Dimens
+                                                                  .textSize5,
+                                                              color:
+                                                              Colors.black,
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .bold),
+                                                        ),
+                                                        SizedBox(height: 4),
+                                                        Text(
+                                                            response.plano_nome,
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                              'Inter',
+                                                              fontSize: Dimens
+                                                                  .textSize6,
+                                                              color: OwnerColors
+                                                                  .colorPrimary,
+                                                            )),
+                                                      ],
+                                                    ),
+                                                  ))),
+                                        ],
+                                      ))),
+                                  SizedBox(height: Dimens.marginApplication),
+                                  Styles().div_horizontal,
+                                  SizedBox(height: Dimens.marginApplication),
+
+                                  SizedBox(height: Dimens.minMarginApplication),
+                                  // {
+                                  //   "id": 7,
+                                  //   "data": "04/05/2023",
+                                  //   "hora": "09:22",
+                                  //   "tipo_pagamento": "Cartão de crédito",
+                                  //   "valor": " R$ 10,00",
+                                  //   "status": "Aprovado"
+                                  // },
+                                  FutureBuilder<List<Map<String, dynamic>>>(
+                                    future: listAllPlans(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        final responseItem =
+                                            User.fromJson(snapshot.data![0]);
+
+                                        if (responseItem.rows != 0) {
+                                          return ListView.builder(
+                                            primary: false,
+                                            shrinkWrap: true,
+                                            itemCount: snapshot.data!.length,
+                                            itemBuilder: (context, index) {
+                                              final response = User.fromJson(
+                                                  snapshot.data![index]);
+
+                                              return Card(
+                                                elevation: Dimens
+                                                    .minElevationApplication,
+                                                color: Colors.white,
+                                                margin: EdgeInsets.all(Dimens
+                                                    .minMarginApplication),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius
+                                                      .circular(Dimens
+                                                          .minRadiusApplication),
+                                                ),
+                                                child: InkWell(
+                                                    onTap: () => {
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              "/ui/method_payment",
+                                                              arguments: {
+                                                                "id_plan":
+                                                                    response
+                                                                        .plano_id,
+                                                              })
+                                                        },
+                                                    child: Container(
+                                                      padding: EdgeInsets.all(Dimens
+                                                          .minPaddingApplication),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          // Container(
+                                                          //     margin: EdgeInsets.only(
+                                                          //         right: Dimens.minMarginApplication),
+                                                          //     child: ClipRRect(
+                                                          //         borderRadius: BorderRadius.circular(
+                                                          //             Dimens.minRadiusApplication),
+                                                          //         child: Image.network(
+                                                          //           ApplicationConstant.URL_CATEGORIES + response.url.toString(),
+                                                          //           height: 24,
+                                                          //           width: 24,
+                                                          //           errorBuilder: (context, exception, stackTrack) => Image.asset(
+                                                          //             'images/default.png',
+                                                          //             height: 24,
+                                                          //           ),
+                                                          //         ))),
+                                                          // SizedBox(
+                                                          //     width: Dimens.minMarginApplication),
+                                                          Expanded(
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                SizedBox(
+                                                                    height: Dimens
+                                                                        .minMarginApplication),
+                                                                Text(
+                                                                  response
+                                                                      .plano_nome,
+                                                                  maxLines: 1,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontFamily:
+                                                                        'Inter',
+                                                                    fontSize: Dimens
+                                                                        .textSize6,
+                                                                    color: Colors
+                                                                        .black87,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    height: Dimens
+                                                                        .minMarginApplication),
+                                                                // Text(
+                                                                //   response.descricao,
+                                                                //   maxLines: 2,
+                                                                //   overflow: TextOverflow.ellipsis,
+                                                                //   style: TextStyle(
+                                                                //     fontFamily: 'Inter',
+                                                                //     fontSize: Dimens.textSize5,
+                                                                //     color: Colors.black,
+                                                                //   ),
+                                                                // ),
+                                                                SizedBox(
+                                                                    height: Dimens
+                                                                        .marginApplication),
+                                                                Text(
+                                                                  response
+                                                                      .valor,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontFamily:
+                                                                        'Inter',
+                                                                    fontSize: Dimens
+                                                                        .textSize6,
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
+                                                                ),
+                                                                // SizedBox(
+                                                                //     height: Dimens.minMarginApplication),
+                                                                // Divider(
+                                                                //   color: Colors.black12,
+                                                                //   height: 2,
+                                                                //   thickness: 1.5,
+                                                                // ),
+                                                                // SizedBox(
+                                                                //     height: Dimens.minMarginApplication),
+                                                                // IntrinsicHeight(
+                                                                //     child: Row(
+                                                                //       children: [
+                                                                //         Icon(
+                                                                //             size: 20,
+                                                                //             Icons.shopping_cart_outlined),
+                                                                //         Text(
+                                                                //           "Adicionar ao carrinho",
+                                                                //           style: TextStyle(
+                                                                //             fontFamily: 'Inter',
+                                                                //             fontSize: Dimens.textSize4,
+                                                                //             color: Colors.black,
+                                                                //           ),
+                                                                //         ),
+                                                                //         SizedBox(
+                                                                //             width: Dimens.minMarginApplication),
+                                                                //         VerticalDivider(
+                                                                //           color: Colors.black12,
+                                                                //           width: 2,
+                                                                //           thickness: 1.5,
+                                                                //         ),
+                                                                //         SizedBox(
+                                                                //             width: Dimens.minMarginApplication),
+                                                                //         Icon(size: 20, Icons.delete_outline),
+                                                                //         Text(
+                                                                //           "Remover",
+                                                                //           style: TextStyle(
+                                                                //             fontFamily: 'Inter',
+                                                                //             fontSize: Dimens.textSize4,
+                                                                //             color: Colors.black,
+                                                                //           ),
+                                                                //         ),
+                                                                //       ],
+                                                                //     ))
+                                                              ],
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )),
+                                              );
+                                            },
+                                          );
+                                        } else {
+                                          return Container(
+                                              padding: EdgeInsets.only(
+                                                  top: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      20),
+                                              child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Center(
+                                                        child: Lottie.network(
+                                                            height: 160,
+                                                            'https://assets3.lottiefiles.com/private_files/lf30_cgfdhxgx.json')),
+                                                    SizedBox(
+                                                        height: Dimens
+                                                            .marginApplication),
+                                                    Text(
+                                                      Strings.empty_list,
+                                                      style: TextStyle(
+                                                        fontFamily: 'Inter',
+                                                        fontSize:
+                                                            Dimens.textSize5,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  ]));
+                                        }
+                                      } else if (snapshot.hasError) {
+                                        return Text('${snapshot.error}');
+                                      }
+                                      return Styles().defaultLoading;
                                     },
-                                  );
-                                } else if (snapshot.hasError) {
-                                  return Text('${snapshot.error}');
-                                }
-                                return Styles().defaultLoading;
-                              },
-                            ),
-                          ],
-                        ))
-                  ],
-                ),
-              )),
-              Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.all(Dimens.marginApplication),
-                      child: ElevatedButton(
-                          style: Styles().styleDefaultButton,
-                          onPressed: () {},
-                          child: Text(
-                            "Mostrar histórico completo",
-                            style: Styles().styleDefaultTextButton,
-                          )),
-                    ),
-                  ])
-            ])));
-    /*     } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
+                                  ),
+                                ],
+                              ))
+                        ],
+                      ),
+                    )),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            margin: EdgeInsets.all(Dimens.marginApplication),
+                            child: ElevatedButton(
+                                style: Styles().styleDefaultButton,
+                                onPressed: () {},
+                                child: Text(
+                                  "Mostrar histórico completo",
+                                  style: Styles().styleDefaultTextButton,
+                                )),
+                          ),
+                        ])
+                  ]);
+                } else if (snapshot.hasError) {
+                  return Styles().defaultErrorRequest;
                 }
-                return Center( child: CircularProgressIndicator());
+                return Styles().defaultLoading;
               },
-            )));*/
+            )));
   }
 
   Future<void> _pullRefresh() async {

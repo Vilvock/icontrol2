@@ -618,7 +618,7 @@ class _ProfileState extends State<Profile> {
                                     fantasyNameController.text,
                                     "Nome fantasia")) return;
                                 if (!validator.validateGenericTextField(
-                                    fantasyNameController.text,
+                                    socialReasonController.text,
                                     "Razão social")) return;
 
                                 setState(() {
@@ -629,7 +629,11 @@ class _ProfileState extends State<Profile> {
                                     fantasyNameController.text,
                                     documentController.text,
                                     cellphoneController.text,
-                                    emailController.text);
+                                    emailController.text,
+                                    fantasyNameController.text,
+                                    socialReasonController.text
+
+                                );
 
                                 setState(() {
                                   _isLoading = false;

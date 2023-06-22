@@ -24,7 +24,6 @@ import 'package:icontrol/ui/main/menu/equips/fleets/fleets.dart';
 import 'package:icontrol/ui/main/menu/payments/payments.dart';
 import 'package:icontrol/ui/main/menu/user/profile.dart';
 import 'package:icontrol/ui/main/notifications/notifications.dart';
-import 'package:icontrol/ui/main/plans.dart';
 import 'package:icontrol/ui/utilities/pdf_viewer.dart';
 
 import 'config/notification_helper.dart';
@@ -113,7 +112,6 @@ void main() async {
       '/ui/notifications': (context) => Notifications(),
       '/ui/recover_password': (context) => RecoverPassword(),
       '/ui/employees': (context) => Employees(),
-      '/ui/plans': (context) => Plans(),
       '/ui/checkout': (context) => Checkout(),
       '/ui/equipments': (context) => Equipments(),
       '/ui/fleets': (context) => Fleets(),

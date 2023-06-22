@@ -90,6 +90,7 @@ flutter:
     - images/qr_code.png
     - images/ticket.png
     - images/calendar.png
+    - images/crown.png
 #    - images/default.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

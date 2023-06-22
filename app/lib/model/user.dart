@@ -40,6 +40,7 @@ class User extends GlobalWSModel{
   final String valor;
   final String nome_fantasia;
   final String razao_social;
+  final int dias;
 
 
 
@@ -82,7 +83,8 @@ class User extends GlobalWSModel{
     required this.tempo_restante_minutos,
     required this.valor,
     required this.nome_fantasia,
-    required this.razao_social, required super.status, required super.msg, required super.id, required super.rows,
+    required this.razao_social,
+    required this.dias, required super.status, required super.msg, required super.id, required super.rows,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -125,6 +127,7 @@ class User extends GlobalWSModel{
       valor: json['valor'],
       nome_fantasia: json['nome_fantasia'],
       razao_social: json['razao_social'],
+      dias: json['dias'],
       status: json['status'],
       msg: json['msg'],
       id: json['id'],

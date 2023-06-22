@@ -202,10 +202,10 @@ class _Plan extends State<Plan> {
                                                     child: Wrap(
                                                       direction: Axis.vertical,
                                                       alignment:
-                                                      WrapAlignment.center,
+                                                          WrapAlignment.center,
                                                       crossAxisAlignment:
-                                                      WrapCrossAlignment
-                                                          .center,
+                                                          WrapCrossAlignment
+                                                              .center,
                                                       children: [
                                                         Container(
                                                           decoration: BoxDecoration(
@@ -216,7 +216,7 @@ class _Plan extends State<Plan> {
                                                           child: Padding(
                                                             padding: EdgeInsets
                                                                 .all(Dimens
-                                                                .minPaddingApplication),
+                                                                    .minPaddingApplication),
                                                             child: ImageIcon(
                                                               AssetImage(
                                                                   'images/crown.png'),
@@ -228,21 +228,21 @@ class _Plan extends State<Plan> {
                                                           "Plano atual",
                                                           style: TextStyle(
                                                               fontFamily:
-                                                              'Inter',
+                                                                  'Inter',
                                                               fontSize: Dimens
                                                                   .textSize5,
                                                               color:
-                                                              Colors.black,
+                                                                  Colors.black,
                                                               fontWeight:
-                                                              FontWeight
-                                                                  .bold),
+                                                                  FontWeight
+                                                                      .bold),
                                                         ),
                                                         SizedBox(height: 4),
                                                         Text(
                                                             response.plano_nome,
                                                             style: TextStyle(
                                                               fontFamily:
-                                                              'Inter',
+                                                                  'Inter',
                                                               fontSize: Dimens
                                                                   .textSize6,
                                                               color: OwnerColors
@@ -258,10 +258,10 @@ class _Plan extends State<Plan> {
                                                     child: Wrap(
                                                       direction: Axis.vertical,
                                                       alignment:
-                                                      WrapAlignment.center,
+                                                          WrapAlignment.center,
                                                       crossAxisAlignment:
-                                                      WrapCrossAlignment
-                                                          .center,
+                                                          WrapCrossAlignment
+                                                              .center,
                                                       children: [
                                                         Container(
                                                           decoration: BoxDecoration(
@@ -272,7 +272,7 @@ class _Plan extends State<Plan> {
                                                           child: Padding(
                                                             padding: EdgeInsets
                                                                 .all(Dimens
-                                                                .minPaddingApplication),
+                                                                    .minPaddingApplication),
                                                             child: ImageIcon(
                                                               AssetImage(
                                                                   'images/crown.png'),
@@ -284,21 +284,21 @@ class _Plan extends State<Plan> {
                                                           "Plano atual",
                                                           style: TextStyle(
                                                               fontFamily:
-                                                              'Inter',
+                                                                  'Inter',
                                                               fontSize: Dimens
                                                                   .textSize5,
                                                               color:
-                                                              Colors.black,
+                                                                  Colors.black,
                                                               fontWeight:
-                                                              FontWeight
-                                                                  .bold),
+                                                                  FontWeight
+                                                                      .bold),
                                                         ),
                                                         SizedBox(height: 4),
                                                         Text(
                                                             response.plano_nome,
                                                             style: TextStyle(
                                                               fontFamily:
-                                                              'Inter',
+                                                                  'Inter',
                                                               fontSize: Dimens
                                                                   .textSize6,
                                                               color: OwnerColors
@@ -339,15 +339,13 @@ class _Plan extends State<Plan> {
                                                   snapshot.data![index]);
 
                                               return Card(
-                                                elevation: Dimens
-                                                    .minElevationApplication,
-                                                color: Colors.white,
+                                                elevation: 0.5,
+                                                color: OwnerColors.colorPrimary,
                                                 margin: EdgeInsets.all(Dimens
                                                     .minMarginApplication),
                                                 shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius
-                                                      .circular(Dimens
-                                                          .minRadiusApplication),
+                                                  borderRadius:
+                                                      BorderRadius.circular(40),
                                                 ),
                                                 child: InkWell(
                                                     onTap: () => {
@@ -361,134 +359,94 @@ class _Plan extends State<Plan> {
                                                               })
                                                         },
                                                     child: Container(
-                                                      padding: EdgeInsets.all(Dimens
-                                                          .minPaddingApplication),
                                                       child: Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
                                                         children: [
-                                                          // Container(
-                                                          //     margin: EdgeInsets.only(
-                                                          //         right: Dimens.minMarginApplication),
-                                                          //     child: ClipRRect(
-                                                          //         borderRadius: BorderRadius.circular(
-                                                          //             Dimens.minRadiusApplication),
-                                                          //         child: Image.network(
-                                                          //           ApplicationConstant.URL_CATEGORIES + response.url.toString(),
-                                                          //           height: 24,
-                                                          //           width: 24,
-                                                          //           errorBuilder: (context, exception, stackTrack) => Image.asset(
-                                                          //             'images/default.png',
-                                                          //             height: 24,
-                                                          //           ),
-                                                          //         ))),
-                                                          // SizedBox(
-                                                          //     width: Dimens.minMarginApplication),
                                                           Expanded(
+                                                              child: Container(
+                                                            padding: EdgeInsets.only(
+                                                                left: Dimens
+                                                                    .paddingApplication,
+                                                                bottom: Dimens
+                                                                    .paddingApplication,
+                                                                top: Dimens
+                                                                    .paddingApplication),
                                                             child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
                                                               children: [
                                                                 SizedBox(
                                                                     height: Dimens
                                                                         .minMarginApplication),
                                                                 Text(
                                                                   response
-                                                                      .plano_nome,
-                                                                  maxLines: 1,
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontFamily:
-                                                                        'Inter',
-                                                                    fontSize: Dimens
-                                                                        .textSize6,
-                                                                    color: Colors
-                                                                        .black87,
-                                                                  ),
+                                                                      .plano_nome
+                                                                      .toUpperCase(),
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Inter',
+                                                                      fontSize:
+                                                                          Dimens
+                                                                              .textSize8,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
                                                                 ),
-                                                                SizedBox(
-                                                                    height: Dimens
-                                                                        .minMarginApplication),
-                                                                // Text(
-                                                                //   response.descricao,
-                                                                //   maxLines: 2,
-                                                                //   overflow: TextOverflow.ellipsis,
-                                                                //   style: TextStyle(
-                                                                //     fontFamily: 'Inter',
-                                                                //     fontSize: Dimens.textSize5,
-                                                                //     color: Colors.black,
-                                                                //   ),
-                                                                // ),
-                                                                SizedBox(
-                                                                    height: Dimens
-                                                                        .marginApplication),
                                                                 Text(
-                                                                  response
-                                                                      .valor,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontFamily:
-                                                                        'Inter',
-                                                                    fontSize: Dimens
-                                                                        .textSize6,
-                                                                    color: Colors
-                                                                        .black,
-                                                                  ),
+                                                                  response.dias
+                                                                          .toString() +
+                                                                      " DIAS",
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Inter',
+                                                                      fontSize:
+                                                                          Dimens
+                                                                              .textSize6,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
                                                                 ),
-                                                                // SizedBox(
-                                                                //     height: Dimens.minMarginApplication),
-                                                                // Divider(
-                                                                //   color: Colors.black12,
-                                                                //   height: 2,
-                                                                //   thickness: 1.5,
-                                                                // ),
-                                                                // SizedBox(
-                                                                //     height: Dimens.minMarginApplication),
-                                                                // IntrinsicHeight(
-                                                                //     child: Row(
-                                                                //       children: [
-                                                                //         Icon(
-                                                                //             size: 20,
-                                                                //             Icons.shopping_cart_outlined),
-                                                                //         Text(
-                                                                //           "Adicionar ao carrinho",
-                                                                //           style: TextStyle(
-                                                                //             fontFamily: 'Inter',
-                                                                //             fontSize: Dimens.textSize4,
-                                                                //             color: Colors.black,
-                                                                //           ),
-                                                                //         ),
-                                                                //         SizedBox(
-                                                                //             width: Dimens.minMarginApplication),
-                                                                //         VerticalDivider(
-                                                                //           color: Colors.black12,
-                                                                //           width: 2,
-                                                                //           thickness: 1.5,
-                                                                //         ),
-                                                                //         SizedBox(
-                                                                //             width: Dimens.minMarginApplication),
-                                                                //         Icon(size: 20, Icons.delete_outline),
-                                                                //         Text(
-                                                                //           "Remover",
-                                                                //           style: TextStyle(
-                                                                //             fontFamily: 'Inter',
-                                                                //             fontSize: Dimens.textSize4,
-                                                                //             color: Colors.black,
-                                                                //           ),
-                                                                //         ),
-                                                                //       ],
-                                                                //     ))
                                                               ],
                                                             ),
-                                                          )
+                                                          )),
+                                                          Expanded(
+                                                              child: Container(
+                                                            decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .white,
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            40))),
+                                                            child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: <
+                                                                    Widget>[
+                                                                  Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          left: Dimens
+                                                                              .marginApplication,
+                                                                          right:
+                                                                              60),
+                                                                      child:
+                                                                          Text(
+                                                                        response
+                                                                            .valor,
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontFamily:
+                                                                              'Inter',
+                                                                          fontSize:
+                                                                              Dimens.textSize6,
+                                                                          color:
+                                                                              OwnerColors.colorPrimary,
+                                                                        ),
+                                                                      )),
+                                                                ]),
+                                                          )),
                                                         ],
                                                       ),
                                                     )),

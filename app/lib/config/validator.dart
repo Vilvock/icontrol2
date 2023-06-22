@@ -119,7 +119,7 @@ class Validator {
   }
 
   bool validateCellphone(String cellphone) {
-    if (cellphone.length > 14) {
+    if (cellphone.length > 13) {
       return true;
     } else {
       ApplicationMessages(context: context)

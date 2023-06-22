@@ -304,6 +304,18 @@ class _Employees extends State<Employees> {
                                       ),
                                       SizedBox(
                                           height: Dimens.minMarginApplication),
+                                      Text(
+                                        response.status.toString() == "1" ? "Status: Ativo" : "Status: Inativo",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontSize: Dimens.textSize4,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                          height: Dimens.minMarginApplication),
                                       Styles().div_horizontal,
                                       SizedBox(
                                           height: Dimens.minMarginApplication),

@@ -2,13 +2,10 @@
 
 colocar dados para atualizar no perfil os mesmo que ele colocou no cadastro
 
-retorno historico planos bugado
-
 1 - crud marcas OK (falta empilhamento de telas)
 2 - crud modelos OK (falta empilhamento de telas)
 3 - terminar fluxo compra de plano (polida no layout e tela de sucesso)
 
-4 - terminar crud funcionarios, colocar request de ativar/ detaivar status funcionario
 5 - crud frotas (requests)
 6 - crud equipamentos (requests)
 

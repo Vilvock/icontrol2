@@ -84,6 +84,11 @@ class _BrandFormAlertDialog extends State<BrandFormAlertDialog> {
 
       final response = Brand.fromJson(parsedResponse);
 
+      if (response.status == "01") {
+        Navigator.of(context).pop(true);
+      } else {}
+      ApplicationMessages(context: context).showMessage(response.msg);
+
       return parsedResponse;
     } catch (e) {
       throw Exception('HTTP_ERROR: $e');
@@ -109,6 +114,11 @@ class _BrandFormAlertDialog extends State<BrandFormAlertDialog> {
       print('HTTP_RESPONSE: $parsedResponse');
 
       final response = Brand.fromJson(parsedResponse);
+
+      if (response.status == "01") {
+        Navigator.of(context).pop(true);
+      } else {}
+      ApplicationMessages(context: context).showMessage(response.msg);
 
       return parsedResponse;
     } catch (e) {

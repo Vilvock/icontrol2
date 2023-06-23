@@ -119,10 +119,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 return EmployeeFormAlertDialog();
               });
           if (result == true) {
-            Navigator.popUntil(
-              context,
-              ModalRoute.withName('/ui/home'),
-            );
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              SystemNavigator.pop();
+            }
             Navigator.pushNamed(context, "/ui/employees");
           }
         },
@@ -171,7 +172,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 return BrandFormAlertDialog();
               });
           if (result == true) {
-
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              SystemNavigator.pop();
+            }
+            Navigator.pushNamed(context, "/ui/brands");
           }
         },
       ));
@@ -193,7 +199,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 return ModelFormAlertDialog(idBrand: idBrand,);
               });
           if (result == true) {
-
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              SystemNavigator.pop();
+            }
+            Navigator.pushNamed(context, "/ui/models");
           }
         },
       ));
@@ -215,7 +226,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 return EquipmentFormAlertDialog();
               });
           if (result == true) {
-
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              SystemNavigator.pop();
+            }
+            Navigator.pushNamed(context, "/ui/equipments");
           }
         },
       ));
@@ -238,7 +254,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   FleetFormAlertDialog();
               });
           if (result == true) {
-
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              SystemNavigator.pop();
+            }
+            Navigator.pushNamed(context, "/ui/fleets");
           }
         },
       ));

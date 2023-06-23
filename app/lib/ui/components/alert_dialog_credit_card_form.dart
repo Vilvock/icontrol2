@@ -209,8 +209,8 @@ class _CreditCardAlertDialog extends State<CreditCardAlertDialog> {
                   children: [
                     Expanded(
                       child: TextField(
-                        maxLength: 4,
-                        controller: widget.yearController,
+                        maxLength: 2,
+                        controller: widget.monthController,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -218,13 +218,13 @@ class _CreditCardAlertDialog extends State<CreditCardAlertDialog> {
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.grey, width: 1.0),
+                            BorderSide(color: Colors.grey, width: 1.0),
                           ),
-                          hintText: 'Ano de expiração',
+                          hintText: 'Mês de expiração',
                           hintStyle: TextStyle(color: Colors.grey),
                           border: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.circular(Dimens.radiusApplication),
+                            BorderRadius.circular(Dimens.radiusApplication),
                             borderSide: BorderSide.none,
                           ),
                           filled: true,
@@ -242,8 +242,8 @@ class _CreditCardAlertDialog extends State<CreditCardAlertDialog> {
                     SizedBox(width: Dimens.marginApplication),
                     Expanded(
                       child: TextField(
-                        maxLength: 2,
-                        controller: widget.monthController,
+                        maxLength: 4,
+                        controller: widget.yearController,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -253,7 +253,7 @@ class _CreditCardAlertDialog extends State<CreditCardAlertDialog> {
                             borderSide:
                                 BorderSide(color: Colors.grey, width: 1.0),
                           ),
-                          hintText: 'Mês de expiração',
+                          hintText: 'Ano de expiração',
                           hintStyle: TextStyle(color: Colors.grey),
                           border: OutlineInputBorder(
                             borderRadius:

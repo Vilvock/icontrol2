@@ -225,8 +225,7 @@ class _Employees extends State<Employees> {
       body: RefreshIndicator(
         onRefresh: _pullRefresh,
         child: FutureBuilder<List<Map<String, dynamic>>>(
-          future:
-              listEmployees(Preferences.getUserData()!.id.toString()),
+          future: listEmployees(Preferences.getUserData()!.id.toString()),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final responseItem = Employee.fromJson(snapshot.data![0]);
@@ -246,7 +245,11 @@ class _Employees extends State<Employees> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 Dimens.minRadiusApplication),
-                            side: response.status == 1 ? BorderSide(color: OwnerColors.colorPrimary, width: 2.0) : BorderSide(color: Colors.transparent, width: 0),
+                            side: response.status == 1
+                                ? BorderSide(
+                                    color: OwnerColors.colorPrimary, width: 2.0)
+                                : BorderSide(
+                                    color: Colors.transparent, width: 0),
                           ),
                           child: Container(
                             padding: EdgeInsets.all(Dimens.paddingApplication),
@@ -305,7 +308,9 @@ class _Employees extends State<Employees> {
                                       SizedBox(
                                           height: Dimens.minMarginApplication),
                                       Text(
-                                        response.status.toString() == "1" ? "Status: Ativo" : "Status: Inativo",
+                                        response.status.toString() == "1"
+                                            ? "Status: Ativo"
+                                            : "Status: Inativo",
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
@@ -314,165 +319,117 @@ class _Employees extends State<Employees> {
                                           color: Colors.black,
                                         ),
                                       ),
-                                      SizedBox(
-                                          height: Dimens.minMarginApplication),
-                                      Styles().div_horizontal,
-                                      SizedBox(
-                                          height: Dimens.minMarginApplication),
-                                      Container(
-                                          child: IntrinsicHeight(
-                                              child: Row(
-                                        children: [
-                                          Expanded(
-                                              child: Container(
-                                            child: Wrap(
-                                              direction: Axis.horizontal,
-                                              alignment: WrapAlignment.center,
-                                              crossAxisAlignment:
-                                                  WrapCrossAlignment.center,
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      right: Dimens
-                                                          .minMarginApplication),
-                                                  child: Icon(
-                                                      size: 20,
-                                                      Icons.edit_note_outlined),
-                                                ),
-                                                GestureDetector(
-                                                    onTap: () async {
-                                                      final result =
-                                                          await showModalBottomSheet<
-                                                                  dynamic>(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              context: context,
-                                                              shape: Styles()
-                                                                  .styleShapeBottomSheet,
-                                                              clipBehavior: Clip
-                                                                  .antiAliasWithSaveLayer,
-                                                              builder:
-                                                                  (BuildContext
-                                                                      context) {
-                                                                return EmployeeFormAlertDialog(
-                                                                    id: response
-                                                                        .id
-                                                                        .toString(),
-                                                                    id_company: Preferences.getUserData()!.id_empresa.toString(),
-                                                                    name: response
-                                                                        .nome,
-                                                                    email: response
-                                                                        .email,
-                                                                    cellphone: response
-                                                                        .celular,
-                                                                    cpf: response
-                                                                        .cpf,
-                                                                    birth: response
-                                                                        .data_nascimento.toString(),
-                                                                    status: response
-                                                                        .status.toString(),);
-                                                              });
-                                                      if (result == true) {
-                                                        setState(() {
-
-                                                        });
-                                                      }
-                                                    },
-                                                    child: Text(
-                                                      "Editar",
-                                                      style: TextStyle(
-                                                        fontFamily: 'Inter',
-                                                        fontSize:
-                                                            Dimens.textSize4,
-                                                        color: Colors.black,
-                                                      ),
-                                                    )),
-                                              ],
-                                            ),
-                                          )),
-                                          Container(
-                                            child: Styles().div_vertical,
-                                          ),
-                                          Expanded(
-                                              child: Container(
-                                            child: Wrap(
-                                              direction: Axis.horizontal,
-                                              alignment: WrapAlignment.center,
-                                              crossAxisAlignment:
-                                                  WrapCrossAlignment.center,
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      right: Dimens
-                                                          .minMarginApplication),
-                                                  child: Icon(
-                                                      size: 20,
-                                                      Icons.delete_outline),
-                                                ),
-                                                GestureDetector(
-                                                    onTap: () => {
-                                                          showModalBottomSheet<
-                                                              dynamic>(
-                                                            isScrollControlled:
-                                                                true,
-                                                            context: context,
-                                                            shape: Styles()
-                                                                .styleShapeBottomSheet,
-                                                            clipBehavior: Clip
-                                                                .antiAliasWithSaveLayer,
-                                                            builder:
-                                                                (BuildContext
-                                                                    context) {
-                                                              return GenericAlertDialog(
-                                                                  title: Strings
-                                                                      .attention,
-                                                                  content:
-                                                                      "Tem certeza que deseja remover este funcionário?",
-                                                                  btnBack:
-                                                                      TextButton(
-                                                                          child:
-                                                                              Text(
-                                                                            Strings.no,
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontFamily: 'Inter',
-                                                                              color: Colors.black54,
-                                                                            ),
-                                                                          ),
-                                                                          onPressed:
-                                                                              () {
-                                                                            Navigator.of(context).pop();
-                                                                          }),
-                                                                  btnConfirm:
-                                                                      TextButton(
-                                                                          child: Text(Strings
-                                                                              .yes),
-                                                                          onPressed:
-                                                                              () {
-                                                                            deleteEmployee(Preferences.getUserData()!.id.toString(),
-                                                                                response.id.toString());
-                                                                            Navigator.of(context).pop();
-                                                                          }));
-                                                            },
-                                                          )
-                                                        },
-                                                    child: Text(
-                                                      "Remover",
-                                                      style: TextStyle(
-                                                        fontFamily: 'Inter',
-                                                        fontSize:
-                                                            Dimens.textSize4,
-                                                        color: Colors.black,
-                                                      ),
-                                                    )),
-                                              ],
-                                            ),
-                                          )),
-                                        ],
-                                      )))
                                     ],
                                   ),
                                 ),
+                                Container(
+                                    margin: EdgeInsets.all(2),
+                                    child: InkWell(
+                                        onTap: () async {
+                                          final result =
+                                              await showModalBottomSheet<
+                                                      dynamic>(
+                                                  isScrollControlled: true,
+                                                  context: context,
+                                                  shape: Styles()
+                                                      .styleShapeBottomSheet,
+                                                  clipBehavior: Clip
+                                                      .antiAliasWithSaveLayer,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return EmployeeFormAlertDialog(
+                                                      id: response.id
+                                                          .toString(),
+                                                      id_company: Preferences
+                                                              .getUserData()!
+                                                          .id_empresa
+                                                          .toString(),
+                                                      name: response.nome,
+                                                      email: response.email,
+                                                      cellphone:
+                                                          response.celular,
+                                                      cpf: response.cpf,
+                                                      birth: response
+                                                          .data_nascimento
+                                                          .toString(),
+                                                      status: response.status
+                                                          .toString(),
+                                                    );
+                                                  });
+                                          if (result == true) {
+                                            setState(() {});
+                                          }
+                                        },
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                Dimens.minRadiusApplication),
+                                          ),
+                                          color: OwnerColors.darkGrey,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(
+                                                Dimens.minPaddingApplication),
+                                            child: Icon(Icons.edit_note,
+                                                size: 20, color: Colors.white),
+                                          ),
+                                        ))),
+                                Container(
+                                    margin: EdgeInsets.all(2),
+                                    child: InkWell(
+                                        onTap: () {
+                                          showModalBottomSheet<dynamic>(
+                                            isScrollControlled: true,
+                                            context: context,
+                                            shape:
+                                                Styles().styleShapeBottomSheet,
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            builder: (BuildContext context) {
+                                              return GenericAlertDialog(
+                                                  title: Strings.attention,
+                                                  content:
+                                                      "Tem certeza que deseja remover este funcionário?",
+                                                  btnBack: TextButton(
+                                                      child: Text(
+                                                        Strings.no,
+                                                        style: TextStyle(
+                                                          fontFamily: 'Inter',
+                                                          color: Colors.black54,
+                                                        ),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      }),
+                                                  btnConfirm: TextButton(
+                                                      child: Text(Strings.yes),
+                                                      onPressed: () {
+                                                        deleteEmployee(
+                                                            Preferences
+                                                                    .getUserData()!
+                                                                .id
+                                                                .toString(),
+                                                            response.id
+                                                                .toString());
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      }));
+                                            },
+                                          );
+                                        },
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                Dimens.minRadiusApplication),
+                                          ),
+                                          color: Colors.red,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(
+                                                Dimens.minPaddingApplication),
+                                            child: Icon(Icons.remove,
+                                                size: 20, color: Colors.white),
+                                          ),
+                                        ))),
                               ],
                             ),
                           ),

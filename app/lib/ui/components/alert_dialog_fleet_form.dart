@@ -104,6 +104,7 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
 
     if (widget.id != null) {
       nameController.text = widget.name!;
+      obsController.text = widget.obs!;
 
       if (widget.status == "1") {
         light = true;
@@ -359,10 +360,16 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
                             obsController.text.toString(),
                             light ? "1" : "2");
                       } else {
-                        await saveFleet(
-                            _imagePicked,
-                            nameController.text.toString(),
-                            obsController.text.toString());
+                        if (_imagePicked.path == "") {
+                          ApplicationMessages(context: context).showMessage("É necessário adicionar uma imagem.");
+
+                        } else {
+                          await saveFleet(
+                              _imagePicked,
+                              nameController.text.toString(),
+                              obsController.text.toString());
+                        }
+
                       }
 
                       setState(() {

@@ -270,7 +270,7 @@ class _Employees extends State<Employees> {
                                           errorBuilder: (context, exception,
                                                   stackTrack) =>
                                               Image.asset(
-                                            'images/default.png',
+                                                'images/main_logo_1.png',
                                             height: 90,
                                             width: 90,
                                           ),

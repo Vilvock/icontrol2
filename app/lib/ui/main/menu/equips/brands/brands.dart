@@ -88,8 +88,6 @@ class _Brands extends State<Brands> {
         resizeToAvoidBottomInset: true,
         appBar: CustomAppBar(title: "Marcas", isVisibleBackButton: true, isVisibleBrandAddButton: true),
         body: RefreshIndicator(
-            onRefresh: _pullRefresh,
-            child: RefreshIndicator(
                 onRefresh: _pullRefresh,
                 child: FutureBuilder<List<Map<String, dynamic>>>(
                   future:
@@ -315,7 +313,7 @@ class _Brands extends State<Brands> {
                     }
                     return Styles().defaultLoading;
                   },
-                ),)));
+                ),));
   }
 
   Future<void> _pullRefresh() async {

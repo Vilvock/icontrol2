@@ -237,7 +237,7 @@ class _ProfileState extends State<Profile> {
       print('HTTP_BODY: $body');
 
       final json =
-          await postRequest.sendPostRequest(Links.UPDATE_USER_DATA, body);
+          await postRequest.sendPostRequest(Links.UPDATE_ADDRESS, body);
       // final parsedResponse = jsonDecode(json); // pegar um objeto so
 
       List<Map<String, dynamic>> _map = [];

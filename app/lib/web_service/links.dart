@@ -21,6 +21,9 @@ abstract class Links {
   static const String VERIFY_PASSWORD_TOKEN = "usuarios/verificatoken/";
   static const String UPDATE_PASSWORD_TOKEN = "usuarios/updatepasswordtoken/";
 
+
+  static const String UPDATE_ADDRESS = "usuarios/updateUserEnd/";
+
   //funcionarios
 
   static const String VERIFY_TOKEN_REGISTER = "usuarios/verificatokencadastro/";

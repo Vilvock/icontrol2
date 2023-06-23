@@ -2,7 +2,7 @@
 
 3 - terminar fluxo compra de plano ((((((((endereco boleto)))))))) OK
 
-5 - crud frotas, ordem e update
+5 - crud frotas, ordem (bug ordem api) e update
 6 - crud equipamentos, (requests)
 
 loading button cartao

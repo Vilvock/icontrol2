@@ -101,6 +101,10 @@ class _Fleets extends State<Fleets> {
 
       final response = Fleet.fromJson(parsedResponse);
 
+      setState(() {
+
+      });
+
       return parsedResponse;
     } catch (e) {
       throw Exception('HTTP_ERROR: $e');
@@ -198,6 +202,56 @@ class _Fleets extends State<Fleets> {
                                           ),
                                         ),
 
+                                  Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Row(children: [
+                                        Container(
+                                            margin: EdgeInsets.all(2),
+                                            child: InkWell(
+                                                onTap: () async {
+
+                                                  updateSequence(response
+                                                      .id
+                                                      .toString(), "1");
+                                                },
+                                                child: Card(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(
+                                                        Dimens.minRadiusApplication),
+                                                  ),
+                                                  color: Colors.white,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.all(
+                                                        Dimens.minPaddingApplication),
+                                                    child: Icon(Icons.arrow_upward_sharp,
+                                                        size: 20, color: OwnerColors.darkGrey),
+                                                  ),
+                                                ))),
+                                        Container(
+                                            margin: EdgeInsets.all(2),
+                                            child: InkWell(
+                                                onTap: () {
+                                                  updateSequence(response
+                                                      .id
+                                                      .toString(), "2");
+                                                },
+                                                child: Card(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(
+                                                        Dimens.minRadiusApplication),
+                                                  ),
+                                                  color: Colors.white,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.all(
+                                                        Dimens.minPaddingApplication),
+                                                    child: Icon(Icons.arrow_downward_sharp,
+                                                        size: 20, color: OwnerColors.darkGrey),
+                                                  ),
+                                                ))),
+                                      ],),
+                                      Row(children: [
                                         Container(
                                             margin: EdgeInsets.all(2),
                                             child: InkWell(
@@ -305,6 +359,10 @@ class _Fleets extends State<Fleets> {
                                                         size: 20, color: Colors.white),
                                                   ),
                                                 ))),
+                                      ],)
+                                      ])
+
+
                                       ],
                                     ),
                                   ),

@@ -70,6 +70,8 @@ class ContainerHome extends StatefulWidget {
   State<ContainerHome> createState() => _ContainerHomeState();
 }
 
+GlobalKey globalKey = new GlobalKey(debugLabel: 'btm_app_bar');
+
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -102,8 +104,8 @@ class BottomNavBar extends StatelessWidget {
       icon: Icon(Icons.person_outline),
       label: Strings.menu,
     ));
-
     return BottomNavigationBar(
+        key: globalKey,
         elevation: Dimens.elevationApplication,
         currentIndex: currentIndex,
         onTap: onTap,
@@ -151,7 +153,11 @@ class _ContainerHomeState extends State<ContainerHome> {
       print('HTTP_RESPONSE: $_map');
 
       final response = User.fromJson(_map[0]);
+      if (response.status == "02") {
+        var navigationBar = globalKey.currentWidget as BottomNavigationBar;
+        navigationBar.onTap!(2);
 
+      } else {}
       ApplicationMessages(context: context).showMessage(response.mensagem);
 
       return _map;

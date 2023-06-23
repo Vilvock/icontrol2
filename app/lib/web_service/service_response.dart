@@ -56,6 +56,61 @@ class PostRequest {
     }
   }
 
+  Future<String> sendPostRequestMultiPartFleet(String requestEndpoint, File file, String idUser, String name, String obs) async {
+    try {
+      print(ApplicationConstant.URL_BASE + requestEndpoint);
+
+      var request = http.MultipartRequest("POST", Uri.parse(ApplicationConstant.URL_BASE + requestEndpoint));
+      request.fields['app_users_id'] = idUser;
+      request.fields['nome'] = name;
+      request.fields['obs'] = obs;
+      request.fields['token'] = ApplicationConstant.TOKEN;
+
+      request.files.add(await http.MultipartFile.fromPath('url', file.path));
+
+      final response = await request.send();
+      final responseString = await response.stream.bytesToString();
+
+      print(responseString + " " + response.statusCode.toString());
+
+      if (response.statusCode == 200) {
+        return responseString;
+      } else {
+        throw Exception('Falha na solicitação POST: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Erro durante a solicitação POST: $e');
+    }
+  }
+
+  Future<String> sendPostRequestMultiPartUpdateFleet(String requestEndpoint, File file, String idFleet, String name, String obs, String status) async {
+    try {
+      print(ApplicationConstant.URL_BASE + requestEndpoint);
+
+      var request = http.MultipartRequest("POST", Uri.parse(ApplicationConstant.URL_BASE + requestEndpoint));
+      request.fields['id_frota'] = idFleet;
+      request.fields['status'] = status;
+      request.fields['nome'] = name;
+      request.fields['obs'] = obs;
+      request.fields['token'] = ApplicationConstant.TOKEN;
+
+      request.files.add(await http.MultipartFile.fromPath('url', file.path));
+
+      final response = await request.send();
+      final responseString = await response.stream.bytesToString();
+
+      print(responseString + " " + response.statusCode.toString());
+
+      if (response.statusCode == 200) {
+        return responseString;
+      } else {
+        throw Exception('Falha na solicitação POST: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Erro durante a solicitação POST: $e');
+    }
+  }
+
   Future<String> getCepRequest(String request) async {
     try {
       print(ApplicationConstant.URL_VIA_CEP + request);

@@ -12,6 +12,7 @@ import '../../config/validator.dart';
 import '../../global/application_constant.dart';
 import '../../model/brand.dart';
 import '../../model/employee.dart';
+import '../../model/fleet.dart';
 import '../../model/user.dart';
 import '../../res/dimens.dart';
 import '../../res/owner_colors.dart';
@@ -45,6 +46,57 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
   File _imagePicked = File("");
 
   final postRequest = PostRequest();
+
+  Future<void> saveFleet(File image, String name, String obs) async {
+    try {
+      final json = await postRequest.sendPostRequestMultiPartFleet(
+          Links.SAVE_FLEET,
+          image,
+          await Preferences.getUserData()!.id.toString(),
+          name,
+          obs);
+
+      List<Map<String, dynamic>> _map = [];
+      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+
+      print('HTTP_RESPONSE: $_map');
+
+      final response = Fleet.fromJson(_map[0]);
+
+      if (response.status == "01") {
+        // setState(() {});
+      } else {}
+      ApplicationMessages(context: context).showMessage(response.msg);
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  Future<void> updateFleet(File image, String idFleet, String name, String obs, String status) async {
+    try {
+      final json = await postRequest.sendPostRequestMultiPartUpdateFleet(
+          Links.UPDATE_FLEET,
+          image,
+          idFleet,
+          name,
+          obs,
+          status);
+
+      List<Map<String, dynamic>> _map = [];
+      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+
+      print('HTTP_RESPONSE: $_map');
+
+      final response = Fleet.fromJson(_map[0]);
+
+      if (response.status == "01") {
+        // setState(() {});
+      } else {}
+      ApplicationMessages(context: context).showMessage(response.msg);
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
 
   @override
   void initState() {
@@ -299,15 +351,18 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
                       });
 
                       if (widget.id != null) {
-                        //
-                        // await updateBrand(
-                        //     widget.id!,
-                        //     nameController.text.toString(),
-                        //     light ? "1" : "2");
+
+                        await updateFleet(
+                          _imagePicked,
+                            widget.id!,
+                            nameController.text.toString(),
+                            obsController.text.toString(),
+                            light ? "1" : "2");
                       } else {
-                        // await saveBrand(
-                        //   nameController.text.toString(),
-                        //   "1",);
+                        await saveFleet(
+                            _imagePicked,
+                            nameController.text.toString(),
+                            obsController.text.toString());
                       }
 
                       setState(() {

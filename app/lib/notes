@@ -1,11 +1,11 @@
 
 
 
-1 - crud marcas OK (falta empilhamento de telas)
-2 - crud modelos OK (falta empilhamento de telas)
-3 - terminar fluxo compra de plano (polida no layout e tela de sucesso) OK
+1 - crud marcas (falta empilhamento de telas) OK
+2 - crud modelos (falta empilhamento de telas) OK
+3 - terminar fluxo compra de plano ((((((((endereco boleto)))))))) OK
 
-5 - crud frotas (requests) TESTAR
+5 - crud frotas (falta empilhamento de telas) OK
 6 - crud equipamentos (requests)
 
 colocar dados para atualizar no perfil os mesmo que ele colocou no cadastro TESTAR

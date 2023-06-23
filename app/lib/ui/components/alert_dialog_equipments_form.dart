@@ -7,7 +7,9 @@ import '../../config/masks.dart';
 import '../../config/preferences.dart';
 import '../../config/validator.dart';
 import '../../global/application_constant.dart';
+import '../../model/brand.dart';
 import '../../model/employee.dart';
+import '../../model/model.dart';
 import '../../model/user.dart';
 import '../../res/dimens.dart';
 import '../../res/owner_colors.dart';
@@ -64,7 +66,68 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
   late Validator validator;
   bool _isLoading = false;
 
+  String currentSelectedValueCategory = "Selecione";
+  String currentSelectedValueSubcategory = "Selecione";
+
+  int? _categoryPosition;
+  int? _subcategoryPosition;
+
+  String? _idCategory;
+  String? _idSubcategory;
+
   final postRequest = PostRequest();
+
+
+  Future<List<Map<String, dynamic>>> listBrands() async {
+    try {
+      final body = {
+        "id_user": await Preferences.getUserData()!.id,
+        "token": ApplicationConstant.TOKEN,
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json =
+      await postRequest.sendPostRequest(Links.LIST_BRANDS, body);
+
+      List<Map<String, dynamic>> _map = [];
+      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+
+      print('HTTP_RESPONSE: $_map');
+
+      final response = Brand.fromJson(_map[0]);
+
+      return _map;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+
+  Future<List<Map<String, dynamic>>> listModels(String idBrand) async {
+    try {
+      final body = {
+        "id_marca": idBrand,
+        "token": ApplicationConstant.TOKEN,
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json =
+      await postRequest.sendPostRequest(Links.LIST_MODELS, body);
+
+      List<Map<String, dynamic>> _map = [];
+      _map = List<Map<String, dynamic>>.from(jsonDecode(json));
+
+      print('HTTP_RESPONSE: $_map');
+
+      final response = Model.fromJson(_map[0]);
+
+      return _map;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
 
   @override
   void initState() {
@@ -115,6 +178,7 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                 MediaQuery.of(context).viewInsets.bottom +
                     Dimens.paddingApplication),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Align(
                     alignment: AlignmentDirectional.topEnd,
@@ -140,6 +204,165 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                       color: Colors.black,
                     ),
                   ),
+                ),
+                SizedBox(height: Dimens.marginApplication),
+                Text(
+                  "Marca",
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: Dimens.textSize5,
+                    color: Colors.black,
+                  ),
+                ),
+                FutureBuilder<List<Map<String, dynamic>>>(
+                  future: listBrands(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final responseItem = Brand.fromJson(snapshot.data![0]);
+
+                      if (responseItem.rows != 0) {
+
+                        var categoryList = <String>[];
+
+                        categoryList.add("Selecione");
+                        for (var i = 0; i < snapshot.data!.length; i++) {
+                          categoryList.add(Brand.fromJson(snapshot.data![i]).nome);
+                        }
+
+                        print("aaaaaaaaaaaaa" + categoryList.toString());
+
+                        return Container(
+                            padding: EdgeInsets.only(
+                                top: Dimens.minPaddingApplication,
+                                bottom: Dimens.minPaddingApplication),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                isExpanded: true,
+                                hint: Text(
+                                  "Selecione",
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    color: OwnerColors.colorPrimary,
+                                  ),
+                                ),
+                                value: currentSelectedValueCategory,
+                                isDense: true,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    currentSelectedValueSubcategory = "Selecione";
+                                    currentSelectedValueCategory = newValue!;
+
+                                    if(categoryList.indexOf(newValue) > 0) {
+                                      _categoryPosition = categoryList.indexOf(newValue) - 1;
+                                      _idCategory = Brand.fromJson(snapshot.data![_categoryPosition!]).id.toString();
+                                      _idSubcategory = null;
+                                    } else {
+                                      _idCategory = null;
+                                    }
+
+                                    print(currentSelectedValueCategory + _categoryPosition.toString() + _idCategory.toString());
+                                  });
+                                },
+                                items: categoryList.map((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value,
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          color: OwnerColors.colorPrimary,
+                                        )),
+                                  );
+                                }).toList(),
+                              ),
+                            ));
+                      } else {
+
+                      }
+                    } else if (snapshot.hasError) {
+                      return Styles().defaultErrorRequest;
+                    }
+                    return Styles().defaultLoading;
+                  },
+                ),
+                SizedBox(height: Dimens.minMarginApplication),
+                FutureBuilder<List<Map<String, dynamic>>>(
+                  future: listModels(_idCategory.toString()),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final responseItem = Model.fromJson(snapshot.data![0]);
+
+                      if (responseItem.rows != 0) {
+
+                        var subCategoryList = <String>[];
+
+                        subCategoryList.add("Selecione");
+                        for (var i = 0; i < snapshot.data!.length; i++) {
+                          subCategoryList.add(Model.fromJson(snapshot.data![i]).nome);
+                        }
+
+                        print("aaaaaaaaaaaaa" + subCategoryList.toString());
+
+                        return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          Text(
+                            "Modelo",
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: Dimens.textSize5,
+                              color: Colors.black,
+                            ),
+                          ),
+
+                          Container(
+                              padding: EdgeInsets.only(
+                                  top: Dimens.minPaddingApplication,
+                                  bottom: Dimens.minPaddingApplication),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  isExpanded: true,
+                                  hint: Text(
+                                    "Selecione",
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      color: OwnerColors.colorPrimary,
+                                    ),
+                                  ),
+                                  value: currentSelectedValueSubcategory,
+                                  isDense: true,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      currentSelectedValueSubcategory = newValue!;
+                                      _subcategoryPosition = subCategoryList.indexOf(newValue) - 1;
+
+                                      if(subCategoryList.indexOf(newValue) > 0) {
+                                        _subcategoryPosition = subCategoryList.indexOf(newValue) - 1;
+                                        _idSubcategory = Model.fromJson(snapshot.data![_subcategoryPosition!]).id.toString();
+                                      } else {
+                                        _idSubcategory = null;
+                                      }
+
+                                      print(currentSelectedValueSubcategory + _subcategoryPosition.toString() + _idSubcategory.toString());
+                                    });
+                                  },
+                                  items: subCategoryList.map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value,
+                                          style: TextStyle(
+                                            fontFamily: 'Inter',
+                                            color: OwnerColors.colorPrimary,
+                                          )),
+                                    );
+                                  }).toList(),
+                                ),
+                              ))]);
+                      } else {
+
+                      }
+                    } else if (snapshot.hasError) {
+                      return Styles().defaultErrorRequest;
+                    }
+                    return Center(/*child: CircularProgressIndicator()*/);
+                  },
                 ),
                 SizedBox(height: Dimens.marginApplication),
                 TextField(

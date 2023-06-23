@@ -376,7 +376,7 @@ class _Plan extends State<Plan> {
                                                                           'Inter',
                                                                       fontSize:
                                                                           Dimens
-                                                                              .textSize8,
+                                                                              .textSize7,
                                                                       color: Colors
                                                                           .black,
                                                                       fontWeight:
@@ -493,7 +493,7 @@ class _Plan extends State<Plan> {
                                                   ]));
                                         }
                                       } else if (snapshot.hasError) {
-                                        return Text('${snapshot.error}');
+                                        return Styles().defaultErrorRequest;
                                       }
                                       return Styles().defaultLoading;
                                     },
@@ -503,23 +503,23 @@ class _Plan extends State<Plan> {
                         ],
                       ),
                     )),
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            margin: EdgeInsets.all(Dimens.marginApplication),
-                            child: ElevatedButton(
-                                style: Styles().styleDefaultButton,
-                                onPressed: () {},
-                                child: Text(
-                                  "Mostrar histórico completo",
-                                  style: Styles().styleDefaultTextButton,
-                                )),
-                          ),
-                        ])
+                    // Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     mainAxisSize: MainAxisSize.max,
+                    //     mainAxisAlignment: MainAxisAlignment.end,
+                    //     children: [
+                    //       Container(
+                    //         width: double.infinity,
+                    //         margin: EdgeInsets.all(Dimens.marginApplication),
+                    //         child: ElevatedButton(
+                    //             style: Styles().styleDefaultButton,
+                    //             onPressed: () {},
+                    //             child: Text(
+                    //               "Mostrar histórico completo",
+                    //               style: Styles().styleDefaultTextButton,
+                    //             )),
+                    //       ),
+                    //     ])
                   ]);
                 } else if (snapshot.hasError) {
                   return Styles().defaultErrorRequest;

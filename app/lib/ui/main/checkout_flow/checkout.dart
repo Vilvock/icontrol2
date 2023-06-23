@@ -262,7 +262,7 @@ class _Checkout extends State<Checkout> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: CustomAppBar(
-          title: "Revisão da compra",
+          title: "",
           isVisibleBackButton: true,
         ),
         body: RefreshIndicator(
@@ -332,7 +332,7 @@ class _Checkout extends State<Checkout> {
                                               _typePlan.toUpperCase(),
                                               style: TextStyle(
                                                   fontFamily: 'Inter',
-                                                  fontSize: Dimens.textSize8,
+                                                  fontSize: Dimens.textSize7,
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -389,6 +389,7 @@ class _Checkout extends State<Checkout> {
                                                               Dimens.textSize9,
                                                           color: OwnerColors
                                                               .colorPrimary,
+                                                        fontWeight: FontWeight.bold
                                                     ))),
                                               ]),
                                             ]),
@@ -401,17 +402,17 @@ class _Checkout extends State<Checkout> {
                               _desc,
                               style: TextStyle(
                                 fontFamily: 'Inter',
-                                fontSize: Dimens.textSize7,
+                                fontSize: Dimens.textSize6,
                                 color: Colors.black,
                               ),
                             ),
 
-                            SizedBox(height: 20),
+                            SizedBox(height: 40),
                             Text(
                               "Validade de " + _days.toString() + " dias",
                               style: TextStyle(
                                 fontFamily: 'Inter',
-                                fontSize: Dimens.textSize7,
+                                fontSize: Dimens.textSize6,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
@@ -422,7 +423,7 @@ class _Checkout extends State<Checkout> {
                               "Efetue a renovação manualmente ou cancele sua assinatura a qualquer momento",
                               style: TextStyle(
                                 fontFamily: 'Inter',
-                                fontSize: Dimens.textSize6,
+                                fontSize: Dimens.textSize5,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),

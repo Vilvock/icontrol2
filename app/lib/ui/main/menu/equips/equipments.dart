@@ -87,7 +87,7 @@ class _Equipments extends State<Equipments> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: CustomAppBar(title: "Equipamentos", isVisibleBackButton: true, isVisibleEquipmentAddButton: true, isVisibleFleetButton: true, isVisibleBrandButton: true,),
+        appBar: CustomAppBar(title: "Equipamentos", isVisibleBackButton: true, isVisibleEquipmentAddButton: true, isVisibleOptionsFleetBrandButton: true),
         body: RefreshIndicator(
                 onRefresh: _pullRefresh,
                 child: FutureBuilder<List<Map<String, dynamic>>>(

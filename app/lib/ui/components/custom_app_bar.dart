@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:icontrol/res/dimens.dart';
 import 'package:icontrol/ui/components/alert_dialog_employee_form.dart';
+import 'package:icontrol/ui/components/alert_dialog_options.dart';
 import 'package:icontrol/ui/main/menu/equips/equipments.dart';
 
 import '../../res/styles.dart';
@@ -21,8 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   bool isVisibleTaskAddButton;
   bool isVisibleNotificationsButton;
   bool isVisibleSearchButton;
-  bool isVisibleFleetButton;
-  bool isVisibleBrandButton;
+  bool isVisibleOptionsFleetBrandButton;
 
   String idBrand;
 
@@ -38,8 +38,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.isVisibleTaskAddButton = false,
       this.isVisibleNotificationsButton = false,
       this.isVisibleSearchButton = false,
-      this.isVisibleFleetButton = false,
-      this.isVisibleBrandButton = false});
+      this.isVisibleOptionsFleetBrandButton = false});
 
   @override
   Widget build(BuildContext context) {
@@ -268,28 +267,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ));
     }
 
-    if (isVisibleFleetButton) {
+    if (isVisibleOptionsFleetBrandButton) {
       _widgetList.add(IconButton(
         icon: Icon(
-          Icons.fire_truck_outlined,
+          Icons.more_vert,
           color: Colors.black,
         ),
-        onPressed: () {
-          Navigator.pushNamed(
-              context, "/ui/fleets");
-        },
-      ));
-    }
-
-    if (isVisibleBrandButton) {
-      _widgetList.add(IconButton(
-        icon: Icon(
-          Icons.card_travel,
-          color: Colors.black,
-        ),
-        onPressed: () {
-          Navigator.pushNamed(
-              context, "/ui/brands");
+        onPressed: () async {
+          await showModalBottomSheet<dynamic>(
+              isScrollControlled: true,
+              context: context,
+              shape: Styles().styleShapeBottomSheet,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              builder: (BuildContext context) {
+                return OptionsAlertDialog();
+              });
         },
       ));
     }

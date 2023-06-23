@@ -74,7 +74,7 @@ class _Fleets extends State<Fleets> {
       final response = Fleet.fromJson(parsedResponse);
 
       setState(() {
-        
+
       });
 
       return parsedResponse;
@@ -115,8 +115,6 @@ class _Fleets extends State<Fleets> {
         resizeToAvoidBottomInset: true,
         appBar: CustomAppBar(title: "Frotas", isVisibleBackButton: true, isVisibleFleetAddButton: true),
         body: RefreshIndicator(
-            onRefresh: _pullRefresh,
-            child: RefreshIndicator(
                 onRefresh: _pullRefresh,
                 child: FutureBuilder<List<Map<String, dynamic>>>(
                   future: listFleets(),
@@ -340,7 +338,7 @@ class _Fleets extends State<Fleets> {
                     }
                     return Styles().defaultLoading;
                   },
-                ))));
+                )));
   }
 
   Future<void> _pullRefresh() async {

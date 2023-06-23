@@ -9,6 +9,7 @@ import '../../config/validator.dart';
 import '../../global/application_constant.dart';
 import '../../model/brand.dart';
 import '../../model/employee.dart';
+import '../../model/equipment.dart';
 import '../../model/model.dart';
 import '../../model/user.dart';
 import '../../res/dimens.dart';
@@ -77,6 +78,89 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
 
   final postRequest = PostRequest();
 
+
+  Future<Map<String, dynamic>> saveEquip(
+      String idBrand,
+      String idModel,
+      String name,
+      String status,
+      String year,
+      String series,
+      String hour,
+      String tag,
+      String owner) async {
+    try {
+      final body = {
+        "id_marca": idBrand,
+        "id_modelo": idModel,
+        "nome": name,
+        "ano": year,
+        "serie": series,
+        "horimetro": hour,
+        "proprietario": owner,
+        "tag": tag,
+        "status": status,
+        "token": ApplicationConstant.TOKEN
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json =
+      await postRequest.sendPostRequest(Links.SAVE_EQUIPMENT, body);
+      final parsedResponse = jsonDecode(json);
+
+      print('HTTP_RESPONSE: $parsedResponse');
+
+      final response = Equipment.fromJson(parsedResponse);
+
+      return parsedResponse;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> updateEquip(
+      String idEquip,
+      String idBrand,
+      String idModel,
+      String name,
+      String status,
+      String year,
+      String series,
+      String hour,
+      String tag,
+      String owner) async {
+    try {
+      final body = {
+        "id_equipamento": idEquip,
+        "id_marca": idBrand,
+        "id_modelo": idModel,
+        "nome": name,
+        "ano": year,
+        "serie": series,
+        "horimetro": hour,
+        "proprietario": owner,
+        "tag": tag,
+        "status": status,
+        "token": ApplicationConstant.TOKEN,
+      };
+
+      print('HTTP_BODY: $body');
+
+      final json =
+      await postRequest.sendPostRequest(Links.UPDATE_EQUIPMENT, body);
+
+      final parsedResponse = jsonDecode(json);
+
+      print('HTTP_RESPONSE: $parsedResponse');
+
+      final response = Equipment.fromJson(parsedResponse);
+
+      return parsedResponse;
+    } catch (e) {
+      throw Exception('HTTP_ERROR: $e');
+    }
+  }
 
   Future<List<Map<String, dynamic>>> listBrands() async {
     try {
@@ -518,28 +602,42 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                     onPressed: () async {
                       if (!validator.validateGenericTextField(
                           nameController.text, "Nome")) return;
+                      if (!validator.validateGenericTextField(
+                          seriesController.text, "Série")) return;
+                      if (!validator.validateGenericTextField(
+                          yearController.text, "Ano")) return;
+                      if (!validator.validateGenericTextField(
+                          ownerController.text, "Proprietário")) return;
+                      if (!validator.validateGenericTextField(
+                          tagController.text, "TAG")) return;
 
                       setState(() {
                         _isLoading = true;
                       });
 
                       if (widget.id != null) {
-                        // await updateEmployee(
-                        //     Preferences.getUserData()!.id.toString(),
-                        //     widget.id!,
-                        //     nameController.text.toString(),
-                        //     emailController.text.toString(),
-                        //     cellphoneController.text.toString(),
-                        //     cpfController.text.toString(),
-                        //     birthController.text.toString());
+                        await updateEquip(
+                            "",
+                            "",
+                            "",
+                            nameController.text.toString(),
+                            "",
+                            yearController.text.toString(),
+                            seriesController.text.toString(),
+                            "",
+                            tagController.text.toString(),
+                            ownerController.text.toString());
                       } else {
-                        // await saveEmployee(
-                        //     Preferences.getUserData()!.id.toString(),
-                        //     nameController.text.toString(),
-                        //     emailController.text.toString(),
-                        //     cellphoneController.text.toString(),
-                        //     cpfController.text.toString(),
-                        //     birthController.text.toString());
+                        await saveEquip(
+                            "",
+                            "",
+                            nameController.text.toString(),
+                            "",
+                            yearController.text.toString(),
+                            seriesController.text.toString(),
+                            "",
+                            tagController.text.toString(),
+                            ownerController.text.toString());
                       }
 
                       setState(() {

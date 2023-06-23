@@ -555,8 +555,8 @@ class _Checkout extends State<Checkout> {
                                                               false;
                                                         });
 
-                                                        Navigator.of(context)
-                                                            .pop();
+                                                        // Navigator.of(context)
+                                                        //     .pop();
                                                       },
                                                 child: (_isLoadingDialog)
                                                     ? const SizedBox(

@@ -2,11 +2,13 @@
 
 3 - terminar fluxo compra de plano ((((((((endereco boleto)))))))) OK
 
-5 - crud frotas, ordem (bug ordem api) e update
+5 - crud frotas,(bug ordem api)
 6 - crud equipamentos, (requests)
 
 loading button cartao
 
 colocar dados para atualizar no perfil os mesmo que ele colocou no cadastro (status 02 falha ao atualizar)
 data final plano
+
+perguntar status equipamento
 

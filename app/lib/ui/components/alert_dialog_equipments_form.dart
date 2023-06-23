@@ -112,6 +112,11 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
 
       final response = Equipment.fromJson(parsedResponse);
 
+      if (response.status == "01") {
+        Navigator.of(context).pop(true);
+      } else {}
+      ApplicationMessages(context: context).showMessage(response.msg);
+
       return parsedResponse;
     } catch (e) {
       throw Exception('HTTP_ERROR: $e');
@@ -154,6 +159,11 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
       print('HTTP_RESPONSE: $parsedResponse');
 
       final response = Equipment.fromJson(parsedResponse);
+
+      if (response.status == "01") {
+        Navigator.of(context).pop(true);
+      } else {}
+      ApplicationMessages(context: context).showMessage(response.msg);
 
       return parsedResponse;
     } catch (e) {
@@ -617,6 +627,35 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                     fontSize: Dimens.textSize5,
                   ),
                 ),
+                SizedBox(height: Dimens.marginApplication),
+                TextField(
+                  controller: scheduleController,
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: OwnerColors.colorPrimary, width: 1.5),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                    ),
+                    hintText: 'Horímetro',
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius:
+                      BorderRadius.circular(Dimens.radiusApplication),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding:
+                    EdgeInsets.all(Dimens.textFieldPaddingApplication),
+                  ),
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: Dimens.textSize5,
+                  ),
+                ),
                 Container(
                   margin: EdgeInsets.only(top: Dimens.marginApplication),
                   width: double.infinity,
@@ -633,6 +672,9 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                           ownerController.text, "Proprietário")) return;
                       if (!validator.validateGenericTextField(
                           tagController.text, "TAG")) return;
+                      // if (!validator.validateGenericTextField(
+                      //     tagController.text, "TAG")) return;
+                      //horimetro
 
                       setState(() {
                         _isLoading = true;
@@ -640,25 +682,25 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
 
                       if (widget.id != null) {
                         await updateEquip(
-                            "",
-                            "",
-                            "",
+                            widget.id.toString(),
+                            _idCategory.toString(),
+                            _idSubcategory.toString(),
                             nameController.text.toString(),
-                            "",
+                            "1",
                             yearController.text.toString(),
                             seriesController.text.toString(),
-                            "",
+                            scheduleController.text.toString(),
                             tagController.text.toString(),
                             ownerController.text.toString());
                       } else {
                         await saveEquip(
-                            "",
-                            "",
+                            _idCategory.toString(),
+                            _idSubcategory.toString(),
                             nameController.text.toString(),
-                            "",
+                            "1",
                             yearController.text.toString(),
                             seriesController.text.toString(),
-                            "",
+                            scheduleController.text.toString(),
                             tagController.text.toString(),
                             ownerController.text.toString());
                       }

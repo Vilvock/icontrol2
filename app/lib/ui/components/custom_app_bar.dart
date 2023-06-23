@@ -21,13 +21,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   bool isVisibleTaskAddButton;
   bool isVisibleNotificationsButton;
   bool isVisibleSearchButton;
-
+  bool isVisibleFleetButton;
+  bool isVisibleBrandButton;
 
   String idBrand;
 
   CustomAppBar(
       {this.title: "",
-        this.idBrand: "",
+      this.idBrand: "",
       this.isVisibleBackButton = false,
       this.isVisibleModelAddButton = false,
       this.isVisibleBrandAddButton = false,
@@ -36,13 +37,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.isVisibleEmployeeAddButton = false,
       this.isVisibleTaskAddButton = false,
       this.isVisibleNotificationsButton = false,
-      this.isVisibleSearchButton = false});
+      this.isVisibleSearchButton = false,
+      this.isVisibleFleetButton = false,
+      this.isVisibleBrandButton = false});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      actions: _returnFavoriteIcon(
-          context),
+      actions: _returnFavoriteIcon(context),
       automaticallyImplyLeading: this.isVisibleBackButton,
       leading: _returnBackIcon(this.isVisibleBackButton, context),
       backgroundColor: Colors.transparent,
@@ -99,8 +101,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return null;
   }
 
-  List<Widget> _returnFavoriteIcon(
-      BuildContext context) {
+  List<Widget> _returnFavoriteIcon(BuildContext context) {
     List<Widget> _widgetList = <Widget>[];
 
     if (isVisibleEmployeeAddButton) {
@@ -196,7 +197,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               shape: Styles().styleShapeBottomSheet,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               builder: (BuildContext context) {
-                return ModelFormAlertDialog(idBrand: idBrand,);
+                return ModelFormAlertDialog(
+                  idBrand: idBrand,
+                );
               });
           if (result == true) {
             if (Navigator.of(context).canPop()) {
@@ -204,10 +207,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             } else {
               SystemNavigator.pop();
             }
-            Navigator.pushNamed(context, "/ui/models", arguments: {
-
-              "id_brand": int.parse(idBrand)
-            });
+            Navigator.pushNamed(context, "/ui/models",
+                arguments: {"id_brand": int.parse(idBrand)});
           }
         },
       ));
@@ -253,8 +254,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               shape: Styles().styleShapeBottomSheet,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               builder: (BuildContext context) {
-                return
-                  FleetFormAlertDialog();
+                return FleetFormAlertDialog();
               });
           if (result == true) {
             if (Navigator.of(context).canPop()) {
@@ -264,6 +264,32 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             }
             Navigator.pushNamed(context, "/ui/fleets");
           }
+        },
+      ));
+    }
+
+    if (isVisibleFleetButton) {
+      _widgetList.add(IconButton(
+        icon: Icon(
+          Icons.fire_truck_outlined,
+          color: Colors.black,
+        ),
+        onPressed: () {
+          Navigator.pushNamed(
+              context, "/ui/fleets");
+        },
+      ));
+    }
+
+    if (isVisibleBrandButton) {
+      _widgetList.add(IconButton(
+        icon: Icon(
+          Icons.card_travel,
+          color: Colors.black,
+        ),
+        onPressed: () {
+          Navigator.pushNamed(
+              context, "/ui/brands");
         },
       ));
     }

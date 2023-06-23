@@ -1,16 +1,15 @@
 
 
-
-1 - crud marcas (falta empilhamento de telas) OK
-2 - crud modelos (falta empilhamento de telas) OK
 3 - terminar fluxo compra de plano ((((((((endereco boleto)))))))) OK
 
-5 - crud frotas (falta empilhamento de telas) OK
-6 - crud equipamentos (requests)
+5 - crud frotas, ordem e update
+6 - crud equipamentos, (requests)
 
-colocar dados para atualizar no perfil os mesmo que ele colocou no cadastro (status 02 falha ao atualizar)
 
 ICONES marcas e frotas botoes TOOLBAR
 
+
+
+colocar dados para atualizar no perfil os mesmo que ele colocou no cadastro (status 02 falha ao atualizar)
 request marcas tem q vir rows 0 em lista
 

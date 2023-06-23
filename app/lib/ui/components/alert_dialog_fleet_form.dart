@@ -64,7 +64,7 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
       final response = Fleet.fromJson(_map[0]);
 
       if (response.status == "01") {
-        // setState(() {});
+        Navigator.of(context).pop(true);
       } else {}
       ApplicationMessages(context: context).showMessage(response.msg);
     } catch (e) {
@@ -90,7 +90,7 @@ class _FleetFormAlertDialog extends State<FleetFormAlertDialog> {
       final response = Fleet.fromJson(_map[0]);
 
       if (response.status == "01") {
-        // setState(() {});
+        Navigator.of(context).pop(true);
       } else {}
       ApplicationMessages(context: context).showMessage(response.msg);
     } catch (e) {

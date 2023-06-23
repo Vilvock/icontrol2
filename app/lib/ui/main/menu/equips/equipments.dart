@@ -81,7 +81,7 @@ class _Equipments extends State<Equipments> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: CustomAppBar(title: "Equipamentos", isVisibleBackButton: true, isVisibleEquipmentAddButton: true),
+        appBar: CustomAppBar(title: "Equipamentos", isVisibleBackButton: true, isVisibleEquipmentAddButton: true, isVisibleFleetButton: true, isVisibleBrandButton: true,),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: RefreshIndicator(
@@ -109,48 +109,48 @@ class _Equipments extends State<Equipments> {
                             ],
                           ),
                         )),
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.all(
-                                      Dimens.minMarginApplication),
-                                  width: double.infinity,
-                                  child: Column(children: [
-                                    Container(
-                                        width: double.infinity,
-                                        child: ElevatedButton(
-                                          style:
-                                              Styles().styleAlternativeButton,
-                                          onPressed: () {
-                                            Navigator.pushNamed(
-                                                context, "/ui/fleets");
-                                                },
-                                          child: Text("Frotas",
-                                              style: Styles()
-                                                  .styleDefaultTextButton),
-                                        )),
-                                    SizedBox(height: Dimens.marginApplication),
-                                    Container(
-                                        width: double.infinity,
-                                        child: ElevatedButton(
-                                          style:
-                                              Styles().styleAlternativeButton,
-                                          onPressed: () {
-                                            Navigator.pushNamed(
-                                                context, "/ui/brands");
-                                          },
-                                          child: Text("Marcas",
-                                              style: Styles()
-                                                  .styleDefaultTextButton),
-                                        )),
-                                  ])),
-                            ])
+                        // Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.center,
+                        //     mainAxisSize: MainAxisSize.max,
+                        //     mainAxisAlignment: MainAxisAlignment.end,
+                        //     children: [
+                        //       Container(
+                        //           margin: EdgeInsets.all(
+                        //               Dimens.minMarginApplication),
+                        //           width: double.infinity,
+                        //           child: Column(children: [
+                        //             Container(
+                        //                 width: double.infinity,
+                        //                 child: ElevatedButton(
+                        //                   style:
+                        //                       Styles().styleAlternativeButton,
+                        //                   onPressed: () {
+                        //                     Navigator.pushNamed(
+                        //                         context, "/ui/fleets");
+                        //                         },
+                        //                   child: Text("Frotas",
+                        //                       style: Styles()
+                        //                           .styleDefaultTextButton),
+                        //                 )),
+                        //             SizedBox(height: Dimens.marginApplication),
+                        //             Container(
+                        //                 width: double.infinity,
+                        //                 child: ElevatedButton(
+                        //                   style:
+                        //                       Styles().styleAlternativeButton,
+                        //                   onPressed: () {
+                        //                     Navigator.pushNamed(
+                        //                         context, "/ui/brands");
+                        //                   },
+                        //                   child: Text("Marcas",
+                        //                       style: Styles()
+                        //                           .styleDefaultTextButton),
+                        //                 )),
+                        //           ])),
+                        //     ])
                       ]);
                     } else if (snapshot.hasError) {
-                      return Text('${snapshot.error}');
+                      return Styles().defaultErrorRequest;
                     }
                     return Styles().defaultLoading;
                   },

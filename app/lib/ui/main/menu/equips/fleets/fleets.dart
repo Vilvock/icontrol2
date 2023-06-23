@@ -73,6 +73,10 @@ class _Fleets extends State<Fleets> {
 
       final response = Fleet.fromJson(parsedResponse);
 
+      setState(() {
+        
+      });
+
       return parsedResponse;
     } catch (e) {
       throw Exception('HTTP_ERROR: $e');

@@ -157,156 +157,117 @@ class _Models extends State<Models> {
                                                 color: Colors.black,
                                               ),
                                             ),
-                                            SizedBox(
-                                                height: Dimens.minMarginApplication),
-                                            Styles().div_horizontal,
-                                            SizedBox(
-                                                height: Dimens.minMarginApplication),
-                                            Container(
-                                                child: IntrinsicHeight(
-                                                    child: Row(
-                                                      children: [
-                                                        Expanded(
-                                                            child: Container(
-                                                              child: Wrap(
-                                                                direction: Axis.horizontal,
-                                                                alignment: WrapAlignment.center,
-                                                                crossAxisAlignment:
-                                                                WrapCrossAlignment.center,
-                                                                children: [
-                                                                  Container(
-                                                                    margin: EdgeInsets.only(
-                                                                        right: Dimens
-                                                                            .minMarginApplication),
-                                                                    child: Icon(
-                                                                        size: 20,
-                                                                        Icons.edit_note_outlined),
-                                                                  ),
-                                                                  GestureDetector(
-                                                                      onTap: () async {
-                                                                        final result =
-                                                                        await showModalBottomSheet<
-                                                                            dynamic>(
-                                                                            isScrollControlled:
-                                                                            true,
-                                                                            context: context,
-                                                                            shape: Styles()
-                                                                                .styleShapeBottomSheet,
-                                                                            clipBehavior: Clip
-                                                                                .antiAliasWithSaveLayer,
-                                                                            builder:
-                                                                                (BuildContext
-                                                                            context) {
-                                                                              return ModelFormAlertDialog(
-                                                                                  id: response
-                                                                                      .id
-                                                                                      .toString(),
-                                                                                  idBrand: _idBrand.toString(),
-                                                                                  name: response
-                                                                                      .nome,
-                                                                                  status: response
-                                                                                      .status.toString());
-                                                                            });
-                                                                        if (result == true) {
-                                                                          setState(() {
-
-                                                                          });
-                                                                        }
-                                                                      },
-                                                                      child: Text(
-                                                                        "Editar",
-                                                                        style: TextStyle(
-                                                                          fontFamily: 'Inter',
-                                                                          fontSize:
-                                                                          Dimens.textSize4,
-                                                                          color: Colors.black,
-                                                                        ),
-                                                                      )),
-                                                                ],
-                                                              ),
-                                                            )),
-                                                        Container(
-                                                          child: Styles().div_vertical,
-                                                        ),
-                                                        Expanded(
-                                                            child: Container(
-                                                              child: Wrap(
-                                                                direction: Axis.horizontal,
-                                                                alignment: WrapAlignment.center,
-                                                                crossAxisAlignment:
-                                                                WrapCrossAlignment.center,
-                                                                children: [
-                                                                  Container(
-                                                                    margin: EdgeInsets.only(
-                                                                        right: Dimens
-                                                                            .minMarginApplication),
-                                                                    child: Icon(
-                                                                        size: 20,
-                                                                        Icons.delete_outline),
-                                                                  ),
-                                                                  GestureDetector(
-                                                                      onTap: () => {
-                                                                        showModalBottomSheet<
-                                                                            dynamic>(
-                                                                          isScrollControlled:
-                                                                          true,
-                                                                          context: context,
-                                                                          shape: Styles()
-                                                                              .styleShapeBottomSheet,
-                                                                          clipBehavior: Clip
-                                                                              .antiAliasWithSaveLayer,
-                                                                          builder:
-                                                                              (BuildContext
-                                                                          context) {
-                                                                            return GenericAlertDialog(
-                                                                                title: Strings
-                                                                                    .attention,
-                                                                                content:
-                                                                                "Tem certeza que deseja remover este modelo?",
-                                                                                btnBack:
-                                                                                TextButton(
-                                                                                    child:
-                                                                                    Text(
-                                                                                      Strings.no,
-                                                                                      style:
-                                                                                      TextStyle(
-                                                                                        fontFamily: 'Inter',
-                                                                                        color: Colors.black54,
-                                                                                      ),
-                                                                                    ),
-                                                                                    onPressed:
-                                                                                        () {
-                                                                                      Navigator.of(context).pop();
-                                                                                    }),
-                                                                                btnConfirm:
-                                                                                TextButton(
-                                                                                    child: Text(Strings
-                                                                                        .yes),
-                                                                                    onPressed:
-                                                                                        () {
-                                                                                      deleteModel(response.id.toString());
-                                                                                      Navigator.of(context).pop();
-                                                                                    }));
-                                                                          },
-                                                                        )
-                                                                      },
-                                                                      child: Text(
-                                                                        "Remover",
-                                                                        style: TextStyle(
-                                                                          fontFamily: 'Inter',
-                                                                          fontSize:
-                                                                          Dimens.textSize4,
-                                                                          color: Colors.black,
-                                                                        ),
-                                                                      )),
-                                                                ],
-                                                              ),
-                                                            )),
-                                                      ],
-                                                    )))
                                           ],
                                         ),
                                       ),
+
+                                      Container(
+                                          margin: EdgeInsets.all(2),
+                                          child: InkWell(
+                                              onTap: () async {
+                                                final result =
+                                                await showModalBottomSheet<
+                                                    dynamic>(
+                                                    isScrollControlled:
+                                                    true,
+                                                    context: context,
+                                                    shape: Styles()
+                                                        .styleShapeBottomSheet,
+                                                    clipBehavior: Clip
+                                                        .antiAliasWithSaveLayer,
+                                                    builder:
+                                                        (BuildContext
+                                                    context) {
+                                                      return ModelFormAlertDialog(
+                                                          id: response
+                                                              .id
+                                                              .toString(),
+                                                          idBrand: _idBrand.toString(),
+                                                          name: response
+                                                              .nome,
+                                                          status: response
+                                                              .status.toString());
+                                                    });
+                                                if (result == true) {
+                                                  setState(() {
+
+                                                  });
+                                                }
+                                              },
+                                              child: Card(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(
+                                                      Dimens.minRadiusApplication),
+                                                ),
+                                                color: OwnerColors.darkGrey,
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(
+                                                      Dimens.minPaddingApplication),
+                                                  child: Icon(Icons.edit_note,
+                                                      size: 20, color: Colors.white),
+                                                ),
+                                              ))),
+                                      Container(
+                                          margin: EdgeInsets.all(2),
+                                          child: InkWell(
+                                              onTap: () {
+                                                showModalBottomSheet<
+                                                    dynamic>(
+                                                  isScrollControlled:
+                                                  true,
+                                                  context: context,
+                                                  shape: Styles()
+                                                      .styleShapeBottomSheet,
+                                                  clipBehavior: Clip
+                                                      .antiAliasWithSaveLayer,
+                                                  builder:
+                                                      (BuildContext
+                                                  context) {
+                                                    return GenericAlertDialog(
+                                                        title: Strings
+                                                            .attention,
+                                                        content:
+                                                        "Tem certeza que deseja remover este modelo?",
+                                                        btnBack:
+                                                        TextButton(
+                                                            child:
+                                                            Text(
+                                                              Strings.no,
+                                                              style:
+                                                              TextStyle(
+                                                                fontFamily: 'Inter',
+                                                                color: Colors.black54,
+                                                              ),
+                                                            ),
+                                                            onPressed:
+                                                                () {
+                                                              Navigator.of(context).pop();
+                                                            }),
+                                                        btnConfirm:
+                                                        TextButton(
+                                                            child: Text(Strings
+                                                                .yes),
+                                                            onPressed:
+                                                                () {
+                                                              deleteModel(response.id.toString());
+                                                              Navigator.of(context).pop();
+                                                            }));
+                                                  },
+                                                );
+                                              },
+                                              child: Card(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(
+                                                      Dimens.minRadiusApplication),
+                                                ),
+                                                color: Colors.red,
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(
+                                                      Dimens.minPaddingApplication),
+                                                  child: Icon(Icons.remove,
+                                                      size: 20, color: Colors.white),
+                                                ),
+                                              ))),
                                     ],
                                   ),
                                 ),

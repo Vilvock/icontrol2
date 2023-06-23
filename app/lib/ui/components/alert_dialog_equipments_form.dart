@@ -78,7 +78,6 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
 
   final postRequest = PostRequest();
 
-
   Future<Map<String, dynamic>> saveEquip(
       String idBrand,
       String idModel,
@@ -106,7 +105,7 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
       print('HTTP_BODY: $body');
 
       final json =
-      await postRequest.sendPostRequest(Links.SAVE_EQUIPMENT, body);
+          await postRequest.sendPostRequest(Links.SAVE_EQUIPMENT, body);
       final parsedResponse = jsonDecode(json);
 
       print('HTTP_RESPONSE: $parsedResponse');
@@ -148,7 +147,7 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
       print('HTTP_BODY: $body');
 
       final json =
-      await postRequest.sendPostRequest(Links.UPDATE_EQUIPMENT, body);
+          await postRequest.sendPostRequest(Links.UPDATE_EQUIPMENT, body);
 
       final parsedResponse = jsonDecode(json);
 
@@ -171,8 +170,7 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
 
       print('HTTP_BODY: $body');
 
-      final json =
-      await postRequest.sendPostRequest(Links.LIST_BRANDS, body);
+      final json = await postRequest.sendPostRequest(Links.LIST_BRANDS, body);
 
       List<Map<String, dynamic>> _map = [];
       _map = List<Map<String, dynamic>>.from(jsonDecode(json));
@@ -187,7 +185,6 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
     }
   }
 
-
   Future<List<Map<String, dynamic>>> listModels(String idBrand) async {
     try {
       final body = {
@@ -197,8 +194,7 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
 
       print('HTTP_BODY: $body');
 
-      final json =
-      await postRequest.sendPostRequest(Links.LIST_MODELS, body);
+      final json = await postRequest.sendPostRequest(Links.LIST_MODELS, body);
 
       List<Map<String, dynamic>> _map = [];
       _map = List<Map<String, dynamic>>.from(jsonDecode(json));
@@ -298,6 +294,7 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                     color: Colors.black,
                   ),
                 ),
+                SizedBox(height: Dimens.minMarginApplication),
                 FutureBuilder<List<Map<String, dynamic>>>(
                   future: listBrands(),
                   builder: (context, snapshot) {
@@ -305,21 +302,23 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                       final responseItem = Brand.fromJson(snapshot.data![0]);
 
                       if (responseItem.rows != 0) {
-
                         var categoryList = <String>[];
 
                         categoryList.add("Selecione");
                         for (var i = 0; i < snapshot.data!.length; i++) {
-                          categoryList.add(Brand.fromJson(snapshot.data![i]).nome);
+                          categoryList
+                              .add(Brand.fromJson(snapshot.data![i]).nome);
                         }
 
                         print("aaaaaaaaaaaaa" + categoryList.toString());
 
-                        return Container(
-                            padding: EdgeInsets.only(
-                                top: Dimens.minPaddingApplication,
-                                bottom: Dimens.minPaddingApplication),
-                            child: DropdownButtonHideUnderline(
+                        return InputDecorator(
+                            decoration: const InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.grey, width: 1.0))),
+                            child: Container(
+                                child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
                                 isExpanded: true,
                                 hint: Text(
@@ -333,18 +332,25 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                                 isDense: true,
                                 onChanged: (newValue) {
                                   setState(() {
-                                    currentSelectedValueSubcategory = "Selecione";
+                                    currentSelectedValueSubcategory =
+                                        "Selecione";
                                     currentSelectedValueCategory = newValue!;
 
-                                    if(categoryList.indexOf(newValue) > 0) {
-                                      _categoryPosition = categoryList.indexOf(newValue) - 1;
-                                      _idCategory = Brand.fromJson(snapshot.data![_categoryPosition!]).id.toString();
+                                    if (categoryList.indexOf(newValue) > 0) {
+                                      _categoryPosition =
+                                          categoryList.indexOf(newValue) - 1;
+                                      _idCategory = Brand.fromJson(snapshot
+                                              .data![_categoryPosition!])
+                                          .id
+                                          .toString();
                                       _idSubcategory = null;
                                     } else {
                                       _idCategory = null;
                                     }
 
-                                    print(currentSelectedValueCategory + _categoryPosition.toString() + _idCategory.toString());
+                                    print(currentSelectedValueCategory +
+                                        _categoryPosition.toString() +
+                                        _idCategory.toString());
                                   });
                                 },
                                 items: categoryList.map((String value) {
@@ -358,10 +364,8 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                                   );
                                 }).toList(),
                               ),
-                            ));
-                      } else {
-
-                      }
+                            )));
+                      } else {}
                     } else if (snapshot.hasError) {
                       return Styles().defaultErrorRequest;
                     }
@@ -376,72 +380,92 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                       final responseItem = Model.fromJson(snapshot.data![0]);
 
                       if (responseItem.rows != 0) {
-
                         var subCategoryList = <String>[];
 
                         subCategoryList.add("Selecione");
                         for (var i = 0; i < snapshot.data!.length; i++) {
-                          subCategoryList.add(Model.fromJson(snapshot.data![i]).nome);
+                          subCategoryList
+                              .add(Model.fromJson(snapshot.data![i]).nome);
                         }
 
                         print("aaaaaaaaaaaaa" + subCategoryList.toString());
 
-                        return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                          Text(
-                            "Modelo",
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: Dimens.textSize5,
-                              color: Colors.black,
-                            ),
-                          ),
-
-                          Container(
-                              padding: EdgeInsets.only(
-                                  top: Dimens.minPaddingApplication,
-                                  bottom: Dimens.minPaddingApplication),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                  isExpanded: true,
-                                  hint: Text(
-                                    "Selecione",
-                                    style: TextStyle(
-                                      fontFamily: 'Inter',
-                                      color: OwnerColors.colorPrimary,
-                                    ),
-                                  ),
-                                  value: currentSelectedValueSubcategory,
-                                  isDense: true,
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      currentSelectedValueSubcategory = newValue!;
-                                      _subcategoryPosition = subCategoryList.indexOf(newValue) - 1;
-
-                                      if(subCategoryList.indexOf(newValue) > 0) {
-                                        _subcategoryPosition = subCategoryList.indexOf(newValue) - 1;
-                                        _idSubcategory = Model.fromJson(snapshot.data![_subcategoryPosition!]).id.toString();
-                                      } else {
-                                        _idSubcategory = null;
-                                      }
-
-                                      print(currentSelectedValueSubcategory + _subcategoryPosition.toString() + _idSubcategory.toString());
-                                    });
-                                  },
-                                  items: subCategoryList.map((String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value,
-                                          style: TextStyle(
-                                            fontFamily: 'Inter',
-                                            color: OwnerColors.colorPrimary,
-                                          )),
-                                    );
-                                  }).toList(),
+                        return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Modelo",
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: Dimens.textSize5,
+                                  color: Colors.black,
                                 ),
-                              ))]);
-                      } else {
+                              ),
+                              SizedBox(height: Dimens.minMarginApplication),
+                              InputDecorator(
+                                  decoration: const InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.grey, width: 1.0))),
+                                  child: Container(
+                                      child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<String>(
+                                      isExpanded: true,
+                                      hint: Text(
+                                        "Selecione",
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          color: OwnerColors.colorPrimary,
+                                        ),
+                                      ),
+                                      value: currentSelectedValueSubcategory,
+                                      isDense: true,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          currentSelectedValueSubcategory =
+                                              newValue!;
+                                          _subcategoryPosition = subCategoryList
+                                                  .indexOf(newValue) -
+                                              1;
 
-                      }
+                                          if (subCategoryList
+                                                  .indexOf(newValue) >
+                                              0) {
+                                            _subcategoryPosition =
+                                                subCategoryList
+                                                        .indexOf(newValue) -
+                                                    1;
+                                            _idSubcategory = Model.fromJson(
+                                                    snapshot.data![
+                                                        _subcategoryPosition!])
+                                                .id
+                                                .toString();
+                                          } else {
+                                            _idSubcategory = null;
+                                          }
+
+                                          print(
+                                              currentSelectedValueSubcategory +
+                                                  _subcategoryPosition
+                                                      .toString() +
+                                                  _idSubcategory.toString());
+                                        });
+                                      },
+                                      items:
+                                          subCategoryList.map((String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value,
+                                              style: TextStyle(
+                                                fontFamily: 'Inter',
+                                                color: OwnerColors.colorPrimary,
+                                              )),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  )))
+                            ]);
+                      } else {}
                     } else if (snapshot.hasError) {
                       return Styles().defaultErrorRequest;
                     }
@@ -492,13 +516,13 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                     hintStyle: TextStyle(color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius:
-                      BorderRadius.circular(Dimens.radiusApplication),
+                          BorderRadius.circular(Dimens.radiusApplication),
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
                     fillColor: Colors.white,
                     contentPadding:
-                    EdgeInsets.all(Dimens.textFieldPaddingApplication),
+                        EdgeInsets.all(Dimens.textFieldPaddingApplication),
                   ),
                   keyboardType: TextInputType.text,
                   style: TextStyle(
@@ -515,20 +539,19 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                           color: OwnerColors.colorPrimary, width: 1.5),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey, width: 1.0),
+                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
                     ),
                     hintText: 'Ano',
                     hintStyle: TextStyle(color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius:
-                      BorderRadius.circular(Dimens.radiusApplication),
+                          BorderRadius.circular(Dimens.radiusApplication),
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
                     fillColor: Colors.white,
-                    contentPadding: EdgeInsets.all(
-                        Dimens.textFieldPaddingApplication),
+                    contentPadding:
+                        EdgeInsets.all(Dimens.textFieldPaddingApplication),
                   ),
                   keyboardType: TextInputType.number,
                   style: TextStyle(
@@ -551,13 +574,13 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                     hintStyle: TextStyle(color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius:
-                      BorderRadius.circular(Dimens.radiusApplication),
+                          BorderRadius.circular(Dimens.radiusApplication),
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
                     fillColor: Colors.white,
                     contentPadding:
-                    EdgeInsets.all(Dimens.textFieldPaddingApplication),
+                        EdgeInsets.all(Dimens.textFieldPaddingApplication),
                   ),
                   keyboardType: TextInputType.text,
                   style: TextStyle(
@@ -580,13 +603,13 @@ class _EquipmentFormAlertDialog extends State<EquipmentFormAlertDialog> {
                     hintStyle: TextStyle(color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius:
-                      BorderRadius.circular(Dimens.radiusApplication),
+                          BorderRadius.circular(Dimens.radiusApplication),
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
                     fillColor: Colors.white,
                     contentPadding:
-                    EdgeInsets.all(Dimens.textFieldPaddingApplication),
+                        EdgeInsets.all(Dimens.textFieldPaddingApplication),
                   ),
                   keyboardType: TextInputType.text,
                   style: TextStyle(

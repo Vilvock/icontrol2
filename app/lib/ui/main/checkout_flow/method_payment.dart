@@ -17,6 +17,11 @@ class _MethodPayment extends State<MethodPayment> {
   bool _isLoading = false;
 
   late int _idPlan;
+  late String _typePayment;
+  late int _days;
+  late String _typePlan;
+  late String _value;
+  late String _desc;
 
   void goToCheckout(String typePayment) {
 
@@ -26,6 +31,10 @@ class _MethodPayment extends State<MethodPayment> {
         arguments: {
           "type_payment": typePayment,
           "id_plan": _idPlan,
+          "days": _days,
+          "name_plan": _typePlan,
+          "value": _value,
+          "desc": _desc
         });
   }
 
@@ -34,7 +43,12 @@ class _MethodPayment extends State<MethodPayment> {
     Map data = {};
     data = ModalRoute.of(context)!.settings.arguments as Map;
 
+    _typePayment = data['type_payment'];
     _idPlan = data['id_plan'];
+    _days= data['days'];
+    _value = data['value'];
+    _typePlan = data['name_plan'];
+    _desc = data['desc'];
 
 
     return Scaffold(

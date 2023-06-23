@@ -314,14 +314,6 @@ class _Plan extends State<Plan> {
                                   SizedBox(height: Dimens.marginApplication),
 
                                   SizedBox(height: Dimens.minMarginApplication),
-                                  // {
-                                  //   "id": 7,
-                                  //   "data": "04/05/2023",
-                                  //   "hora": "09:22",
-                                  //   "tipo_pagamento": "Cartão de crédito",
-                                  //   "valor": " R$ 10,00",
-                                  //   "status": "Aprovado"
-                                  // },
                                   FutureBuilder<List<Map<String, dynamic>>>(
                                     future: listAllPlans(),
                                     builder: (context, snapshot) {
@@ -349,13 +341,13 @@ class _Plan extends State<Plan> {
                                                 ),
                                                 child: InkWell(
                                                     onTap: () => {
-                                                          Navigator.pushNamed(
-                                                              context,
-                                                              "/ui/method_payment",
+                                                          Navigator.pushNamed(context, "/ui/method_payment",
                                                               arguments: {
-                                                                "id_plan":
-                                                                    response
-                                                                        .plano_id,
+                                                                "id_plan": response.plano_id,
+                                                                "days": response.dias,
+                                                                "name_plan": response.plano_nome,
+                                                                "value": response.valor,
+                                                                "desc": response.obs
                                                               })
                                                         },
                                                     child: Container(

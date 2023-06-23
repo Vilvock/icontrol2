@@ -30,6 +30,10 @@ class _Checkout extends State<Checkout> {
 
   late int _idPlan;
   late String _typePayment;
+  late int _days;
+  late String _typePlan;
+  late String _value;
+  late String _desc;
 
   final postRequest = PostRequest();
 
@@ -91,7 +95,7 @@ class _Checkout extends State<Checkout> {
         ApplicationMessages(context: context)
             .showMessage("Não foi possível autenticar este cartão!");
       } else {
-        payWithCreditCard(idPlan, response.id);
+        await payWithCreditCard(idPlan, response.id);
       }
 
       // setState(() {});
@@ -100,8 +104,7 @@ class _Checkout extends State<Checkout> {
     }
   }
 
-  Future<void> payWithCreditCard(
-      String idPlan, String idCreditCard) async {
+  Future<void> payWithCreditCard(String idPlan, String idCreditCard) async {
     try {
       final body = {
         "id_plano": idPlan,
@@ -129,7 +132,7 @@ class _Checkout extends State<Checkout> {
               context, "/ui/success", (route) => false,
               arguments: {
                 "payment_type": _typePaymentName,
-                // "total_value": _totalValue,
+                "total_value": _value,
               });
         });
       } else {}
@@ -140,13 +143,14 @@ class _Checkout extends State<Checkout> {
   }
 
   Future<void> payWithTicket(
-      String idPlan,
+    String idPlan,
     /*  String cep,
       String state,
       String city,
       String address,
       String nbh,
-      String number*/) async {
+      String number*/
+  ) async {
     try {
       final body = {
         "id_plano": idPlan,
@@ -179,7 +183,7 @@ class _Checkout extends State<Checkout> {
               arguments: {
                 "payment_type": _typePaymentName,
                 "barCode": response.cod_barras,
-                // "total_value": _totalValue,
+                "total_value": _value,
               });
         });
       } else {}
@@ -216,7 +220,7 @@ class _Checkout extends State<Checkout> {
               "payment_type": _typePaymentName,
               "base64": response.qrcode_64,
               "qrCodeClipboard": response.qrcode,
-              // "total_value": _totalValue,
+              "total_value": _value,
             });
       } else {}
       ApplicationMessages(context: context).showMessage(response.msg);
@@ -232,6 +236,10 @@ class _Checkout extends State<Checkout> {
 
     _typePayment = data['type_payment'];
     _idPlan = data['id_plan'];
+    _days= data['days'];
+    _value = data['value'];
+    _typePlan = data['name_plan'];
+    _desc = data['desc'];
 
     switch (_typePayment) {
       case "1":
@@ -273,23 +281,146 @@ class _Checkout extends State<Checkout> {
                     Container(
                         margin: EdgeInsets.all(Dimens.marginApplication),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              "Pagamento",
+                              "Resumo da assinatura",
                               style: TextStyle(
                                 fontFamily: 'Inter',
-                                fontSize: Dimens.textSize5,
+                                fontSize: Dimens.textSize7,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
                             ),
-                            SizedBox(height: Dimens.minMarginApplication),
-                            Text(
-                              "Tipo de pagamento: $_typePaymentName",
+                            SizedBox(height: 40),
+                            // SizedBox(height: Dimens.minMarginApplication),
+                            // Text(
+                            //   "Tipo de pagamento: $_typePaymentName",
+                            //   style: TextStyle(
+                            //     fontFamily: 'Inter',
+                            //     fontSize: Dimens.textSize5,
+                            //     color: Colors.black,
+                            //   ),
+                            // ),
+
+                            Card(
+                                elevation: 0.5,
+                                color: OwnerColors.colorPrimary,
+                                margin:
+                                    EdgeInsets.all(Dimens.minMarginApplication),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40),
+                                ),
+                                child: Container(
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          child: Container(
+                                        padding: EdgeInsets.only(
+                                            left: Dimens.paddingApplication,
+                                            bottom: Dimens.paddingApplication,
+                                            top: Dimens.paddingApplication),
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                                height: Dimens
+                                                    .minMarginApplication),
+                                            Text(
+                                              _typePlan.toUpperCase(),
+                                              style: TextStyle(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: Dimens.textSize8,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              _days.toString() + " DIAS",
+                                              style: TextStyle(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: Dimens.textSize5,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                      )),
+                                      Expanded(
+                                          child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(40))),
+                                        child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(children: [
+                                                Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 40,
+                                                        bottom: 40,
+                                                        left: Dimens
+                                                            .marginApplication),
+                                                    child: Text(
+                                                      "R\$",
+                                                      style: TextStyle(
+                                                          fontFamily: 'Inter',
+                                                          fontSize:
+                                                              Dimens.textSize6,
+                                                          color: OwnerColors
+                                                              .colorPrimary,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    )),
+                                                Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 40,
+                                                        bottom: 40,
+                                                        right: 30),
+                                                    child: Text(
+                                                      _value.replaceAll("R\$ ", ""),
+                                                      style: TextStyle(
+                                                          fontFamily: 'Inter',
+                                                          fontSize:
+                                                              Dimens.textSize9,
+                                                          color: OwnerColors
+                                                              .colorPrimary,
+                                                    ))),
+                                              ]),
+                                            ]),
+                                      )),
+                                    ],
+                                  ),
+                                )),
+                            SizedBox(height: 20),
+                            Text(textAlign: TextAlign.center,
+                              _desc,
                               style: TextStyle(
                                 fontFamily: 'Inter',
-                                fontSize: Dimens.textSize5,
+                                fontSize: Dimens.textSize7,
+                                color: Colors.black,
+                              ),
+                            ),
+
+                            SizedBox(height: 20),
+                            Text(
+                              "Validade de " + _days.toString() + " dias",
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: Dimens.textSize7,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+
+                            Text(textAlign: TextAlign.center,
+                              "Efetue a renovação manualmente ou cancele sua assinatura a qualquer momento",
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: Dimens.textSize6,
+                                fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
                             ),
@@ -303,179 +434,168 @@ class _Checkout extends State<Checkout> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    // Container(
+                    //   margin: EdgeInsets.all(Dimens.minMarginApplication),
+                    //   width: double.infinity,
+                    //   child: Card(
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(
+                    //             Dimens.minRadiusApplication),
+                    //       ),
+                    //       child: Container(
+                    //           padding:
+                    //               EdgeInsets.all(Dimens.paddingApplication),
+                    //           child: Column(children: [
+                    //             Row(
+                    //               children: [
+                    //                 Expanded(
+                    //                   child: Text(
+                    //                     "Valor total",
+                    //                     style: TextStyle(
+                    //                       fontFamily: 'Inter',
+                    //                       fontSize: Dimens.textSize6,
+                    //                       color: Colors.black,
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //                 Text(
+                    //                   "",
+                    //                   style: TextStyle(
+                    //                       fontFamily: 'Inter',
+                    //                       fontSize: Dimens.textSize6,
+                    //                       color: Colors.black,
+                    //                       fontWeight: FontWeight.bold),
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //             SizedBox(height: Dimens.marginApplication),
                     Container(
-                      margin: EdgeInsets.all(Dimens.minMarginApplication),
-                      width: double.infinity,
-                      child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                Dimens.minRadiusApplication),
-                          ),
-                          child: Container(
-                              padding:
-                                  EdgeInsets.all(Dimens.paddingApplication),
-                              child: Column(children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "Valor total",
-                                        style: TextStyle(
-                                          fontFamily: 'Inter',
-                                          fontSize: Dimens.textSize6,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      "",
-                                      style: TextStyle(
-                                          fontFamily: 'Inter',
-                                          fontSize: Dimens.textSize6,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: Dimens.marginApplication),
-                                Container(
-                                    width: double.infinity,
-                                    child: ElevatedButton(
-                                      style: Styles().styleDefaultButton,
-                                      onPressed: _isLoading
-                                          ? null
-                                          : () async {
-                                              setState(() {
-                                                _isLoading = true;
-                                              });
+                        margin: EdgeInsets.all(Dimens.marginApplication),
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: Styles().styleDefaultButton,
+                          onPressed: _isLoading
+                              ? null
+                              : () async {
+                                  setState(() {
+                                    _isLoading = true;
+                                  });
 
-                                              if (_typePayment ==
-                                                  ApplicationConstant
-                                                      .CREDIT_CARD
-                                                      .toString()) {
-                                                /*final result = */ await showModalBottomSheet<
-                                                        dynamic>(
-                                                    isScrollControlled: true,
-                                                    context: context,
-                                                    shape: Styles()
-                                                        .styleShapeBottomSheet,
-                                                    clipBehavior: Clip
-                                                        .antiAliasWithSaveLayer,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return CreditCardAlertDialog(
-                                                        cardNumberController:
-                                                            cardNumberController,
-                                                        cpfController:
-                                                            cpfController,
-                                                        monthController:
-                                                            monthController,
-                                                        nameController:
-                                                            nameController,
-                                                        securityCodeController:
-                                                            securityCodeController,
-                                                        yearController:
-                                                            yearController,
-                                                        btnConfirm: Container(
-                                                          margin: EdgeInsets.only(
-                                                              top: Dimens
-                                                                  .marginApplication),
-                                                          width:
-                                                              double.infinity,
-                                                          child: ElevatedButton(
-                                                            style: Styles()
-                                                                .styleDefaultButton,
-                                                            onPressed:
-                                                                _isLoadingDialog
-                                                                    ? null
-                                                                    : () async {
-                                                                        setState(
-                                                                            () {
-                                                                          _isLoadingDialog =
-                                                                              true;
-                                                                        });
+                                  if (_typePayment ==
+                                      ApplicationConstant.CREDIT_CARD
+                                          .toString()) {
+                                    /*final result = */ await showModalBottomSheet<
+                                            dynamic>(
+                                        isScrollControlled: true,
+                                        context: context,
+                                        shape: Styles().styleShapeBottomSheet,
+                                        clipBehavior:
+                                            Clip.antiAliasWithSaveLayer,
+                                        builder: (BuildContext context) {
+                                          return CreditCardAlertDialog(
+                                            cardNumberController:
+                                                cardNumberController,
+                                            cpfController: cpfController,
+                                            monthController: monthController,
+                                            nameController: nameController,
+                                            securityCodeController:
+                                                securityCodeController,
+                                            yearController: yearController,
+                                            btnConfirm: Container(
+                                              margin: EdgeInsets.only(
+                                                  top:
+                                                      Dimens.marginApplication),
+                                              width: double.infinity,
+                                              child: ElevatedButton(
+                                                style:
+                                                    Styles().styleDefaultButton,
+                                                onPressed: _isLoadingDialog
+                                                    ? null
+                                                    : () async {
+                                                        setState(() {
+                                                          _isLoadingDialog =
+                                                              true;
+                                                        });
 
-                                                                        var _formattedCardNumber = cardNumberController.text.replaceAll(
-                                                                            new RegExp(r'[^0-9]'),
-                                                                            '');
+                                                        var _formattedCardNumber =
+                                                            cardNumberController
+                                                                .text
+                                                                .replaceAll(
+                                                                    new RegExp(
+                                                                        r'[^0-9]'),
+                                                                    '');
 
-                                                                        await createTokenCreditCard(
-                                                                            _idPlan.toString(),
-                                                                            _formattedCardNumber.toString(),
-                                                                            monthController.text.toString(),
-                                                                            yearController.text.toString(),
-                                                                            securityCodeController.text.toString(),
-                                                                            nameController.text.toString(),
-                                                                            cpfController.text.toString());
+                                                        await createTokenCreditCard(
+                                                            _idPlan.toString(),
+                                                            _formattedCardNumber
+                                                                .toString(),
+                                                            monthController.text
+                                                                .toString(),
+                                                            yearController.text
+                                                                .toString(),
+                                                            securityCodeController
+                                                                .text
+                                                                .toString(),
+                                                            nameController.text
+                                                                .toString(),
+                                                            cpfController.text
+                                                                .toString());
 
-                                                                        setState(
-                                                                            () {
-                                                                          _isLoadingDialog =
-                                                                              false;
-                                                                        });
+                                                        setState(() {
+                                                          _isLoadingDialog =
+                                                              false;
+                                                        });
 
-                                                                        Navigator.of(context)
-                                                                            .pop();
-                                                                      },
-                                                            child:
-                                                                (_isLoadingDialog)
-                                                                    ? const SizedBox(
-                                                                        width: Dimens
-                                                                            .buttonIndicatorWidth,
-                                                                        height: Dimens
-                                                                            .buttonIndicatorHeight,
-                                                                        child:
-                                                                            CircularProgressIndicator(
-                                                                          color:
-                                                                              OwnerColors.colorAccent,
-                                                                          strokeWidth:
-                                                                              Dimens.buttonIndicatorStrokes,
-                                                                        ))
-                                                                    : Text(
-                                                                        "Realizar compra",
-                                                                        style: Styles()
-                                                                            .styleDefaultTextButton),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    });
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                child: (_isLoadingDialog)
+                                                    ? const SizedBox(
+                                                        width: Dimens
+                                                            .buttonIndicatorWidth,
+                                                        height: Dimens
+                                                            .buttonIndicatorHeight,
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          color: OwnerColors
+                                                              .colorAccent,
+                                                          strokeWidth: Dimens
+                                                              .buttonIndicatorStrokes,
+                                                        ))
+                                                    : Text("Assinar agora",
+                                                        style: Styles()
+                                                            .styleDefaultTextButton),
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  } else if (_typePayment ==
+                                      ApplicationConstant.PIX.toString()) {
+                                    await payWithPIX(_idPlan.toString());
+                                  } else {
+                                    await payWithTicket(_idPlan.toString());
+                                  }
 
-                                              } else if (_typePayment ==
-                                                  ApplicationConstant
-                                                      .PIX
-                                                      .toString()) {
-
-                                                await payWithPIX(_idPlan.toString());
-
-                                              } else {
-                                                await payWithTicket(_idPlan.toString());
-                                              }
-
-                                              setState(() {
-                                                _isLoading = false;
-                                              });
-                                            },
-                                      child: (_isLoading)
-                                          ? const SizedBox(
-                                              width:
-                                                  Dimens.buttonIndicatorWidth,
-                                              height:
-                                                  Dimens.buttonIndicatorHeight,
-                                              child: CircularProgressIndicator(
-                                                color: OwnerColors.colorAccent,
-                                                strokeWidth: Dimens
-                                                    .buttonIndicatorStrokes,
-                                              ))
-                                          : Text(
-                                              _typePaymentName ==
-                                                      "Cartão de crédito"
-                                                  ? "Inserir dados do cartão"
-                                                  : "Realizar compra",
-                                              style: Styles()
-                                                  .styleDefaultTextButton),
-                                    )),
-                              ]))),
-                    )
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
+                                },
+                          child: (_isLoading)
+                              ? const SizedBox(
+                                  width: Dimens.buttonIndicatorWidth,
+                                  height: Dimens.buttonIndicatorHeight,
+                                  child: CircularProgressIndicator(
+                                    color: OwnerColors.colorAccent,
+                                    strokeWidth: Dimens.buttonIndicatorStrokes,
+                                  ))
+                              : Text(
+                                  _typePaymentName == "Cartão de crédito"
+                                      ? "Inserir dados do cartão"
+                                      : "Assinar agora",
+                                  style: Styles().styleDefaultTextButton),
+                        )),
+                    //           ]))),
+                    // )
                   ])
             ])));
     /*     } else if (snapshot.hasError) {

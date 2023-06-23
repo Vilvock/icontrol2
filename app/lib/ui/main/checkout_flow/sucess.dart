@@ -68,28 +68,28 @@ class _Success extends State<Success> {
                         child: Lottie.network(
                             height: 140,
                             'https://assets1.lottiefiles.com/packages/lf20_o3kwwgtn.json')),
+                    // SizedBox(height: Dimens.marginApplication),
+                    // Text(
+                    //   "Detalhes do pedido #",
+                    //   style: TextStyle(
+                    //     fontFamily: 'Inter',
+                    //     fontSize: Dimens.textSize6,
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.black,
+                    //   ),
+                    // // ),
+                    // SizedBox(height: Dimens.marginApplication),
+                    // Styles().div_horizontal,
                     SizedBox(height: Dimens.marginApplication),
-                    Text(
-                      "Detalhes do pedido #",
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: Dimens.textSize6,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    SizedBox(height: Dimens.marginApplication),
-                    Styles().div_horizontal,
-                    SizedBox(height: Dimens.marginApplication),
-                    Text(
-                      "Valores:",
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: Dimens.textSize5,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
+                    // Text(
+                    //   "Valores:",
+                    //   style: TextStyle(
+                    //     fontFamily: 'Inter',
+                    //     fontSize: Dimens.textSize5,
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.black,
+                    //   ),
+                    // ),
                     SizedBox(height: Dimens.minMarginApplication),
                     Column(children: [
                       Row(
@@ -108,7 +108,7 @@ class _Success extends State<Success> {
                             _totalValue.toString(),
                             style: TextStyle(
                                 fontFamily: 'Inter',
-                                fontSize: Dimens.textSize5,
+                                fontSize: Dimens.textSize7,
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),
                           ),

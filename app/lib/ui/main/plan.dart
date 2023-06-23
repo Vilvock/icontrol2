@@ -239,7 +239,7 @@ class _Plan extends State<Plan> {
                                                         ),
                                                         SizedBox(height: 4),
                                                         Text(
-                                                            "00/00/0000",
+                                                            response.expiracao_validade,
                                                             style: TextStyle(
                                                               fontFamily:
                                                                   'Inter',

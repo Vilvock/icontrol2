@@ -130,14 +130,14 @@ class _Checkout extends State<Checkout> {
       final response = Payment.fromJson(_map[0]);
 
       if (response.status == "01") {
-        setState(() {
+
           Navigator.pushNamedAndRemoveUntil(
               context, "/ui/success", (route) => false,
               arguments: {
                 "payment_type": _typePaymentName,
                 "total_value": _value,
               });
-        });
+
       } else {}
       ApplicationMessages(context: context).showMessage(response.msg);
     } catch (e) {

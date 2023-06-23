@@ -153,7 +153,7 @@ class _ContainerHomeState extends State<ContainerHome> {
       print('HTTP_RESPONSE: $_map');
 
       final response = User.fromJson(_map[0]);
-      if (response.status == "02") {
+      if (response.status != "01") {
         var navigationBar = globalKey.currentWidget as BottomNavigationBar;
         navigationBar.onTap!(2);
 

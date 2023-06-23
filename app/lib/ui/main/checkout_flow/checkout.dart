@@ -12,6 +12,7 @@ import '../../../../res/owner_colors.dart';
 import '../../../../res/strings.dart';
 import '../../../../web_service/links.dart';
 import '../../../../web_service/service_response.dart';
+import '../../../config/validator.dart';
 import '../../../model/payment.dart';
 import '../../../res/styles.dart';
 import '../../components/alert_dialog_credit_card_form.dart';
@@ -35,6 +36,7 @@ class _Checkout extends State<Checkout> {
   late String _value;
   late String _desc;
 
+  late Validator validator;
   final postRequest = PostRequest();
 
   var _typePaymentName;
@@ -48,6 +50,7 @@ class _Checkout extends State<Checkout> {
 
   @override
   void initState() {
+    validator = Validator(context: context);
     super.initState();
   }
 
@@ -512,6 +515,11 @@ class _Checkout extends State<Checkout> {
                                                 onPressed: _isLoadingDialog
                                                     ? null
                                                     : () async {
+
+                                                  if (!validator.validateGenericTextField(
+                                                      nameController.text, "Nome")) return;
+                                                  if (!validator.validateCPF(cpfController.text)) return;
+
                                                         setState(() {
                                                           _isLoadingDialog =
                                                               true;

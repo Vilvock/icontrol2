@@ -5,10 +5,13 @@
 5 - crud frotas, ordem e update
 6 - crud equipamentos, (requests)
 
+data final plano
+modelo e marca mesmo layout border
+inverter ordem mes e ano
+loading button cartao
 
-ICONES marcas e frotas botoes TOOLBAR
-
-
+diminui um pouco o tamanho das letras
+menu 3 points marcas e frotas e abrir modal
 
 colocar dados para atualizar no perfil os mesmo que ele colocou no cadastro (status 02 falha ao atualizar)
 request marcas tem q vir rows 0 em lista

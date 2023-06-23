@@ -94,7 +94,9 @@ class PostRequest {
       request.fields['obs'] = obs;
       request.fields['token'] = ApplicationConstant.TOKEN;
 
-      request.files.add(await http.MultipartFile.fromPath('url', file.path));
+      if (file.path != "") {
+        request.files.add(await http.MultipartFile.fromPath('url', file.path));
+      }
 
       final response = await request.send();
       final responseString = await response.stream.bytesToString();

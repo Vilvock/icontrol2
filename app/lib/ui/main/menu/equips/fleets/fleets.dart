@@ -188,6 +188,16 @@ class _Fleets extends State<Fleets> {
                                               SizedBox(
                                                   height: Dimens.minMarginApplication),
                                               Text(
+                                                response.obs.toString(),
+                                                style: TextStyle(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: Dimens.textSize5,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                  height: Dimens.minMarginApplication),
+                                              Text(
                                                 response.status.toString() == "1" ? "Status: Ativo" : "Status: Inativo",
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,

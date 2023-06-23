@@ -204,7 +204,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             } else {
               SystemNavigator.pop();
             }
-            Navigator.pushNamed(context, "/ui/models");
+            Navigator.pushNamed(context, "/ui/models", arguments: {
+
+              "id_brand": int.parse(idBrand)
+            });
           }
         },
       ));
